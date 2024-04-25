@@ -34,20 +34,16 @@ cd "$mark" || exit 1
 ## ======================== ##
 
 mkdir split blanks bin_counts binarized
-
 chromosomes=$(seq 1 22)
+chromosomes=$(echo -e "$chromosomes\nX")
 
-for chromosome in $chromosomes; do
+for chromosome in $(echo "$chromosomes"); do
   awk \
     -v chromosome="$chromosome" \
     '$1 == "chr"chromsome' \
     "purified_reads.bed" > \
     "split/purified_chr${chromosome}.bed"
 done
-
-awk '$1 == "chrX"' \
-  "purified_reads.bed" > \
-  "split/purified_chrX.bed"
 
 ## ======== ##
 ##   BINS   ##
@@ -74,7 +70,7 @@ Rscript "$SCRIPT_DIR/create_blank_bed_files.R" \
 module purge
 module load BEDTools
 
-for chromosome in $chromosomes; do
+for chromosome in $(echo "$chromosomes"); do
   bedtools intersect \
     -wa \
     -c \
@@ -83,13 +79,6 @@ for chromosome in $chromosomes; do
     "bin_counts/chromosome${chromosome}.bed"
 done
 
-bedtools intersect \
-  -wa \
-  -c \
-  -a "split/purified_chrX.bed" \
-  -b "blanks/chromosomeX.bed" > \
-  "bin_counts/chromosomeX.bed"
-
 ## ============ ##
 ##   BINARIZE   ##
 ## ============ ##
@@ -97,7 +86,7 @@ bedtools intersect \
 module purge
 module load R
 
-for chromosome in $chromosomes; do
+for chromosome in $(echo "$chromosomes"); do
   file="binarized/${cell_type}_chr${chromosome}_binary.txt"
   echo -e "${cell_type}\tchr${chromosome}" > "$file" 
   echo "$mark"
@@ -108,13 +97,3 @@ for chromosome in $chromosomes; do
 
   gzip "$file"
 done
-
-file="binarized/${cell_type}_chrX_binary.txt"
-echo -e "${cell_type}\tchrX" > "$file" 
-echo "$mark"
-
-Rscript binarize.R \
-  "bin_counts/chromosomeX.bed" \
-  "binarized/${mark}.binarized.bed"
-
-gzip "$file"
