@@ -36,8 +36,8 @@ awk '$4 == "h" && $5 >= 30' NeuN_3_sample_sam.bed > 5hmc/filtered_reads.bed
 module purge
 module load R
 
-Rscript "scripts/binom.R" 5mc
-Rscript "scripts/binom.R" 5hmc
+Rscript "$SCRIPT_DIR/binom.R" 5mc
+Rscript "$SCRIPT_DIR/binom.R" 5hmc
 
 module purge
 
