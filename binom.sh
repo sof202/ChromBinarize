@@ -11,13 +11,15 @@
 #SBATCH --error=binom%j.err
 #SBATCH --job-name=Binom
 
-SCRIPT_PATH=$(scontrol show job $SLURM_JOBID | awk -F= '/Command=/{print $2}')
-SCRIPT_DIR=$(dirname $SCRIPT_PATH)
-cd $SCRIPT_DIR
+SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | awk -F= '/Command=/{print $2}')
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+cd "$SCRIPT_DIR" || exit 1
 cd ..
 
-mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.log" "${SCRIPT_DIR}/logs/binom${SLURM_JOB_ID}.log"
-mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.err" "${SCRIPT_DIR}/logs/binom${SLURM_JOB_ID}.err"
+mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.log" \
+  "${SCRIPT_DIR}/logs/binom${SLURM_JOB_ID}.log"
+mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.err" \
+  "${SCRIPT_DIR}/logs/binom${SLURM_JOB_ID}.err"
 
 rm -rf 5mc
 rm -rf 5hmc
