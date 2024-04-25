@@ -22,7 +22,7 @@ mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.log" \
 mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.err" \
   "${SCRIPT_DIR}/logs/binarize${SLURM_JOB_ID}.err"
 
-mark=$1           #5mc or 5hmc
+mark=$1             #5mc or 5hmc
 chromosome_sizes=$2 #file of chromosome sizes
 bin_size=$3         #bin size expected to be used with ChromHMM
 cell_type=$4        #celltype to be used in ChromHMM
@@ -34,6 +34,7 @@ cd "$mark" || exit 1
 ## ======================== ##
 
 mkdir split blanks bin_counts binarized
+
 chromosomes=$(seq 1 22)
 chromosomes=$(echo -e "$chromosomes\nX")
 
