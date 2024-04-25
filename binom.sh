@@ -41,5 +41,5 @@ Rscript "scripts/binom.R" 5hmc
 
 module purge
 
-awk '$8 > 1.7e-8 && $9 < 1.7e-8' 5mc/processed_reads.bed > 5mc/Subsampled.100.5mc.bed
-awk '$8 > 1.7e-8 && $9 < 1.7e-8' 5hmc/processed_reads.bed > 5hmc/Subsampled.100.5hmc.bed
+awk '$8 > 1.7e-8 && $9 < 1.7e-8' 5mc/processed_reads.bed > 5mc/purified_reads.bed
+awk '$8 > 1.7e-8 && $9 < 1.7e-8' 5hmc/processed_reads.bed > 5hmc/purified_reads.bed
