@@ -11,7 +11,9 @@
 #SBATCH --error=binom%j.err
 #SBATCH --job-name=Binom
 
-SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | awk -F= '/Command=/{print $2}')
+SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | \
+  awk '/Command=/{print $1}' | \
+  cut -d= -f1)
 SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
 cd "$SCRIPT_DIR" || exit 1
 cd ..

@@ -12,7 +12,8 @@
 #SBATCH --job-name=Binarize
 
 SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | \
-              awk -F= '/Command=/{print $2}')
+  awk '/Command=/{print $1}' | \
+  cut -d= -f1)
 SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
 cd "$SCRIPT_DIR" || exit 1
 cd ..
