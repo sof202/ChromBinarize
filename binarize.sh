@@ -94,7 +94,7 @@ for chromosome in $(echo "$chromosomes"); do
   echo -e "${cell_type}\tchr${chromosome}" > "$file" 
   echo "$mark" >> "$file"
 
-  Rscript binarize.R \
+  Rscript "$SCRIPT_DIR/binarize.R" \
     "bin_counts/chromosome${chromosome}.bed" \
     "$file"
 
