@@ -35,6 +35,7 @@ cd "$mark" || exit 1
 ##   SPLITING CHROMOSOMES   ##
 ## ======================== ##
 
+rm -rf split blanks bin_counts binarized
 mkdir -p split blanks bin_counts binarized
 
 chromosomes=$(seq 1 22)
@@ -100,3 +101,5 @@ for chromosome in $(echo "$chromosomes"); do
 
   gzip "$file"
 done
+
+rm -rf split blanks bin_counts
