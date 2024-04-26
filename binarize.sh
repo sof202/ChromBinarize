@@ -18,7 +18,7 @@ SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
 cd "$SCRIPT_DIR" || exit 1
 cd ..
 
-mkdir "${SCRIPT_DIR}/logs/"
+mkdir -p "${SCRIPT_DIR}/logs/"
 mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.log" \
   "${SCRIPT_DIR}/logs/binarize${SLURM_JOB_ID}.log"
 mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.err" \
