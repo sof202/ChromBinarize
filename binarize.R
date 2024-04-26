@@ -15,11 +15,11 @@ get_average_bin_count <- function(bin_counts) {
 
 is_significantly_methylated <-
   function(bin_count, average_bin_count, threshold = 0.0001) {
-    p_value <- ppois(bin_count, average_bin_count, lower.tail = FALSE)
-    if (p_value < threshold) {
-      return(1)
-    }
-    return(0)
+    return(
+      as.numeric(
+        ppois(bin_count, average_bin_count, lower.tail = FALSE) < threshold
+      )
+    )
   }
 
 
