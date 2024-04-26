@@ -14,7 +14,7 @@
 SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | \
   awk '/Command=/{print $1}' | \
   cut -d= -f1)
-SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+SCRIPT_DIR=$(realpath "$(dirname "$SCRIPT_PATH")")
 cd "$SCRIPT_DIR" || exit 1
 cd ..
 
