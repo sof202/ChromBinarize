@@ -77,8 +77,8 @@ for chromosome in $(echo "$chromosomes"); do
   bedtools intersect \
     -wa \
     -c \
-    -a "split/purified_chr${chromosome}.bed" \
-    -b "blanks/chromosome${chromosome}.bed" > \
+    -a "blanks/chromosome${chromosome}.bed" \
+    -b "split/purified_chr${chromosome}.bed" > \
     "bin_counts/chromosome${chromosome}.bed"
 done
 
