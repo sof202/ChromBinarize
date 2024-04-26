@@ -1,6 +1,6 @@
 args <- commandArgs(trailingOnly = TRUE)
 bin_counts_file <- args[1]
-output_directory <- args[2]
+output_file <- args[2]
 
 remove_zero_bins <- function(bin_counts) {
   return(dplyr::filter(bin_counts, count > 0))
@@ -40,6 +40,6 @@ bin_counts <- bin_counts |>
 
 data.table::fwrite(
   bin_counts,
-  file = output_directory,
+  file = output_file,
   append = TRUE
 )

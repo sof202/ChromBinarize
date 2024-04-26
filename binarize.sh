@@ -92,11 +92,11 @@ module load R
 for chromosome in $(echo "$chromosomes"); do
   file="binarized/${cell_type}_chr${chromosome}_binary.txt"
   echo -e "${cell_type}\tchr${chromosome}" > "$file" 
-  echo "$mark"
+  echo "$mark" >> "$file"
 
   Rscript binarize.R \
     "bin_counts/chromosome${chromosome}.bed" \
-    "binarized/${mark}.binarized.bed"
+    "$file"
 
   gzip "$file"
 done
