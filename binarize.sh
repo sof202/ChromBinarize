@@ -43,7 +43,7 @@ chromosomes=$(echo -e "$chromosomes\nX")
 for chromosome in $(echo "$chromosomes"); do
   awk \
     -v chromosome="$chromosome" \
-    '$1 == "chr"chromsome' \
+    '$1 == "chr"chromosome' \
     "purified_reads.bed" > \
     "split/purified_chr${chromosome}.bed"
 done
@@ -58,7 +58,7 @@ module load R
 Rscript "$SCRIPT_DIR/create_blank_bed_files.R" \
   "$chromosome_sizes" \
   "$bin_size" \
-  "blanks"
+  "$(pwd)/blanks"
 
 ## ================ ##
 ##   INTERSECTION   ##
