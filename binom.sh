@@ -26,7 +26,7 @@ mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.err" \
 
 rm -rf 5mc
 rm -rf 5hmc
-mkdir 5mc 5hmc
+mkdir -p 5mc 5hmc
 
 awk '$4 == "m" && $5 >= 500 && $7 >= 95 {print $5","$7}' NeuN_3_sample_sam.bed > 5mc/methylated.csv
 awk '$4 == "m" && $5 >= 500 && $7 <= 5 {print $5","$7}' NeuN_3_sample_sam.bed > 5mc/unmethylated.csv

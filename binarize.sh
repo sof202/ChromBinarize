@@ -35,7 +35,7 @@ cd "$mark" || exit 1
 ##   SPLITING CHROMOSOMES   ##
 ## ======================== ##
 
-mkdir split blanks bin_counts binarized
+mkdir -p split blanks bin_counts binarized
 
 chromosomes=$(seq 1 22)
 chromosomes=$(echo -e "$chromosomes\nX")
