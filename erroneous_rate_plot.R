@@ -73,6 +73,15 @@ stats_table <- stats_table |>
     "p2" = erroneous_methylated_p(methylated_positions, n)
   )
 
+n_values <- 1:max_read_depth
+p1 <- lapply(n_values, function(n) {
+  do.call(erroneous_unmethylated_p, c(list(
+    unmethylated_positions = unmethylated_positions,
+    n = n
+  )))
+})
+
+p1
 
 p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
   geom_smooth(color = "red", span = 1.2) +
@@ -92,6 +101,7 @@ p2_plot <- ggplot(stats_table, aes(x = n, y = p2)) +
   ) +
   theme_bw()
 
+# needed on some servers to actually create png files
 options(bitmapType = "cairo")
 
 ggsave(
