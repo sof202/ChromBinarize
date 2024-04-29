@@ -1,8 +1,10 @@
 args <- commandArgs(trailingOnly = TRUE)
 bed_file <- args[1]
-mark <- args[2]
-max_read_depth <- args[3]
-methylation_threshold <- args[4] # percentage, 95 corresponds to <= 5 and >= 95
+mark <- args[2] # m for 5mc and h for 5hmc
+max_read_depth <- as.numeric(args[3]) # you don't need to consider N = 2000
+
+# percentage, 95 corresponds to <= 5 and >= 95
+methylation_threshold <- as.numeric(args[4])
 
 library(ggplot2)
 
