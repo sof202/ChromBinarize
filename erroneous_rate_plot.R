@@ -35,7 +35,7 @@ unmethylated_positions <- methylation_data |>
 erroneous_unmethylated_p <- function(methylated_positions, n) {
   methylated_positions <- methylated_positions |>
     dplyr::filter(read_depth >= n) |>
-    dplyr::mutate(methylated_positions,
+    dplyr::mutate(
       "incorrectly_unmethylated" =
         read_depth * (100 - percent_methylation) / 100
     )
@@ -51,7 +51,7 @@ erroneous_unmethylated_p <- function(methylated_positions, n) {
 erroneous_methylated_p <- function(unmethylated_positions, n) {
   unmethylated_positions <- unmethylated_positions |>
     dplyr::filter(read_depth >= n) |>
-    dplyr::mutate(unmethylated_positions,
+    dplyr::mutate(
       "incorrectly_methylated" =
         read_depth * percent_methylation / 100
     )
