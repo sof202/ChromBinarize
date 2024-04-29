@@ -65,27 +65,18 @@ erroneous_methylated_p <- function(unmethylated_positions, n) {
 }
 
 
-n_values <- 1:max_read_depth
+stats_table <- data.table::data.table("n" = 1:max_read_depth)
 
-p1 <- lapply(n_values, function(n) {
-  do.call(erroneous_methylated_p, c(list(
-    unmethylated_positions = unmethylated_positions,
-    n = n
-  )))
-})
+stats_table <- stats_table |>
+  dplyr::mutate(
+    "p1" = erroneous_unmethylated_p(unmethylated_positions, n),
+    "p2" = erroneous_methylated_p(methylated_positions, n)
+  )
 
-p2 <- lapply(n_values, function(n) {
-  do.call(erroneous_unmethylated_p, c(list(
-    methylated_positions = methylated_positions,
-    n = n
-  )))
-})
-
-stats_table <- data.table::data.table("n" = n_values, "p1" = p1, "p2" = p2)
 
 p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
-  geom_smooth(color = red, span = 1.2) +
-  geom_point(color = black) +
+  geom_smooth(color = "red", span = 1.2) +
+  geom_point(color = "black") +
   labs(
     x = "min read depth considered",
     y = "probability of erroneous unmethylation"
@@ -93,8 +84,8 @@ p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
   theme_bw()
 
 p2_plot <- ggplot(stats_table, aes(x = n, y = p2)) +
-  geom_smooth(color = red, span = 1.2) +
-  geom_point(color = black) +
+  geom_smooth(color = "red", span = 1.2) +
+  geom_point(color = "black") +
   labs(
     x = "min read depth considered",
     y = "probability of erroneous methylation"
