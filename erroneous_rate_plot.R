@@ -92,6 +92,8 @@ p2_plot <- ggplot(stats_table, aes(x = n, y = p2)) +
   ) +
   theme_bw()
 
+options(bitmapType = "cairo")
+
 ggsave(
   "p1.png",
   plot = p1_plot
