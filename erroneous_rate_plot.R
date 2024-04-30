@@ -32,8 +32,6 @@ unmethylated_positions <- methylation_data |>
     percent_methylation <= 100 - methylation_threshold
   )
 
-methylated_positions
-
 erroneous_unmethylated_p <- function(methylated_positions, n) {
   methylated_positions <- methylated_positions |>
     dplyr::filter(read_depth >= n) |>
@@ -74,9 +72,6 @@ p2 <- lapply(n_values, function(n) {
   erroneous_methylated_p(unmethylated_positions, n)
 })
 
-n_values
-p1
-
 stats_table <- data.table::data.table(
   "n" = n_values,
   "p1" = unlist(p1),
@@ -84,7 +79,6 @@ stats_table <- data.table::data.table(
 )
 
 p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
-  geom_smooth(color = "red", span = 1.2) +
   geom_point(color = "black") +
   labs(
     x = "min read depth considered",
@@ -93,7 +87,6 @@ p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
   theme_bw()
 
 p2_plot <- ggplot(stats_table, aes(x = n, y = p2)) +
-  geom_smooth(color = "red", span = 1.2) +
   geom_point(color = "black") +
   labs(
     x = "min read depth considered",
