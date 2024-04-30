@@ -72,6 +72,9 @@ p2 <- lapply(n_values, function(n) {
   erroneous_methylated_p(unmethylated_positions, n)
 })
 
+n_values
+p1
+
 stats_table <- data.table::data.table(
   "n" = n_values,
   "p1" = unlist(p1),
