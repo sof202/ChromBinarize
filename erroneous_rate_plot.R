@@ -74,8 +74,8 @@ p2 <- lapply(n_values, function(n) {
 
 stats_table <- data.table::data.table(
   "n" = n_values,
-  "p1" = p1,
-  "p2" = p2
+  "p1" = unlist(p1),
+  "p2" = unlist(p2)
 )
 
 p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
