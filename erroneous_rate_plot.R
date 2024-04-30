@@ -32,6 +32,8 @@ unmethylated_positions <- methylation_data |>
     percent_methylation <= 100 - methylation_threshold
   )
 
+methylated_positions
+
 erroneous_unmethylated_p <- function(methylated_positions, n) {
   methylated_positions <- methylated_positions |>
     dplyr::filter(read_depth >= n) |>
