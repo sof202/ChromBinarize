@@ -64,24 +64,19 @@ erroneous_methylated_p <- function(unmethylated_positions, n) {
   return(erroneous_methylated_p)
 }
 
-
-stats_table <- data.table::data.table("n" = 1:max_read_depth)
-
-stats_table <- stats_table |>
-  dplyr::mutate(
-    "p1" = erroneous_unmethylated_p(unmethylated_positions, n),
-    "p2" = erroneous_methylated_p(methylated_positions, n)
-  )
-
 n_values <- 1:max_read_depth
 p1 <- lapply(n_values, function(n) {
-  do.call(erroneous_unmethylated_p, c(list(
-    unmethylated_positions = unmethylated_positions,
-    n = n
-  )))
+  erroneous_unmethylated_p(methylated_positions, n)
+})
+p2 <- lapply(n_values, function(n) {
+  erroneous_methylated_p(unmethylated_positions, n)
 })
 
-p1
+stats_table <- data.table::data.table(
+  "n" = n_values,
+  "p1" = p1,
+  "p2" = p2
+)
 
 p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
   geom_smooth(color = "red", span = 1.2) +
