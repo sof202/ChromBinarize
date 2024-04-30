@@ -27,6 +27,7 @@ mark=$2
 max_read_depth=$3
 methylation_threshold=$4
 
+mkdir -p "$SCRIPT_DIR/plots/"
 
 module purge
 module load R
@@ -35,4 +36,6 @@ Rscript "$SCRIPT_DIR/erroneous_rate_plot.R" \
   "$bed_file" \
   "$mark" \
   "$max_read_depth" \
-  "$methylation_threshold"
+  "$methylation_threshold" \
+  "$SCRIPT_DIR/plots/unmethylation_${mark}_${methylation_threshold}.png" \
+  "$SCRIPT_DIR/plots/methylation_${mark}_${methylation_threshold}.png"

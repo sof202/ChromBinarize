@@ -5,6 +5,8 @@ max_read_depth <- as.numeric(args[3]) # you don't need to consider N = 2000
 
 # percentage, 95 corresponds to <= 5 and >= 95
 methylation_threshold <- as.numeric(args[4])
+plot_1_name <- args[5]
+plot_2_name <- args[6]
 
 library(ggplot2)
 
@@ -82,7 +84,8 @@ p1_plot <- ggplot(stats_table, aes(x = n, y = p1)) +
   geom_point(color = "black") +
   labs(
     x = "min read depth considered",
-    y = "probability of erroneous unmethylation"
+    y = "probability of erroneous unmethylation",
+    title = "probability of erroneous unmethylation for binomial distribution"
   ) +
   theme_bw()
 
@@ -90,7 +93,8 @@ p2_plot <- ggplot(stats_table, aes(x = n, y = p2)) +
   geom_point(color = "black") +
   labs(
     x = "min read depth considered",
-    y = "probability of erroneous methylation"
+    y = "probability of erroneous methylation",
+    title = "probability of erroneous methylation for binomial distribution"
   ) +
   theme_bw()
 
@@ -98,11 +102,11 @@ p2_plot <- ggplot(stats_table, aes(x = n, y = p2)) +
 options(bitmapType = "cairo")
 
 ggsave(
-  "p1.png",
+  plot_1_name,
   plot = p1_plot
 )
 
 ggsave(
-  "p2.png",
+  plot_2_name,
   plot = p2_plot
 )
