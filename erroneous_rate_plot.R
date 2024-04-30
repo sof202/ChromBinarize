@@ -41,7 +41,7 @@ erroneous_unmethylated_p <- function(methylated_positions, n) {
     )
   incorrectly_unmethylated_total <-
     sum(methylated_positions$incorrectly_unmethylated)
-  total_reads <- sum(methylated_positions$reads)
+  total_reads <- sum(methylated_positions$read_depth)
   erroneous_unmethylated_p <-
     incorrectly_unmethylated_total / total_reads
 
@@ -57,7 +57,7 @@ erroneous_methylated_p <- function(unmethylated_positions, n) {
     )
   incorrectly_methylated_total <-
     sum(unmethylated_positions$incorrectly_methylated)
-  total_reads <- sum(unmethylated_positions$reads)
+  total_reads <- sum(unmethylated_positions$read_depth)
   erroneous_methylated_p <-
     incorrectly_methylated_total / total_reads
 
