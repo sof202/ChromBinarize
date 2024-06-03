@@ -24,17 +24,19 @@ mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.log" \
 mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.err" \
   "${SCRIPT_DIR}/logs/binom${SLURM_JOB_ID}.err"
 
+bed_file_location=$1
+
 rm -rf 5mc
 rm -rf 5hmc
 mkdir -p 5mc 5hmc
 
-awk '$4 == "m" && $5 >= 500 && $7 >= 95 {print $5","$7}' NeuN_3_sample_sam.bed > 5mc/methylated.csv
-awk '$4 == "m" && $5 >= 500 && $7 <= 5 {print $5","$7}' NeuN_3_sample_sam.bed > 5mc/unmethylated.csv
-awk '$4 == "m" && $5 >= 30' NeuN_3_sample_sam.bed > 5mc/filtered_reads.bed
+awk '$4 == "m" && $5 >= 500 && $7 >= 95 {print $5","$7}' "${bed_file_location}" > 5mc/methylated.csv
+awk '$4 == "m" && $5 >= 500 && $7 <= 5 {print $5","$7}' "${bed_file_location}" > 5mc/unmethylated.csv
+awk '$4 == "m" && $5 >= 30' "${bed_file_location}" > 5mc/filtered_reads.bed
 
-awk '$4 == "h" && $5 >= 50 && $7 >= 95 {print $5","$7}' NeuN_3_sample_sam.bed > 5hmc/methylated.csv
-awk '$4 == "h" && $5 >= 50 && $7 <= 5 {print $5","$7}' NeuN_3_sample_sam.bed > 5hmc/unmethylated.csv
-awk '$4 == "h" && $5 >= 30' NeuN_3_sample_sam.bed > 5hmc/filtered_reads.bed
+awk '$4 == "h" && $5 >= 50 && $7 >= 95 {print $5","$7}' "${bed_file_location}" > 5hmc/methylated.csv
+awk '$4 == "h" && $5 >= 50 && $7 <= 5 {print $5","$7}' "${bed_file_location}" > 5hmc/unmethylated.csv
+awk '$4 == "h" && $5 >= 30' "${bed_file_location}" > 5hmc/filtered_reads.bed
 
 module purge
 module load R
