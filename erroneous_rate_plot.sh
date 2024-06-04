@@ -31,7 +31,7 @@ run_type=$5 # N for read_number, otherwise looks at percentage
 mkdir -p "$SCRIPT_DIR/plots/"
 
 module purge
-module load R
+module load R/4.2.1-foss-2022a
 
 if [ "$run_type" == "N" ]; then
   Rscript "$SCRIPT_DIR/erroneous_rate_plot_N.R" \

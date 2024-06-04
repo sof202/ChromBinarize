@@ -54,7 +54,7 @@ done
 ## ======== ##
 
 module purge
-module load R
+module load R/4.2.1-foss-2022a
 
 Rscript "$SCRIPT_DIR/create_blank_bed_files.R" \
   "$chromosome_sizes" \
@@ -88,7 +88,7 @@ done
 ## ============ ##
 
 module purge
-module load R
+module load R/4.2.1-foss-2022a
 
 for chromosome in $(echo "$chromosomes"); do
   file="binarized/${cell_type}_chr${chromosome}_binary.txt"
@@ -102,4 +102,4 @@ for chromosome in $(echo "$chromosomes"); do
   gzip "$file"
 done
 
-rm -rf split blanks bin_counts
+# rm -rf split blanks bin_counts
