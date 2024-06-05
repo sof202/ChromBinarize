@@ -11,7 +11,7 @@ library(ggplot2)
 ##   SUBSET DATA   ##
 ## =============== ##
 
-subet_methylation_data <- function(methylation_data, methylation_threshold, plot_type) {
+subset_methylation_data <- function(methylation_data, methylation_threshold, plot_type) {
   if (plot_type == "p1") {
     methylation_data <- methylation_data |>
       dplyr::filter(percent_methylation >= methylation_threshold)
@@ -56,7 +56,7 @@ create_p_plot_data <- function(max_read_depth, methylation_data, plot_type) {
 
   if (plot_type == "p1") {
     p1 <- lapply(n_values, function(n) {
-      calculate_error_rate(methylation_data, n)
+      calculate_error_rate(methylation_data, n, plot_type)
     })
     stats_table <- data.table::data.table(
       "n" = n_values,
@@ -66,7 +66,7 @@ create_p_plot_data <- function(max_read_depth, methylation_data, plot_type) {
   }
 
   p2 <- lapply(n_values, function(n) {
-    calculate_error_rate(methylation_data, n)
+    calculate_error_rate(methylation_data, n, plot_type)
   })
   stats_table <- data.table::data.table(
     "n" = n_values,
@@ -118,7 +118,7 @@ methylation_data <- dplyr::filter(methylation_data, mark_name == mark)
 
 if (plot_type == "p1") {
   percent_thresholds <- c(80, 82.5, 85, 87.5, 90, 92.5, 95, 97.5, 100)
-} else if (plot_type == "p1") {
+} else if (plot_type == "p2") {
   percent_thresholds <- c(0, 2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20)
 } else {
   stop("please provide p1 or p2 as the plot type")

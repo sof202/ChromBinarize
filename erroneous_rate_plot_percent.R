@@ -11,7 +11,7 @@ library(ggplot2)
 ##   SUBSET DATA   ##
 ## =============== ##
 
-subet_methylation_data <- function(methylation_data, read_threshold) {
+subset_methylation_data <- function(methylation_data, read_threshold) {
     methylation_data <- methylation_data |>
       dplyr::filter(percent_methylation >= read_threshold)
     return(methylation_data)
@@ -118,7 +118,7 @@ if (plot_type `%nin% c("p1", "p2")) {
 if (mark == "m") {
   n_thresholds <- c(100, 150, 200, 250, 300, 350)
 } else {
-  n_thresholds <- c(10, 20, 30, 40, 50, 60)
+  n_thresholds <- c(10, 20, 30, 40, 50, 60) # hydroxy is usually with less reads
 }
 
 p_plot_grid <- concatenate_plots(n_thresholds, methylation_data, plot_type)
