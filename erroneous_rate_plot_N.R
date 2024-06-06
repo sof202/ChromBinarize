@@ -76,7 +76,7 @@ create_p_plot_data <- function(max_read_depth, methylation_data, plot_type) {
 }
 
 create_p_plot <- function(max_read_depth, methylation_data, plot_type) {
-  stats_table <- create_plot_data(max_read_depth, methylation_data, plot_type)
+  stats_table <- create_p_plot_data(max_read_depth, methylation_data, plot_type)
   p_plot <- ggplot(stats_table, aes(x = n, y = !!plot_type)) +
     geom_point(color = "black") +
     labs(
