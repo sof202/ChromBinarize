@@ -7,30 +7,53 @@
 #SBATCH --ntasks-per-node=16
 #SBATCH --mem=4G 
 #SBATCH --mail-type=END 
-#SBATCH --output=binom%j.log
-#SBATCH --error=binom%j.err
-#SBATCH --job-name=Binom
+#SBATCH --output=binomial%j.log
+#SBATCH --error=binomial%j.err
+#SBATCH --job-name=Binomial
+
 
 SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | \
   awk '/Command=/{print $1}' | \
   cut -d= -f1)
 SCRIPT_DIR=$(realpath "$(dirname "$SCRIPT_PATH")")
-cd "$SCRIPT_DIR" || exit 1
-cd ..
 
-mkdir -p "${SCRIPT_DIR}/logs/"
-mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.log" \
-  "${SCRIPT_DIR}/logs/binom${SLURM_JOB_ID}.log"
-mv "${SLURM_SUBMIT_DIR}/binom${SLURM_JOB_ID}.err" \
-  "${SCRIPT_DIR}/logs/binom${SLURM_JOB_ID}.err"
+ROOT_DIR="${SCRIPT_DIR}/.."
+RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
 
+mkdir -p "${ROOT_DIR}/logs/"
+mv "${SLURM_SUBMIT_DIR}/binomial${SLURM_JOB_ID}.log" \
+  "${ROOT_DIR}/logs/binomial${SLURM_JOB_ID}.log"
+mv "${SLURM_SUBMIT_DIR}/binomial${SLURM_JOB_ID}.err" \
+  "${ROOT_DIR}/logs/binomial${SLURM_JOB_ID}.err"
 
-bed_file_location=$1
-base_folder=$(pwd)
+usage() {
+cat <<EOF
+================================================================================
+1_binomial.sh
+================================================================================
+Purpose: Filters input bed file on sites that are significantly (un)methylated
+Author: Sam Fletcher
+Contact: s.o.fletcher@exeter.ac.uk
+Dependencies: R, awk
+Inputs:
+\$1 -> base folder (for data)
+\$2 -> bed file location
+================================================================================
+EOF
+    exit 0
+}
 
-rm -rf 5mc
-rm -rf 5hmc
-mkdir -p 5mc 5hmc
+if [ -z "$2" ]; then usage; fi 
+
+## ======== ##
+##   MAIN   ##
+## ======== ##
+
+base_folder=$1
+bed_file_location=$2
+
+rm -rf "${base_folder}/5mc" "${base_folder}5hmc"
+mkdir -p "${base_folder}/5mc" "${base_folder}5hmc"
 
 awk '$4 == "m" && $5 >= 500 && $7 >= 95 {print $5","$7}' "${bed_file_location}" > "${base_folder}/5mc/methylated.csv"
 awk '$4 == "m" && $5 >= 500 && $7 <= 5 {print $5","$7}' "${bed_file_location}" > "${base_folder}/5mc/unmethylated.csv"
@@ -43,8 +66,8 @@ awk '$4 == "h" && $5 >= 30' "${bed_file_location}" > "${base_folder}/5hmc/filter
 module purge
 module load R/4.2.1-foss-2022a
 
-Rscript "$SCRIPT_DIR/binom.R" "${base_folder}/5mc"
-Rscript "$SCRIPT_DIR/binom.R" "${base_folder}/5hmc"
+Rscript "${RSCRIPT_DIR}/binom.R" "${base_folder}/5mc"
+Rscript "${RSCRIPT_DIR}/binom.R" "${base_folder}/5hmc"
 
 module purge
 

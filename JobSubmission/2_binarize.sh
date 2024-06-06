@@ -11,25 +11,53 @@
 #SBATCH --error=binarize%j.err
 #SBATCH --job-name=Binarize
 
+
 SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | \
   awk '/Command=/{print $1}' | \
   cut -d= -f1)
 SCRIPT_DIR=$(realpath "$(dirname "$SCRIPT_PATH")")
-cd "$SCRIPT_DIR" || exit 1
-cd ..
+ROOT_DIR="${SCRIPT_DIR}/.."
+RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
 
-mkdir -p "${SCRIPT_DIR}/logs/"
+mkdir -p "${ROOT_DIR}/logs/"
 mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.log" \
-  "${SCRIPT_DIR}/logs/binarize${SLURM_JOB_ID}.log"
+  "${ROOT_DIR}/logs/binarize${SLURM_JOB_ID}.log"
 mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.err" \
-  "${SCRIPT_DIR}/logs/binarize${SLURM_JOB_ID}.err"
+  "${ROOT_DIR}/logs/binarize${SLURM_JOB_ID}.err"
 
-mark=$1             #5mc or 5hmc
-chromosome_sizes=$2 #file of chromosome sizes
-bin_size=$3         #bin size expected to be used with ChromHMM
-cell_type=$4        #celltype to be used in ChromHMM
+usage() {
+cat <<EOF
+================================================================================
+2_binarize.sh
+================================================================================
+Purpose: Turns processed data into binarized data
+Author: Sam Fletcher
+Contact: s.o.fletcher@exeter.ac.uk
+Dependencies: R, bedtools
+Inputs:
+\$1 -> base folder (for data)
+\$2 -> mark (m for 5mc, h for 5hmc)
+\$3 -> file of chromosome sizes
+\$4 -> bin size
+\$5 -> cell type
+================================================================================
+EOF
+    exit 0
+}
 
-cd "$mark" || exit 1
+if [ -z "$5" ]; then usage; fi 
+
+## ======== ##
+##   MAIN   ##
+## ======== ##
+
+base_folder=$1
+mark=$2
+chromosome_sizes=$3
+bin_size=$4
+cell_type=$5 
+
+cd "${base_folder}/${mark}" || exit 1
 
 ## ======================== ##
 ##   SPLITING CHROMOSOMES   ##
@@ -56,7 +84,7 @@ done
 module purge
 module load R/4.2.1-foss-2022a
 
-Rscript "$SCRIPT_DIR/create_blank_bed_files.R" \
+Rscript "$RSCRIPT_DIR/create_blank_bed_files.R" \
   "$chromosome_sizes" \
   "$bin_size" \
   "$(pwd)/blanks"
@@ -95,11 +123,9 @@ for chromosome in $(echo "$chromosomes"); do
   echo -e "${cell_type}\tchr${chromosome}" > "$file" 
   echo "$mark" >> "$file"
 
-  Rscript "$SCRIPT_DIR/binarize.R" \
+  Rscript "$RSCRIPT_DIR/binarize.R" \
     "bin_counts/chromosome${chromosome}.bed" \
     "$file"
 
   gzip "$file"
 done
-
-# rm -rf split blanks bin_counts
