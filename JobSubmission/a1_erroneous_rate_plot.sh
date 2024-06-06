@@ -53,10 +53,10 @@ if [ -z "$5" ]; then usage; fi
 ## ======== ##
 
 bed_file=$1
-mark=$2 # m for methylation, h for hydroxymethylation
+mark=$2 
 max_read_depth=$3
 plot_type=$4
-run_type=$5 # N for read_number, otherwise looks at percentage
+run_type=$5 
 
 mkdir -p "$ROOT_DIR/plots/"
 
