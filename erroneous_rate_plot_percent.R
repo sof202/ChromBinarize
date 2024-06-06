@@ -71,7 +71,7 @@ create_p_plot_data <- function(methylation_data, plot_type) {
 }
 
 create_p_plot <- function(methylation_data, plot_type) {
-  stats_table <- create_plot_data(methylation_data, plot_type)
+  stats_table <- create_p_plot_data(methylation_data, plot_type)
   p_plot <- ggplot(stats_table, aes(x = percent, y = !!plot_type)) +
     geom_point(color = "black") +
     labs(
@@ -111,7 +111,7 @@ names(methylation_data) <- c(
 
 methylation_data <- dplyr::filter(methylation_data, mark_name == mark)
 
-if (plot_type `%nin% c("p1", "p2")) { 
+if (as.character(plot_type) %nin% c("p1", "p2")) { 
   stop("Please specify a plot type from p1 or p2") 
 }
 
