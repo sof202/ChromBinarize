@@ -1,3 +1,11 @@
+# Required packages:
+#  ggplot2
+#  data.table
+#  dplyr
+#  cowplot
+#  grid
+#  gridExtra
+
 args <- commandArgs(trailingOnly = TRUE)
 bed_file <- args[1]
 mark <- args[2] # m for 5mc and h for 5hmc
@@ -80,21 +88,29 @@ create_p_plot <- function(max_read_depth, methylation_data, plot_type) {
   p_plot <- ggplot(stats_table, aes(x = n, y = !!plot_type)) +
     geom_point(color = "black") +
     labs(
-      x = "min read depth considered",
-      y = "probability of erroneous read",
-      title = "probability of erroneous read for binomial distribution"
+      x = "",
+      y = ""
     ) +
     theme_bw()
   return(p_plot)
 }
 
 concatenate_plots <- function(max_read_depth, methylation_data, plot_type, percent_thresholds) {
-  plot_list <- NULL
+  plot_list <- list() 
+  index <- 1
   for (percent in percent_thresholds) {
     subsetted_methylation_data <- subset_methylation_data(methylation_data, percent, plot_type)
-    plot_list <- c(plot_list, create_p_plot(max_read_depth, subsetted_methylation_data, plot_type))
+    p_plot <- create_p_plot(max_read_depth, subsetted_methylation_data, plot_type)
+    plot_list[[index]] <- p_plot
+    index <- index + 1
   }
-  p_plot_grid <- cowplot::plot_grid(plotlist = plot_list, ncol = 3, labels = percent_thresholds)
+  p_plot_grid <- cowplot::plot_grid(
+    plotlist = plot_list,
+    ncol = 3,
+    labels = percent_thresholds,
+    label_x = 0.65,
+    label_y = 0.7
+  )
   return(p_plot_grid)
 }
 
@@ -125,6 +141,16 @@ if (plot_type == "p1") {
 }
 
 p_plot_grid <- concatenate_plots(max_read_depth, methylation_data, plot_type, percent_thresholds)
+
+y_axis <- grid::textGrob("Probability of erroneous Read", 
+                   gp=grid::gpar(fontface="bold", fontsize=15), rot=90)
+
+x_axis <- grid::textGrob("Minimum read depth considered", 
+                   gp=grid::gpar(fontface="bold", fontsize=15))
+
+p_plot_grid <- gridExtra::grid.arrange(
+  gridExtra::arrangeGrob(p_plot_grid, left = y_axis, bottom = x_axis)
+)
 
 # needed on some servers to actually create png files
 options(bitmapType = "cairo")

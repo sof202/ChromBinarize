@@ -1,3 +1,11 @@
+# Required packages:
+#  ggplot2
+#  data.table
+#  dplyr
+#  cowplot
+#  grid
+#  gridExtra
+
 args <- commandArgs(trailingOnly = TRUE)
 bed_file <- args[1]
 mark <- args[2] # m for 5mc and h for 5hmc
@@ -13,7 +21,7 @@ library(ggplot2)
 
 subset_methylation_data <- function(methylation_data, read_threshold) {
     methylation_data <- methylation_data |>
-      dplyr::filter(percent_methylation >= read_threshold)
+      dplyr::filter(read_depth >= read_threshold)
     return(methylation_data)
 }
 
@@ -75,21 +83,29 @@ create_p_plot <- function(methylation_data, plot_type) {
   p_plot <- ggplot(stats_table, aes(x = percent, y = !!plot_type)) +
     geom_point(color = "black") +
     labs(
-      x = "maximum percent methylation considered",
-      y = "probability of erroneous read",
-      title = "probability of erroneous read for binomial distribution"
+      x = "",
+      y = ""
     ) +
     theme_bw()
   return(p_plot)
 }
 
 concatenate_plots <- function(n_thresholds, methylation_data, plot_type) {
-  plot_list <- NULL
+  plot_list <- list()
+  index <- 1
   for (n_threshold in n_thresholds) {
     subsetted_methylation_data <- subset_methylation_data(methylation_data, n_threshold)
-    plot_list <- c(plot_list, create_p_plot(subsetted_methylation_data, plot_type))
+    p_plot <- create_p_plot(subsetted_methylation_data, plot_type)
+    plot_list[[index]] <- p_plot
+    index <- index + 1
   }
-  p_plot_grid <- cowplot::plot_grid(plotlist = plot_list, ncol = 2, labels = n_thresholds)
+  p_plot_grid <- cowplot::plot_grid(
+    plotlist = plot_list,
+    ncol = 3,
+    labels = n_thresholds,
+    label_x = 0.65,
+    label_y = 0.9
+  )
   return(p_plot_grid)
 }
 
@@ -116,12 +132,22 @@ if (as.character(plot_type) %nin% c("p1", "p2")) {
 }
 
 if (mark == "m") {
-  n_thresholds <- c(100, 150, 200, 250, 300, 350)
+  n_thresholds <- c(100, 150, 200, 250, 300, 350, 400, 450, 500)
 } else {
   n_thresholds <- c(10, 20, 30, 40, 50, 60) # hydroxy is usually with less reads
 }
 
 p_plot_grid <- concatenate_plots(n_thresholds, methylation_data, plot_type)
+
+y_axis <- grid::textGrob("Probability of erroneous Read", 
+                   gp=grid::gpar(fontface="bold", fontsize=15), rot=90)
+
+x_axis <- grid::textGrob("Minimum percent methylated considered", 
+                   gp=grid::gpar(fontface="bold", fontsize=15))
+
+p_plot_grid <- gridExtra::grid.arrange(
+  gridExtra::arrangeGrob(p_plot_grid, left = y_axis, bottom = x_axis)
+)
 
 # needed on some servers to actually create png files
 options(bitmapType = "cairo")

@@ -39,11 +39,11 @@ if [ "$run_type" == "N" ]; then
     "$mark" \
     "$max_read_depth" \
     "$plot_type" \
-    "$SCRIPT_DIR/plots/erroneous_rate_plot_N_x_axis.png"
+    "$SCRIPT_DIR/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 else
   Rscript "$SCRIPT_DIR/erroneous_rate_plot_percent.R" \
     "$bed_file" \
     "$mark" \
     "$plot_type" \
-    "$SCRIPT_DIR/plots/erroneous_rate_plot_percent_x_axis.png"
+    "$SCRIPT_DIR/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 fi
