@@ -105,14 +105,12 @@ module purge
 ##   REMOVE UNMETHYLATED SITES   ##
 ## ============================= ##
 
-if [ "${remove_unmethylated_sites}" == "y" ]; then
-  awk -v threshold="${binomial_threshold}" \
-    '$8 > threshold && $9 < threshold' \
-    "${base_folder}/5mc/processed_reads.bed" > \
-    "${base_folder}/5mc/purified_reads.bed"
+awk -v threshold="${binomial_threshold}" \
+  '$8 > threshold && $9 < threshold' \
+  "${base_folder}/5mc/processed_reads.bed" > \
+  "${base_folder}/5mc/purified_reads.bed"
 
-  awk -v threshold="${binomial_threshold}" \
-    '$8 > threshold && $9 < threshold' \
-    "${base_folder}/5hmc/processed_reads.bed" > \
-    "${base_folder}/5hmc/purified_reads.bed"
-fi
+awk -v threshold="${binomial_threshold}" \
+  '$8 > threshold && $9 < threshold' \
+  "${base_folder}/5hmc/processed_reads.bed" > \
+  "${base_folder}/5hmc/purified_reads.bed"

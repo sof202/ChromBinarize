@@ -23,8 +23,6 @@ reference_percentage_threshold_m=95
 reference_read_depth_threshold_h=50
 reference_percentage_threshold_h=95
 
-# remove the "y" here if you want to keep sites that are deemed unmethylated
-remove_unmethylated_sites="y"
 binomial_threshold=1.7e-8
 
 
