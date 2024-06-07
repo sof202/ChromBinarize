@@ -19,7 +19,9 @@ library(ggplot2)
 ##   SUBSET DATA   ##
 ## =============== ##
 
-subset_methylation_data <- function(methylation_data, methylation_threshold, plot_type) {
+subset_methylation_data <- function(methylation_data,
+                                    methylation_threshold,
+                                    plot_type) {
   if (plot_type == "p1") {
     methylation_data <- methylation_data |>
       dplyr::filter(percent_methylation >= methylation_threshold)
@@ -39,13 +41,13 @@ calculate_error_rate <- function(methylation_data, n, plot_type) {
     methylation_data <- methylation_data |>
       dplyr::filter(read_depth >= n) |>
       dplyr::mutate(
-      "incorrectly_classified" = read_depth * (100 - percent_methylation) / 100
+        "incorrectly_classified" = read_depth * (100 - percent_methylation) / 100
       )
   } else {
     methylation_data <- methylation_data |>
       dplyr::filter(read_depth >= n) |>
       dplyr::mutate(
-      "incorrectly_classified" = read_depth * percent_methylation / 100
+        "incorrectly_classified" = read_depth * percent_methylation / 100
       )
   }
   incorrect_total <- sum(methylation_data$incorrectly_classified)
@@ -95,12 +97,17 @@ create_p_plot <- function(max_read_depth, methylation_data, plot_type) {
   return(p_plot)
 }
 
-concatenate_plots <- function(max_read_depth, methylation_data, plot_type, percent_thresholds) {
-  plot_list <- list() 
+concatenate_plots <- function(max_read_depth,
+                              methylation_data,
+                              plot_type,
+                              percent_thresholds) {
+  plot_list <- list()
   index <- 1
   for (percent in percent_thresholds) {
-    subsetted_methylation_data <- subset_methylation_data(methylation_data, percent, plot_type)
-    p_plot <- create_p_plot(max_read_depth, subsetted_methylation_data, plot_type)
+    subsetted_methylation_data <-
+      subset_methylation_data(methylation_data, percent, plot_type)
+    p_plot <-
+      create_p_plot(max_read_depth, subsetted_methylation_data, plot_type)
     plot_list[[index]] <- p_plot
     index <- index + 1
   }
@@ -140,13 +147,20 @@ if (plot_type == "p1") {
   stop("please provide p1 or p2 as the plot type")
 }
 
-p_plot_grid <- concatenate_plots(max_read_depth, methylation_data, plot_type, percent_thresholds)
+p_plot_grid <-
+  concatenate_plots(
+    max_read_depth,
+    methylation_data,
+    plot_type, percent_thresholds
+  )
 
-y_axis <- grid::textGrob("Probability of erroneous Read", 
-                   gp=grid::gpar(fontface="bold", fontsize=15), rot=90)
+y_axis <- grid::textGrob("Probability of erroneous Read",
+  gp = grid::gpar(fontface = "bold", fontsize = 15), rot = 90
+)
 
-x_axis <- grid::textGrob("Minimum read depth considered", 
-                   gp=grid::gpar(fontface="bold", fontsize=15))
+x_axis <- grid::textGrob("Minimum read depth considered",
+  gp = grid::gpar(fontface = "bold", fontsize = 15)
+)
 
 p_plot_grid <- gridExtra::grid.arrange(
   gridExtra::arrangeGrob(p_plot_grid, left = y_axis, bottom = x_axis)

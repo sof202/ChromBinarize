@@ -13,16 +13,16 @@ plot_type <- as.name(args[3])
 output_file <- args[4]
 
 library(ggplot2)
-`%nin%` = Negate(`%in%`)
+`%nin%` <- Negate(`%in%`)
 
 ## =============== ##
 ##   SUBSET DATA   ##
 ## =============== ##
 
 subset_methylation_data <- function(methylation_data, read_threshold) {
-    methylation_data <- methylation_data |>
-      dplyr::filter(read_depth >= read_threshold)
-    return(methylation_data)
+  methylation_data <- methylation_data |>
+    dplyr::filter(read_depth >= read_threshold)
+  return(methylation_data)
 }
 
 ## ============================ ##
@@ -34,13 +34,13 @@ calculate_error_rate <- function(methylation_data, percent, plot_type) {
     methylation_data <- methylation_data |>
       dplyr::filter(percent_methylation >= percent) |>
       dplyr::mutate(
-      "incorrectly_classified" = read_depth * (100 - percent_methylation) / 100
+        "incorrectly_classified" = read_depth * (100 - percent_methylation) / 100
       )
   } else {
     methylation_data <- methylation_data |>
       dplyr::filter(percent_methylation <= percent) |>
       dplyr::mutate(
-      "incorrectly_classified" = read_depth * percent_methylation / 100
+        "incorrectly_classified" = read_depth * percent_methylation / 100
       )
   }
   incorrect_total <- sum(methylation_data$incorrectly_classified)
@@ -94,7 +94,8 @@ concatenate_plots <- function(n_thresholds, methylation_data, plot_type) {
   plot_list <- list()
   index <- 1
   for (n_threshold in n_thresholds) {
-    subsetted_methylation_data <- subset_methylation_data(methylation_data, n_threshold)
+    subsetted_methylation_data <-
+      subset_methylation_data(methylation_data, n_threshold)
     p_plot <- create_p_plot(subsetted_methylation_data, plot_type)
     plot_list[[index]] <- p_plot
     index <- index + 1
@@ -127,8 +128,8 @@ names(methylation_data) <- c(
 
 methylation_data <- dplyr::filter(methylation_data, mark_name == mark)
 
-if (as.character(plot_type) %nin% c("p1", "p2")) { 
-  stop("Please specify a plot type from p1 or p2") 
+if (as.character(plot_type) %nin% c("p1", "p2")) {
+  stop("Please specify a plot type from p1 or p2")
 }
 
 if (mark == "m") {
@@ -139,11 +140,13 @@ if (mark == "m") {
 
 p_plot_grid <- concatenate_plots(n_thresholds, methylation_data, plot_type)
 
-y_axis <- grid::textGrob("Probability of erroneous Read", 
-                   gp=grid::gpar(fontface="bold", fontsize=15), rot=90)
+y_axis <- grid::textGrob("Probability of erroneous Read",
+  gp = grid::gpar(fontface = "bold", fontsize = 15), rot = 90
+)
 
-x_axis <- grid::textGrob("Minimum percent methylated considered", 
-                   gp=grid::gpar(fontface="bold", fontsize=15))
+x_axis <- grid::textGrob("Minimum percent methylated considered",
+  gp = grid::gpar(fontface = "bold", fontsize = 15)
+)
 
 p_plot_grid <- gridExtra::grid.arrange(
   gridExtra::arrangeGrob(p_plot_grid, left = y_axis, bottom = x_axis)
