@@ -35,28 +35,20 @@ percent thresholds.
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R
-Inputs:
-\$1 -> input bed file
-\$2 -> mark (m for 5mc, h for 5hmc)
-\$3 -> maximum read depth to consider (in plots)
-\$4 -> plot type ("p1" or "p2")
-\$5 -> run type ("N" -> Read depth x axis, else -> percent methylation x axis)
 ================================================================================
 EOF
     exit 0
 }
 
-if [ -z "$5" ]; then usage; fi 
+if [ "$#" -eq 0 ]; then usage; fi 
 
 ## ======== ##
 ##   MAIN   ##
 ## ======== ##
 
-bed_file=$1
-mark=$2 
-max_read_depth=$3
-plot_type=$4
-run_type=$5 
+# config will source all of the variables seen below
+config_file_location=$1
+source "${config_file_location}" || exit 1
 
 mkdir -p "$ROOT_DIR/plots/"
 
@@ -65,14 +57,14 @@ module load R/4.2.1-foss-2022a
 
 if [ "$run_type" == "N" ]; then
   Rscript "$RSCRIPT_DIR/erroneous_rate_plot_N.R" \
-    "$bed_file" \
+    "$bed_file_location" \
     "$mark" \
     "$max_read_depth" \
     "$plot_type" \
     "$ROOT_DIR/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 else
   Rscript "$RSCRIPT_DIR/erroneous_rate_plot_percent.R" \
-    "$bed_file" \
+    "$bed_file_location" \
     "$mark" \
     "$plot_type" \
     "$ROOT_DIR/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"

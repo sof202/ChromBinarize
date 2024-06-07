@@ -35,36 +35,20 @@ Purpose: Filters input bed file on sites that are significantly (un)methylated
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, awk
-Inputs:
-\$1 -> base folder (for data)
-\$2 -> bed file location
-\$3 -> minimum read depth to consider in subsequent analysis
-\$4 -> min read depth for methylation reference dataset
-\$5 -> min percent_methylation for methylation reference dataset
-\$6 -> min read depth for hydroxymethylation reference dataset
-\$7 -> min percent_methylation for hydroxymethylation reference dataset
-\$8 -> flag for removing unmethylated sites
 ================================================================================
 EOF
     exit 0
 }
 
-if [ -z "$2" ]; then usage; fi 
+if [ "$#" -eq 0 ]; then usage; fi 
 
 ## ======== ##
 ##   MAIN   ##
 ## ======== ##
 
-base_folder=$1
-bed_file_location=$2
-minimum_read_depth=${3:-30}
-
-reference_read_depth_threshold_m=${4:-500}
-reference_percentage_threshold_m=${5:-95}
-reference_read_depth_threshold_h=${6:-50}
-reference_percentage_threshold_h=${7:-95}
-
-remove_unmethylated_sites=$8
+# config will source all of the variables seen below
+config_file_location=$1
+source "${config_file_location}" || exit 1
 
 rm -rf "${base_folder}/5mc" "${base_folder}5hmc"
 mkdir -p "${base_folder}/5mc" "${base_folder}5hmc"
@@ -121,12 +105,14 @@ module purge
 ##   REMOVE UNMETHYLATED SITES   ##
 ## ============================= ##
 
-if [ -z "${remove_unmethylated_sites}" ]; then
-  awk '$8 > 1.7e-8 && $9 < 1.7e-8' \
+if [ "${remove_unmethylated_sites}" == "y" ]; then
+  awk -v threshold="${binomial_threshold}" \
+    '$8 > threshold && $9 < threshold' \
     "${base_folder}/5mc/processed_reads.bed" > \
     "${base_folder}/5mc/purified_reads.bed"
 
-  awk '$8 > 1.7e-8 && $9 < 1.7e-8' \
+  awk -v threshold="${binomial_threshold}" \
+    '$8 > threshold && $9 < threshold' \
     "${base_folder}/5hmc/processed_reads.bed" > \
     "${base_folder}/5hmc/purified_reads.bed"
 fi

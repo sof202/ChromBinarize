@@ -34,29 +34,20 @@ Purpose: Turns processed data into binarized data
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, bedtools
-Inputs:
-\$1 -> base folder (for data)
-\$2 -> mark (m for 5mc, h for 5hmc)
-\$3 -> file of chromosome sizes
-\$4 -> bin size
-\$5 -> cell type
 ================================================================================
 EOF
     exit 0
 }
 
-if [ -z "$5" ]; then usage; fi 
+if [ "$#" -eq 0 ]; then usage; fi 
 
 ## ======== ##
 ##   MAIN   ##
 ## ======== ##
 
-base_folder=$1
-mark=$2
-chromosome_sizes=$3
-bin_size=$4
-cell_type=$5 
-
+# config will source all of the variables seen below
+config_file_location=$1
+source "${config_file_location}" || exit 1
 cd "${base_folder}/${mark}" || exit 1
 
 ## ======================== ##

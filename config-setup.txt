@@ -1,0 +1,54 @@
+## =============== ##
+##   CONFIG FILE   ##
+## =============== ##
+
+## --------------- ##
+## globally needed ##
+## --------------- ##
+
+# directory that you want processed data to be sent to
+base_folder=
+bed_file_location=
+
+## ------------- ##
+## 1_binomial.sh ##
+## ------------- ##
+
+minimum_read_depth=30
+
+# Thresholds for creating 'good reference datasets' for obtaining value of p
+# that is used in binomial distribution
+reference_read_depth_threshold_m=500
+reference_percentage_threshold_m=95
+reference_read_depth_threshold_h=50
+reference_percentage_threshold_h=95
+
+# remove the "y" here if you want to keep sites that are deemed unmethylated
+remove_unmethylated_sites="y"
+binomial_threshold=1.7e-8
+
+
+## ------------- ##
+## 2_binarize.sh ##
+## ------------- ##
+
+mark="m"
+
+# file path to chromosome sizes (for assembly. Should "chromosome size")
+chromosome_sizes=
+bin_size=200
+cell_type="NeuN"
+
+## ------------------------- ##
+## a1_erroneous_rate_plot.sh ##
+## ------------------------- ##
+
+max_read_depth=
+
+# p1 for rate of erroneous unmethylation calls for methylated sites
+# p2 for rate of erroneous methylation calls for unmethylated sites
+plot_type=
+
+# N for looking at read depth on x axis
+# percent (or anything except N) for looking at percentage on x axis
+run_type=
