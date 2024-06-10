@@ -84,6 +84,7 @@ methylation_data <- read_methylation_data(bed_file_location)
 
 methylation_data <-
   add_lead_and_lag(methylation_data) |>
+  dplyr::rowwise() |>
   dplyr::mutate(
     "true_lead_percent_methylation" = exclude_distant_neighbours(
       start,
@@ -100,7 +101,6 @@ methylation_data <-
       lagging_percent_methylation
     )
   ) |>
-  dplyr::rowwise() |>
   dplyr::mutate(
     "average_surrounding_methylation" = calculate_mean_methylation(
       true_lead_percent_methylation,
