@@ -23,7 +23,7 @@ add_lead_and_lag <- function(methylation_data) {
     "leading_percent_methylation" = dplyr::lead(percent_methylation),
     "leading_start_position" = dplyr::lead(start),
     "lagging_percent_methylation" = dplyr::lag(percent_methylation),
-    "leading_start_position" = dplyr::lag(start)
+    "lagging_start_position" = dplyr::lag(start)
   )
   return(methylation_data)
 }
