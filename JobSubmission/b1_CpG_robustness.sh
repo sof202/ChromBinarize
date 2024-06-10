@@ -50,7 +50,7 @@ if [ "$#" -eq 0 ]; then usage; fi
 config_file_location=$1
 source "${config_file_location}" || exit 1
 
-mkdir "${base_folder}/5mc"
+mkdir -p "${base_folder}/5mc"
 awk -v read_threshold="${minimum_read_depth}" \
   '$4 == "m" && $5 >= read_threshold' \
   "${bed_file_location}" > "${base_folder}/5mc/filtered_reads.bed"
