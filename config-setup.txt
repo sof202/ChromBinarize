@@ -50,3 +50,10 @@ plot_type=
 # N for looking at read depth on x axis
 # percent (or anything except N) for looking at percentage on x axis
 run_type=
+
+## -------------------- ##
+## b1_CpG_robustness.sh ##
+## -------------------- ##
+
+# Maximum distance between CpGs that you would consider 'close proximity'
+max_distance=30
