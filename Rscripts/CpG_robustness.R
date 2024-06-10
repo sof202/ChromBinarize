@@ -35,7 +35,7 @@ exclude_distant_neighbours <- function(start,
                                        percent_methylation) {
   distance <- abs(start - neighbour_start)
   return(ifelse(
-    distance < max_distance && distance < min_distance,
+    distance < max_distance && distance > min_distance,
     percent_methylation,
     NA
   ))
