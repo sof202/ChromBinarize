@@ -114,7 +114,7 @@ methylation_data <-
 cpg_robustness_plot <- create_cpg_robustness_plot(methylation_data)
 write.table(
   methylation_data,
-  quotes = FALSE,
+  quote = FALSE,
   row.names = FALSE
 )
 
