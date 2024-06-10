@@ -95,6 +95,7 @@ methylation_data <-
       lagging_percent_methylation
     )
   ) |>
+  dplyr::rowwise() |>
   dplyr::mutate(
     "average_surrounding_methylation" = calculate_mean_methylation(
       true_lead_percent_methylation,
