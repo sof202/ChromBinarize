@@ -88,7 +88,7 @@ methylation_data <-
     )
   ) |>
   dplyr::mutate(
-    "true_lead_percent_methylation" = exclude_distant_neighbours(
+    "true_lag_percent_methylation" = exclude_distant_neighbours(
       start,
       lagging_start_position,
       max_distance,
