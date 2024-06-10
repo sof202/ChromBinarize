@@ -77,16 +77,16 @@ awk -v read_threshold="${minimum_read_depth}" \
 #
 awk -v percent_threshold="${reference_percentage_threshold_h}" \
   -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$4 == "m" && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
+  '$4 == "h" && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
   "${bed_file_location}" > "${base_folder}/5hmc/methylated.csv"
 
 awk -v percent_threshold=$((100 - "${reference_percentage_threshold_h}")) \
   -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$4 == "m" && $5 >= read_threshold && $7 <= 5 {print $5","$7}' \
+  '$4 == "h" && $5 >= read_threshold && $7 <= 5 {print $5","$7}' \
   "${bed_file_location}" > "${base_folder}/5hmc/unmethylated.csv"
 
 awk -v read_threshold="${minimum_read_depth}" \
-  '$4 == "m" && $5 >= read_threshold' \
+  '$4 == "h" && $5 >= read_threshold' \
   "${bed_file_location}" > "${base_folder}/5hmc/filtered_reads.bed"
 
 ## ========================= ##
