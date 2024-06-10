@@ -1,8 +1,9 @@
 args <- commandArgs(trailingOnly = TRUE)
 
 bed_file_location <- args[1]
-max_distance <- as.numeric(args[2])
-output_file <- args[3]
+min_distance <- as.numeric(args[2])
+max_distance <- as.numeric(args[3])
+output_file <- args[4]
 
 library(ggplot2)
 
@@ -33,7 +34,11 @@ exclude_distant_neighbours <- function(start,
                                        max_distance,
                                        percent_methylation) {
   distance <- abs(start - neighbour_start)
-  return(ifelse(distance < max_distance, percent_methylation, NA))
+  return(ifelse(
+    distance < max_distance && distance < min_distance,
+    percent_methylation,
+    NA
+  ))
 }
 
 calculate_mean_methylation <- function(lead_methylation, lag_methylation) {

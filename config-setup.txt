@@ -55,5 +55,9 @@ run_type=
 ## b1_CpG_robustness.sh ##
 ## -------------------- ##
 
+# Minimumdistance between CpGs that you would consider 'close proximity'
+min_distance=0
+
 # Maximum distance between CpGs that you would consider 'close proximity'
 max_distance=30
+
