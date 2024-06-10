@@ -112,6 +112,11 @@ methylation_data <-
   )
 
 cpg_robustness_plot <- create_cpg_robustness_plot(methylation_data)
+write.table(
+  methylation_data,
+  quotes = FALSE,
+  row.names = FALSE
+)
 
 # needed on some servers to actually create png files
 options(bitmapType = "cairo")
