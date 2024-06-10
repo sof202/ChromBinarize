@@ -64,6 +64,6 @@ Rscript "${RSCRIPT_DIR}/CpG_robustness.R" \
   "${base_folder}/5mc/filtered_reads.bed" \
   "${min_distance}" \
   "${max_distance}" \
-  "${ROOT_DIR}/plots/cpg_robustness.png"
+  "${ROOT_DIR}/plots/cpg_robustness_min_${min_distance}_max_${max_distance}.png"
 
 
