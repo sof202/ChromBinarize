@@ -38,14 +38,14 @@ erroneous_methylated_p <-
 ##   MAIN  ##
 ## ======= ##
 
-methylation_data <- data.table::fread(paste0(folder, "/filtered_reads.bed"))
-names(methylation_data) <-
-  c("Chr", "start", "end", "name", "size", "strand", "percent_methylation")
-
 reverse_binomial <- function(n, p, percent_methylation) {
   x <- ceiling(n * percent_methylation / 100)
   return(1 - pbinom(x - 1, n, p))
 }
+
+methylation_data <- data.table::fread(paste0(folder, "/filtered_reads.bed"))
+names(methylation_data) <-
+  c("Chr", "start", "end", "name", "size", "strand", "percent_methylation")
 
 methylation_data <- dplyr::mutate(methylation_data,
   size = as.numeric(size),
