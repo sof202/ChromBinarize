@@ -51,8 +51,9 @@ config_file_location=$1
 source "${config_file_location}" || exit 1
 
 mkdir -p "${base_folder}/5mc"
-awk -v read_threshold="${minimum_read_depth}" \
-  '$4 == "m" && $5 >= read_threshold' \
+awk -v min_read_threshold="${minimum_read_depth}" \
+  -v max_read_threshold="${maximum_read_depth}" \
+  '$4 == "m" && $5 >= min_read_threshold && $5 <= max_read_threshold' \
   "${bed_file_location}" > "${base_folder}/5mc/filtered_reads.bed"
 
 mkdir -p "${ROOT_DIR}/plots"

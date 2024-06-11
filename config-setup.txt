@@ -14,7 +14,9 @@ bed_file_location=
 ## 1_binomial.sh ##
 ## ------------- ##
 
+# Thresholds on the read depth considered for filtering input bed files
 minimum_read_depth=30
+maximum_read_depth=1000
 
 # Thresholds for creating 'good reference datasets' for obtaining value of p
 # that is used in binomial distribution
@@ -41,7 +43,10 @@ cell_type="NeuN"
 ## a1_erroneous_rate_plot.sh ##
 ## ------------------------- ##
 
-max_read_depth=
+# In some datasets, the maximum value for the read depth of a single site
+# can be in the thousands. However, most sites are well below this number,
+# putting a maximum value here helps with interpretability of plots.
+max_N_value=750
 
 # p1 for rate of erroneous unmethylation calls for methylated sites
 # p2 for rate of erroneous methylation calls for unmethylated sites

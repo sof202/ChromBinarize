@@ -59,7 +59,7 @@ if [ "$run_type" == "N" ]; then
   Rscript "$RSCRIPT_DIR/erroneous_rate_plot_N.R" \
     "$bed_file_location" \
     "$mark" \
-    "$max_read_depth" \
+    "$max_N_value" \
     "$plot_type" \
     "$ROOT_DIR/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 else
