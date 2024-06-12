@@ -48,7 +48,12 @@ if [ "$#" -eq 0 ]; then usage; fi
 # config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || exit 1
-cd "${base_folder}/${mark}" || exit 1
+
+if [ "${mark}" == "m" ]; then
+  cd "${base_folder}/5mc" || exit 1
+else
+  cd "${base_folder}/5hmc" || exit 1
+fi
 
 ## ======================== ##
 ##   SPLITING CHROMOSOMES   ##
@@ -108,6 +113,13 @@ done
 
 module purge
 module load R/4.2.1-foss-2022a
+
+if [ "${mark}" == "m" ]; then
+  mark="5-methylcytosine"
+else
+  mark="5-hydroxymethylcytosine"
+fi
+
 
 for chromosome in $(echo "$chromosomes"); do
   file="binarized/${cell_type}_chr${chromosome}_binary.txt"
