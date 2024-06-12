@@ -62,7 +62,7 @@ awk -v percent_threshold="${reference_percentage_threshold_m}" \
   '$4 == "m" && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
   "${bed_file_location}" > "${base_folder}/5mc/methylated.csv"
 
-awk -v percent_threshold=$((100 - "${reference_percentage_threshold_m}")) \
+awk -v percent_threshold=$((100 - ${reference_percentage_threshold_m})) \
   -v read_threshold="${reference_read_depth_threshold_m}" \
   '$4 == "m" && $5 >= read_threshold && $7 <= 5 {print $5","$7}' \
   "${bed_file_location}" > "${base_folder}/5mc/unmethylated.csv"
@@ -80,7 +80,7 @@ awk -v percent_threshold="${reference_percentage_threshold_h}" \
   '$4 == "h" && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
   "${bed_file_location}" > "${base_folder}/5hmc/methylated.csv"
 
-awk -v percent_threshold=$((100 - "${reference_percentage_threshold_h}")) \
+awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
   -v read_threshold="${reference_read_depth_threshold_h}" \
   '$4 == "h" && $5 >= read_threshold && $7 <= 5 {print $5","$7}' \
   "${bed_file_location}" > "${base_folder}/5hmc/unmethylated.csv"
@@ -106,11 +106,11 @@ module purge
 ## ============================= ##
 
 awk -v threshold="${binomial_threshold}" \
-  '$8 > threshold && $9 < threshold' \
+  '$9 < threshold' \
   "${base_folder}/5mc/processed_reads.bed" > \
   "${base_folder}/5mc/purified_reads.bed"
 
 awk -v threshold="${binomial_threshold}" \
-  '$8 > threshold && $9 < threshold' \
+  '$9 < threshold' \
   "${base_folder}/5hmc/processed_reads.bed" > \
   "${base_folder}/5hmc/purified_reads.bed"
