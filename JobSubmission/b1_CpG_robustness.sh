@@ -5,7 +5,7 @@
 #SBATCH -A Research_Project-MRC190311 
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=16
-#SBATCH --mem=4G 
+#SBATCH --mem=20G 
 #SBATCH --mail-type=END 
 #SBATCH --output=robustness%j.log
 #SBATCH --error=robustness%j.err
