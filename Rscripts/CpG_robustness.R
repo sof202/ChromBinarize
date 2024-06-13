@@ -59,7 +59,8 @@ create_cpg_robustness_plot <- function(methylation_data) {
       methylation_data,
       aes(x = percent_methylation, y = average_surrounding_methylation)
     ) +
-    geom_point() +
+    geom_bin2d(bins = 100) +
+    scale_fill_continuous(type = "viridis") +
     geom_abline(intercept = 0, slope = 1, color = "black") +
     labs(
       x = "Percent methylation",
