@@ -20,7 +20,7 @@ get_average_bin_count <- function(bin_counts) {
 is_densely_methylated <-
   function(bin_count, average_bin_count, threshold = 0.0001) {
     return(
-      as.numeric(
+      as.numeric( # Numeric is used as T/F is not as transferable as 0/1
         ppois(bin_count, average_bin_count, lower.tail = FALSE) < threshold
       )
     )
