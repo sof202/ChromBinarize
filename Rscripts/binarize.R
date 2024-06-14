@@ -1,7 +1,11 @@
 args <- commandArgs(trailingOnly = TRUE)
 bin_counts_file <- args[1]
-output_file <- args[2]
+dense_output_file <- args[2]
+sparse_output_file <- args[3]
 
+## ==================== ##
+##  BIN IDENTIFICATION  ##
+## ==================== ##
 remove_zero_bins <- function(bin_counts) {
   return(dplyr::filter(bin_counts, count > 0))
 }
@@ -13,7 +17,7 @@ get_average_bin_count <- function(bin_counts) {
   return(mean(bin_counts$count))
 }
 
-is_significantly_methylated <-
+is_densely_methylated <-
   function(bin_count, average_bin_count, threshold = 0.0001) {
     return(
       as.numeric(
@@ -23,23 +27,38 @@ is_significantly_methylated <-
   }
 
 
+## ===================== ##
+##   DATA MANIPULATION   ##
+## ===================== ##
 bin_counts <- data.table::fread(bin_counts_file)
 names(bin_counts) <- c("chr", "start", "end", "count")
 average_bin_count <- get_average_bin_count(bin_counts)
 
 bin_counts <- bin_counts |>
   dplyr::mutate(
-    "significantly_methylated" = is_significantly_methylated(
-      count,
-      average_bin_count
-    )
+    "densely_methylated" = is_densely_methylated(count, average_bin_count)
   ) |>
-  dplyr::select(
-    significantly_methylated
+  dplyr::mutate(
+    "methylation_present" = count > 0
   )
 
+densely_methylated_bins <- dplyr::select(bin_counts, densely_methylated)
+
+sparsely_methylated_bins <- bin_counts |>
+  dplyr::filter(!densely_methylated) |>
+  dplyr::select(methylation_present)
+
+## =========== ##
+##   OUTPUTS   ##
+## =========== ##
 data.table::fwrite(
-  bin_counts,
-  file = output_file,
+  densely_methylated_bins,
+  file = dense_output_file,
+  append = TRUE
+)
+
+data.table::fwrite(
+  sparsely_methylated_bins,
+  file = sparse_output_file,
   append = TRUE
 )

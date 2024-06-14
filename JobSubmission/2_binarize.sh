@@ -122,13 +122,18 @@ fi
 
 
 for chromosome in $(echo "$chromosomes"); do
-  file="binarized/${cell_type}_chr${chromosome}_binary.txt"
-  echo -e "${cell_type}\tchr${chromosome}" > "$file" 
-  echo "$mark" >> "$file"
+  dense_file="binarized/dense/${cell_type}_chr${chromosome}_binary.txt"
+  echo -e "${cell_type}\tchr${chromosome}" > "$dense_file" 
+  echo "$mark" >> "$dense_file"
+
+  sparse_file="binarized/sparse/${cell_type}_chr${chromosome}_binary.txt"
+  echo -e "${cell_type}\tchr${chromosome}" > "$sparse_file" 
+  echo "$mark" >> "$sparse_file"
 
   Rscript "$RSCRIPT_DIR/binarize.R" \
     "bin_counts/chromosome${chromosome}.bed" \
-    "$file"
+    "$dense_file" \
+    "$sparse_file"
 
-  gzip "$file"
+  gzip "$dense_file" "$sparse_file"
 done
