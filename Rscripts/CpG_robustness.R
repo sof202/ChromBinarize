@@ -66,6 +66,7 @@ create_cpg_robustness_plot <- function(methylation_data) {
       x = "Percent methylation",
       y = "Average surrounding percent methylation"
     ) +
+    scale_fill_gradientn(colors = c("grey", "red", "yellow")) +
     annotate(
       "text",
       x = 95,
