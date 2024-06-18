@@ -22,7 +22,7 @@ colnames(methylation_data) <- c(
 # Here we combine 5mC and 5hmC as WGBS only has 5mC data
 methylation_data <- methylation_data |>
   dplyr::mutate(
-    "hydroxy_lag" = dplyr::lag()
+    "hydroxy_lag" = dplyr::lag(ONT_percent_methylation)
   ) |>
   dplyr::mutate(
     "ONT_full_methylation" = hydroxy_lag + ONT_percent_methylation
