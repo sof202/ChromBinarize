@@ -60,9 +60,20 @@ run_type=
 ## b1_CpG_robustness.sh ##
 ## -------------------- ##
 
-# Minimumdistance between CpGs that you would consider 'close proximity'
+# Minimum distance between CpGs that you would consider 'close proximity'
 min_distance=0
 
 # Maximum distance between CpGs that you would consider 'close proximity'
 max_distance=30
 
+## --------------------- ##
+## c1_WGBS_comparison.sh ##
+## --------------------- ##
+
+# ONT file to compare WGBS data to
+# Cols: chr, start, end, mark, sample size, strand, percent methylation
+ONT_bed_file=
+
+# WGBS file to compare ONT data to
+# Cols: chr, start, end, number of methylated reads, total reads
+WGBS_bed_file=
