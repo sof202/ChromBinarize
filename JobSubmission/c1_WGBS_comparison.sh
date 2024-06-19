@@ -67,6 +67,8 @@ bedtools intersect \
 module purge
 module load R/4.2.1-foss-2022a
 
+mkdir -p "${ROOT_DIR}/plots"
+
 Rscript "${RSCRIPT_DIR}/WGBS_comparison.R" \
   "${WGBS_folder}/ONT_WGBS_intersect.bed" \
-  "${WGBS_folder}"
+  "${ROOT_DIR}/plots"
