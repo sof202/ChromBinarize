@@ -62,10 +62,7 @@ fi
 rm -rf split blanks bin_counts binarized
 mkdir -p split blanks bin_counts binarized
 
-chromosomes=$(seq 1 22)
-chromosomes=$(echo -e "$chromosomes\nX")
-
-for chromosome in $(echo "$chromosomes"); do
+for chromosome in {1..22} X; do
   awk \
     -v chromosome="$chromosome" \
     '$1 == "chr"chromosome' \
@@ -98,7 +95,7 @@ Rscript "$RSCRIPT_DIR/create_blank_bed_files.R" \
 module purge
 module load BEDTools
 
-for chromosome in $(echo "$chromosomes"); do
+for chromosome in {1..22} X; do
   bedtools intersect \
     -wa \
     -c \
@@ -121,7 +118,7 @@ else
 fi
 
 
-for chromosome in $(echo "$chromosomes"); do
+for chromosome in {1..22} X; do
   dense_file="binarized/dense/${cell_type}_chr${chromosome}_binary.txt"
   echo -e "${cell_type}\tchr${chromosome}" > "$dense_file" 
   echo "$mark" >> "$dense_file"
