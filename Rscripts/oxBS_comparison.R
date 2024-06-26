@@ -15,36 +15,26 @@ colnames(methylation_data) <- c(
   "mark",
   "ONT_N",
   "ONT_percent_methylation",
-  "WGBS_N",
-  "WGBS_percent_methylation"
+  "oxBS_N",
+  "oxBS_percent_methylation"
 )
 
-# Here we combine 5mC and 5hmC as WGBS only has 5mC data
+# Here we extract the hydroxymethylation
 methylation_data <- methylation_data |>
-  dplyr::mutate(
-    "hydroxy_lag" = dplyr::lag(ONT_percent_methylation)
-  ) |>
-  dplyr::mutate(
-    "ONT_full_methylation" = hydroxy_lag + ONT_percent_methylation
-  ) |>
-  dplyr::select(
-    -c("hydroxy_lag", "ONT_percent_methylation")
-  ) |>
-  dplyr::rename(
-    "ONT_percent_methylation" = ONT_full_methylation
+  dplyr::filter(
+    mark == "h"
   )
 
 methylation_data <- methylation_data |>
   dplyr::mutate(
     "absolute_change_percent_methylation" = abs(
-      ONT_percent_methylation - WGBS_percent_methylation
+      ONT_percent_methylation - oxBS_percent_methylation
     ),
-    "absolute_change_read_depth" = abs(ONT_N - WGBS_N)
+    "absolute_change_read_depth" = abs(ONT_N - oxBS_N)
   ) |>
   dplyr::filter(
     ONT_N >= 30, # Filtering by read depth should give better results
-    WGBS_N >= 30,
-    mark == "m" # still have hydroxy rows at this point.
+    oxBS_N >= 30,
   )
 
 # Purely for read depth histogram (makes plot more interpretable)
@@ -74,13 +64,13 @@ breaks <- c(1, 10, 100, 1000, 10000)
 methylation_correlation_plot <-
   ggplot(
     methylation_data,
-    aes(x = ONT_percent_methylation, y = WGBS_percent_methylation)
+    aes(x = ONT_percent_methylation, y = oxBS_percent_methylation)
   ) +
   geom_bin2d(bins = 100) +
   scale_fill_gradient(name = "count", trans = "log",
                         breaks = breaks, labels = breaks) +
   theme_bw() +
-  labs(x = "percent methylation in ONT", y = "percent methylation in WGBS")
+  labs(x = "percent methylation in ONT", y = "percent methylation in oxBS")
 
 
 options(bitmapType = "cairo")
