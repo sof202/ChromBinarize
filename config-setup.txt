@@ -66,9 +66,9 @@ min_distance=0
 # Maximum distance between CpGs that you would consider 'close proximity'
 max_distance=30
 
-## --------------------- ##
-## c1_WGBS_comparison.sh ##
-## --------------------- ##
+## --------------------------------------------- ##
+## c1_WGBS_comparison.sh / d1_oxBS_comparison.sh ##
+## --------------------------------------------- ##
 
 # ONT file to compare WGBS data to
 # Cols: chr, start, end, mark, sample size, strand, percent methylation
@@ -77,3 +77,10 @@ ONT_bed_file=
 # WGBS file to compare ONT data to
 # Cols: chr, start, end, number of methylated reads, total reads
 WGBS_bed_file=
+
+## ---------------------------- ##
+## e1_convert_MACS_to_binary.sh ##
+## ---------------------------- ##
+
+epigenetic_mark=
+input_MACS_file=
