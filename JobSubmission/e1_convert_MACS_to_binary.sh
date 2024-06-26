@@ -20,10 +20,10 @@ ROOT_DIR="${SCRIPT_DIR}/.."
 RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
 
 mkdir -p "${ROOT_DIR}/logs/"
-mv "${SLURM_SUBMIT_DIR}/compare${SLURM_JOB_ID}.log" \
-  "${ROOT_DIR}/logs/compare${SLURM_JOB_ID}.log"
-mv "${SLURM_SUBMIT_DIR}/compare${SLURM_JOB_ID}.err" \
-  "${ROOT_DIR}/logs/compare${SLURM_JOB_ID}.err"
+mv "${SLURM_SUBMIT_DIR}/convert${SLURM_JOB_ID}.log" \
+  "${ROOT_DIR}/logs/convert${SLURM_JOB_ID}.log"
+mv "${SLURM_SUBMIT_DIR}/convert${SLURM_JOB_ID}.err" \
+  "${ROOT_DIR}/logs/convert${SLURM_JOB_ID}.err"
 
 usage() {
 cat <<EOF
@@ -52,7 +52,7 @@ source "${config_file_location}" || exit 1
 module purge
 module load R/4.2.1-foss-2022a
 
-mkdir -p "${base_folder}/4_BinarizedFiles"
+mkdir -p "${base_folder}/4_BinarizedFiles/${epigenetic_mark}"
 
 Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
   "${chromosome_sizes}" \
