@@ -20,11 +20,11 @@ SCRIPT_DIR=$(realpath "$(dirname "$SCRIPT_PATH")")
 ROOT_DIR="${SCRIPT_DIR}/.."
 RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
 
-mkdir -p "${ROOT_DIR}/logs/"
+mkdir -p "${LOG_DIR}/"
 mv "${SLURM_SUBMIT_DIR}/binomial${SLURM_JOB_ID}.log" \
-  "${ROOT_DIR}/logs/binomial${SLURM_JOB_ID}.log"
+  "${LOG_DIR}/binomial${SLURM_JOB_ID}.log"
 mv "${SLURM_SUBMIT_DIR}/binomial${SLURM_JOB_ID}.err" \
-  "${ROOT_DIR}/logs/binomial${SLURM_JOB_ID}.err"
+  "${LOG_DIR}/binomial${SLURM_JOB_ID}.err"
 
 usage() {
 cat <<EOF
