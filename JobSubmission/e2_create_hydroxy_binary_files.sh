@@ -56,19 +56,34 @@ mv "${SLURM_SUBMIT_DIR}/hydroxy${SLURM_JOB_ID}.err" \
 ##   EXTRACT CONFIDENT POSITIONS   ##
 ## --------------------------------##
 
+mkdir -p "${base_folder}/5hmc"
+
 awk -v percent_threshold="${reference_percentage_threshold_h}" \
   -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$5 >= read_threshold && (int($4/$5 * 10000)/100) >= percent_threshold {print $5","$7}' \
-  "${oxBS_bed_file_location}" > "${base_folder}/5hmc/methylated.csv"
+  'function convert_to_percent(reads, total_reads) {
+     return (int(reads / total_reads * 10000) / 100)
+   }
+   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
+  "${oxBS_bed_file_location}" > \
+    "${base_folder}/5hmc/methylated.csv"
 
 awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
   -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$5 >= read_threshold && (int($4/$5 * 10000)/100) <= percent_threshold {print $5","$7}' \
-  "${oxBS_bed_file_location}" > "${base_folder}/5hmc/unmethylated.csv"
+  'function convert_to_percent(reads, total_reads) {
+     return (int(reads / total_reads * 10000) / 100)
+   }
+   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
+  "${oxBS_bed_file_location}" > \
+    "${base_folder}/5hmc/unmethylated.csv"
 
 awk -v read_threshold="${minimum_read_depth}" \
-  '{OFS="\t"} $5 >= read_threshold {print $1,$2,$3,"h",$5,"+",int($4/$5 * 10000) / 100}' \
-  "${oxBS_bed_file_location}" > "${base_folder}/5hmc/filtered_reads.bed"
+  'function convert_to_percent(reads, total_reads) {
+     return (int(reads / total_reads * 10000) / 100)
+   }
+  {OFS="\t"} 
+  $5 >= read_threshold {print $1,$2,$3,"h",$5,"+",convert_to_percent($4,$5)}' \
+  "${oxBS_bed_file_location}" > \
+    "${base_folder}/5hmc/filtered_reads.bed"
 
 ## ------------------------- ##
 ##   RUN BINOMIAL ANALYSIS   ##
