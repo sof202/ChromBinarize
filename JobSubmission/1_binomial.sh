@@ -74,7 +74,7 @@ awk -v read_threshold="${minimum_read_depth}" \
 ## ================= ##
 ##  5hmC filtering   ##
 ## ================= ##
-#
+
 awk -v percent_threshold="${reference_percentage_threshold_h}" \
   -v read_threshold="${reference_read_depth_threshold_h}" \
   '$4 == "h" && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
