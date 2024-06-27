@@ -60,8 +60,7 @@ mv "${SLURM_SUBMIT_DIR}/methylation${SLURM_JOB_ID}.err" \
 # We only want to capture the 5mC signal, so we need to remove the 5hmC signal
 # using oxBS data.
 
-if [[ -n ${oxBS_data_exists} ]]; then
-
+if [[ -n ${oxBS_bed_file_location} ]]; then
   module purge
   module load BEDTools
 
