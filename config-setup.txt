@@ -85,3 +85,10 @@ WGBS_bed_file=
 
 epigenetic_mark=
 input_MACS_file=
+
+## ------------------------------------------------------------------------- ##
+## e2_create_hydroxy_binary_files.sh / e3_create_methylation_binary_files.sh ##
+## ------------------------------------------------------------------------- ##
+
+WGBS_bed_file_location=
+oxBS_bed_file_location=
