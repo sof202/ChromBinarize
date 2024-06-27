@@ -9,7 +9,7 @@
 # directory that you want processed data to be sent to
 base_folder=
 bed_file_location=
-LOG_DIR=
+LOG_DIR=$(pwd)
 
 ## ------------- ##
 ## 1_binomial.sh ##
