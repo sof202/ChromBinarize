@@ -59,16 +59,16 @@ mv "${SLURM_SUBMIT_DIR}/hydroxy${SLURM_JOB_ID}.err" \
 awk -v percent_threshold="${reference_percentage_threshold_h}" \
   -v read_threshold="${reference_read_depth_threshold_h}" \
   '$5 >= read_threshold && (int($4/$5 * 10000)/100) >= percent_threshold {print $5","$7}' \
-  "${bed_file_location}" > "${base_folder}/5hmc/methylated.csv"
+  "${oxBS_bed_file_location}" > "${base_folder}/5hmc/methylated.csv"
 
 awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
   -v read_threshold="${reference_read_depth_threshold_h}" \
   '$5 >= read_threshold && (int($4/$5 * 10000)/100) <= percent_threshold {print $5","$7}' \
-  "${bed_file_location}" > "${base_folder}/5hmc/unmethylated.csv"
+  "${oxBS_bed_file_location}" > "${base_folder}/5hmc/unmethylated.csv"
 
 awk -v read_threshold="${minimum_read_depth}" \
   '{OFS="\t"} $5 >= read_threshold {print $1,$2,$3,"h",$5,"+",int($4/$5 * 10000) / 100}' \
-  "${bed_file_location}" > "${base_folder}/5hmc/filtered_reads.bed"
+  "${oxBS_bed_file_location}" > "${base_folder}/5hmc/filtered_reads.bed"
 
 ## ------------------------- ##
 ##   RUN BINOMIAL ANALYSIS   ##
