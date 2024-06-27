@@ -19,12 +19,6 @@ SCRIPT_DIR=$(realpath "$(dirname "$SCRIPT_PATH")")
 ROOT_DIR="${SCRIPT_DIR}/.."
 RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
 
-mkdir -p "${LOG_DIR}/"
-mv "${SLURM_SUBMIT_DIR}/compare${SLURM_JOB_ID}.log" \
-  "${LOG_DIR}/compare${SLURM_JOB_ID}.log"
-mv "${SLURM_SUBMIT_DIR}/compare${SLURM_JOB_ID}.err" \
-  "${LOG_DIR}/compare${SLURM_JOB_ID}.err"
-
 usage() {
 cat <<EOF
 ================================================================================
@@ -49,6 +43,12 @@ if [ "$#" -eq 0 ]; then usage; fi
 # config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || exit 1
+
+mkdir -p "${LOG_DIR}/"
+mv "${SLURM_SUBMIT_DIR}/compare${SLURM_JOB_ID}.log" \
+  "${LOG_DIR}/compare${SLURM_JOB_ID}.log"
+mv "${SLURM_SUBMIT_DIR}/compare${SLURM_JOB_ID}.err" \
+  "${LOG_DIR}/compare${SLURM_JOB_ID}.err"
 
 
 module purge
