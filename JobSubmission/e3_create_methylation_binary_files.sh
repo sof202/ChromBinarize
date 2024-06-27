@@ -60,33 +60,37 @@ mv "${SLURM_SUBMIT_DIR}/methylation${SLURM_JOB_ID}.err" \
 # We only want to capture the 5mC signal, so we need to remove the 5hmC signal
 # using oxBS data.
 
-module purge
-module load BEDTools
+if [[ -n ${oxBS_data_exists} ]]; then
 
-bedtools intersect -wo \
-  -a "${WGBS_bed_file_location}" \
-  -b "${oxBS_bed_file_location}" |
-  awk \
-    -v read_threshold="${reference_read_depth_threshold_h}" \
-    'function convert_to_percent(reads, total_reads) {
-       return (int(reads / total_reads * 10000) / 100)
-     }
-     {OFS="\t"} 
-     $10 >= read_threshold {print $1,$2,$3,$5,convert_to_percent($4,$5),convert_to_percent($9,$10)}' > \
-  "${base_folder}/5mc/combined.bed"
+  module purge
+  module load BEDTools
 
-awk '
-    function convert_to_reads(percentage, total_reads) {
-      return (int(percentage * total_reads / 100))
-    }
-    function ReLU_distance(i,j) {
-      return ((j - i) > 0 ? (j - i) : 0)
-    }
-    {OFS="\t"}
-    {print $1,$2,$3,convert_to_reads(ReLU_distance($5,$10), $4), $4}
-    ' "${base_folder}/5mc/combined.bed" > \
-      "${base_folder}/5mc/WGBS_5hmc_removed.bed"
+  bedtools intersect -wo \
+    -a "${WGBS_bed_file_location}" \
+    -b "${oxBS_bed_file_location}" |
+    awk \
+      -v read_threshold="${reference_read_depth_threshold_h}" \
+      'function convert_to_percent(reads, total_reads) {
+         return (int(reads / total_reads * 10000) / 100)
+       }
+       {OFS="\t"} 
+       $10 >= read_threshold {print $1,$2,$3,$5,convert_to_percent($4,$5),convert_to_percent($9,$10)}' > \
+    "${base_folder}/5mc/combined.bed"
 
+  awk '
+      function convert_to_reads(percentage, total_reads) {
+        return (int(percentage * total_reads / 100))
+      }
+      function ReLU_distance(i,j) {
+        return ((j - i) > 0 ? (j - i) : 0)
+      }
+      {OFS="\t"}
+      {print $1,$2,$3,convert_to_reads(ReLU_distance($5,$10), $4), $4}
+      ' "${base_folder}/5mc/combined.bed" > \
+        "${base_folder}/5mc/WGBS_5hmc_removed.bed"
+else
+  cp "${WGBS_bed_file_location}" "${base_folder}/5mc/WGBS_5hmc_removed.bed"
+fi
 
 ## ------------------------------- ##
 ##   EXTRACT CONFIDENT POSITIONS   ##
