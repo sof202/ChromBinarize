@@ -62,17 +62,19 @@ Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
 module purge
 module load BEDTools
 
-mkdir -p "${base_folder}/4_BinarizedFiles/${epigenetic_mark}"
-
 for chr in {1..22} X; do
+  output_binary_file="${base_folder}/4_BinarizedFiles/${epigenetic_mark}/${cell_type}_chr${chr}_binary.txt.gz"
+  echo -e "${cell_type}\tchr${chr}" > "${output_binary_file}"
+  echo "${epigenetic_mark}" >> "${output_binary_file}"
+
   bedtools intersect \
     -wa \
     -c \
     -a "${base_folder}/4_BinarizedFiles/${epigenetic_mark}/chromosome${chr}.bed" \
     -b "${input_MACS_file}" | \
     awk '{OFS="\t"} {print ($4 > 0 ? 1 : 0)}' | \
-    gzip > \
-    "${base_folder}/4_BinarizedFiles/${epigenetic_mark}/${cell_type}_chr${chr}_binary.txt.gz"
+    gzip >> \
+    "${output_binary_file}"
 
   rm "${base_folder}/4_BinarizedFiles/${epigenetic_mark}/chromosome${chr}.bed"
 done
