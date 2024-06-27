@@ -39,7 +39,7 @@ bin_counts <- bin_counts |>
     "densely_methylated" = is_densely_methylated(count, average_bin_count)
   ) |>
   dplyr::mutate(
-    "methylation_present" = count > 0
+    "methylation_present" = as.numeric(count > 0)
   )
 
 densely_methylated_bins <- dplyr::select(bin_counts, densely_methylated)
