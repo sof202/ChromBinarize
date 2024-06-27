@@ -60,7 +60,7 @@ mv "${SLURM_SUBMIT_DIR}/methylation${SLURM_JOB_ID}.err" \
 # We only want to capture the 5mC signal, so we need to remove the 5hmC signal
 # using oxBS data.
 
-mkdir "${base_folder}/5mc"
+mkdir -p "${base_folder}/5mc"
 
 if [[ -n ${oxBS_bed_file_location} ]]; then
   module purge
@@ -83,7 +83,7 @@ if [[ -n ${oxBS_bed_file_location} ]]; then
         return (int(percentage * total_reads / 100))
       }
       function ReLU_distance(i,j) {
-        return ((j - i) > 0 ? (j - i) : 0)
+        return ((i - j) > 0 ? (i - j) : 0)
       }
       {OFS="\t"}
       {print $1,$2,$3,convert_to_reads(ReLU_distance($5,$10), $4), $4}
@@ -99,17 +99,31 @@ fi
 
 awk -v percent_threshold="${reference_percentage_threshold_h}" \
   -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$5 >= read_threshold && (int($4/$5 * 10000)/100) >= percent_threshold {print $5","$7}' \
-  "${base_folder}/5mc/WGBS_5hmc_removed.bed" > "${base_folder}/5mc/methylated.csv"
+  'function convert_to_percent(reads, total_reads) {
+     return (int(reads / total_reads * 10000) / 100)
+   }
+   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
+  "${oxBS_bed_file_location}" > \
+    "${base_folder}/5mc/methylated.csv"
 
 awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
   -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$5 >= read_threshold && (int($4/$5 * 10000)/100) <= percent_threshold {print $5","$7}' \
-  "${base_folder}/5mc/WGBS_5hmc_removed.bed" > "${base_folder}/5mc/unmethylated.csv"
+  'function convert_to_percent(reads, total_reads) {
+     return (int(reads / total_reads * 10000) / 100)
+   }
+   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
+  "${oxBS_bed_file_location}" > \
+    "${base_folder}/5mc/unmethylated.csv"
 
 awk -v read_threshold="${minimum_read_depth}" \
-  '{OFS="\t"} $5 >= read_threshold {print $1,$2,$3,"m",$5,"+",int($4/$5 * 10000) / 100}' \
-  "${base_folder}/5mc/WGBS_5hmc_removed.bed" > "${base_folder}/5mc/filtered_reads.bed"
+  'function convert_to_percent(reads, total_reads) {
+     return (int(reads / total_reads * 10000) / 100)
+   }
+  {OFS="\t"} 
+  $5 >= read_threshold {print $1,$2,$3,"h",$5,"+",convert_to_percent($4,$5)}' \
+  "${oxBS_bed_file_location}" > \
+    "${base_folder}/5mc/filtered_reads.bed"
+
 
 ## ------------------------- ##
 ##   RUN BINOMIAL ANALYSIS   ##
@@ -187,8 +201,8 @@ done
 module purge
 module load R/4.2.1-foss-2022a
 
-mkdir -p "${base_folder}/5hmc/binarized/dense"
-mkdir -p "${base_folder}/5hmc/binarized/sparse"
+mkdir -p "${base_folder}/5mc/binarized/dense"
+mkdir -p "${base_folder}/5mc/binarized/sparse"
 
 for chromosome in {1..22} X; do
   dense_file="${base_folder}/5mc/binarized/dense/${cell_type}_chr${chromosome}_binary.txt"
