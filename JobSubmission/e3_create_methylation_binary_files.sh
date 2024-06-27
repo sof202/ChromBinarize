@@ -60,6 +60,8 @@ mv "${SLURM_SUBMIT_DIR}/methylation${SLURM_JOB_ID}.err" \
 # We only want to capture the 5mC signal, so we need to remove the 5hmC signal
 # using oxBS data.
 
+mkdir "${base_folder}/5mc"
+
 if [[ -n ${oxBS_bed_file_location} ]]; then
   module purge
   module load BEDTools
@@ -140,7 +142,7 @@ for chromosome in {1..22} X; do
   awk \
     -v chromosome="$chromosome" \
     '$1 == "chr"chromosome' \
-    "purified_reads.bed" > \
+    "${base_folder}/5mc/purified_reads.bed" > \
     "${base_folder}/5mc/split/purified_chr${chromosome}.bed"
 done
 

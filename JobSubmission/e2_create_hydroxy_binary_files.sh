@@ -116,7 +116,7 @@ for chromosome in {1..22} X; do
   awk \
     -v chromosome="$chromosome" \
     '$1 == "chr"chromosome' \
-    "purified_reads.bed" > \
+    "${base_folder}/5hmc/purified_reads.bed" > \
     "${base_folder}/5hmc/split/purified_chr${chromosome}.bed"
 done
 
