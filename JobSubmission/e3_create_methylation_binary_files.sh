@@ -187,6 +187,9 @@ done
 module purge
 module load R/4.2.1-foss-2022a
 
+mkdir -p "${base_folder}/5hmc/binarized/dense"
+mkdir -p "${base_folder}/5hmc/binarized/sparse"
+
 for chromosome in {1..22} X; do
   dense_file="${base_folder}/5mc/binarized/dense/${cell_type}_chr${chromosome}_binary.txt"
   echo -e "${cell_type}\tchr${chromosome}" > "$dense_file" 
