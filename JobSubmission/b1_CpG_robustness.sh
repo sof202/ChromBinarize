@@ -38,11 +38,8 @@ source "${config_file_location}" || exit 1
 
 source "${ROOT_DIR}/parameters.txt" || exit 1
 
-mkdir -p "${LOG_DIR}/"
-mv "${SLURM_SUBMIT_DIR}/robustness${SLURM_JOB_ID}.log" \
-  "${LOG_DIR}/robustness${SLURM_JOB_ID}.log"
-mv "${SLURM_SUBMIT_DIR}/robustness${SLURM_JOB_ID}.err" \
-  "${LOG_DIR}/robustness${SLURM_JOB_ID}.err"
+source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
+move_log_files robustness
 
 mkdir -p "${BASE_DIR}/5mc"
 awk -v min_read_threshold="${minimum_read_depth}" \

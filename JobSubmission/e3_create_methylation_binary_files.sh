@@ -30,21 +30,18 @@ EOF
 
 if [ "$#" -eq 0 ]; then usage; fi 
 
-## ============================ ##
-##   EXTRACT METHYLATED SITES   ##
-## ============================ ##
-
 # config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || exit 1
 
 source "${ROOT_DIR}/parameters.txt" || exit 1
 
-mkdir -p "${LOG_DIR}/"
-mv "${SLURM_SUBMIT_DIR}/methylation${SLURM_JOB_ID}.log" \
-  "${LOG_DIR}/methylation${SLURM_JOB_ID}.log"
-mv "${SLURM_SUBMIT_DIR}/methylation${SLURM_JOB_ID}.err" \
-  "${LOG_DIR}/methylation${SLURM_JOB_ID}.err"
+source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
+move_log_files methylation
+
+## ============================ ##
+##   EXTRACT METHYLATED SITES   ##
+## ============================ ##
 
 ## ------------------------------------ ##
 ##   REMOVE HYDROXYMETHYLATION SIGNAL   ##

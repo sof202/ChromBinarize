@@ -38,11 +38,8 @@ source "${config_file_location}" || exit 1
 
 source "${ROOT_DIR}/parameters.txt" || exit 1
 
-mkdir -p "${LOG_DIR}/"
-mv "${SLURM_SUBMIT_DIR}/pvalues${SLURM_JOB_ID}.log" \
-  "${LOG_DIR}/pvalues${SLURM_JOB_ID}.log"
-mv "${SLURM_SUBMIT_DIR}/pvalues${SLURM_JOB_ID}.err" \
-  "${LOG_DIR}/pvalues${SLURM_JOB_ID}.err"
+source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
+move_log_files pvalues
 
 mkdir -p "$ROOT_DIR/plots/"
 
