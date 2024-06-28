@@ -127,9 +127,9 @@ Rscript "${RSCRIPT_DIR}/binom.R" "${BASE_DIR}/5mc"
 
 module purge
 
-## -------------------------==== ##
+## ----------------------------- ##
 ##   REMOVE UNMETHYLATED SITES   ##
-## -------------------------==== ##
+## ----------------------------- ##
 
 awk -v threshold="${binomial_threshold}" \
   '$9 < threshold' \
