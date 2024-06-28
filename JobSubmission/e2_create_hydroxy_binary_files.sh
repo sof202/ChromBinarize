@@ -38,62 +38,20 @@ source "${ROOT_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files hydroxy
 
+output_directory="${BASE_DIR}/5hmc"
+
 ## =================================== ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
 ## =================================== ##
 
-## ------------------------------- ##
-##   EXTRACT CONFIDENT POSITIONS   ##
-## --------------------------------##
+mkdir -p "${output_directory}"
+source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-mkdir -p "${BASE_DIR}/5hmc"
-
-awk -v percent_threshold="${reference_percentage_threshold_h}" \
-  -v read_threshold="${reference_read_depth_threshold_h}" \
-  'function convert_to_percent(reads, total_reads) {
-     return (int(reads / total_reads * 10000) / 100)
-   }
-   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
-  "${oxBS_bed_file_location}" > \
-    "${BASE_DIR}/5hmc/methylated.csv"
-
-awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
-  -v read_threshold="${reference_read_depth_threshold_h}" \
-  'function convert_to_percent(reads, total_reads) {
-     return (int(reads / total_reads * 10000) / 100)
-   }
-   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
-  "${oxBS_bed_file_location}" > \
-    "${BASE_DIR}/5hmc/unmethylated.csv"
-
-awk -v read_threshold="${minimum_read_depth}" \
-  'function convert_to_percent(reads, total_reads) {
-     return (int(reads / total_reads * 10000) / 100)
-   }
-  {OFS="\t"} 
-  $5 >= read_threshold {print $1,$2,$3,"h",$5,"+",convert_to_percent($4,$5)}' \
-  "${oxBS_bed_file_location}" > \
-    "${BASE_DIR}/5hmc/filtered_reads.bed"
-
-## ------------------------- ##
-##   RUN BINOMIAL ANALYSIS   ##
-## ------------------------- ##
-
-module purge
-module load R/4.2.1-foss-2022a
-
-Rscript "${RSCRIPT_DIR}/binom.R" "${BASE_DIR}/5hmc"
-
-module purge
-
-## -------------------------==== ##
-##   REMOVE UNMETHYLATED SITES   ##
-## -------------------------==== ##
-
-awk -v threshold="${binomial_threshold}" \
-  '$9 < threshold' \
-  "${BASE_DIR}/5hmc/processed_reads.bed" > \
-  "${BASE_DIR}/5hmc/purified_reads.bed"
+purification_extractSitesWithHighMethylation "${output_directory}"
+purification_extractSitesWithLowMethylation "${output_directory}"
+purification_filterOutLowReadDepthSites "${output_directory}"
+purification_calculateSiteMethylationProbability "${output_directory}"
+purification_removeDeterminedUnmethylatedSites "${output_directory}"
 
 ## ======================== ##
 ##   BINARIZATION PROCESS   ##
@@ -101,9 +59,9 @@ awk -v threshold="${binomial_threshold}" \
 
 source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-binarization_createDirectories "${BASE_DIR}/5hmc"
-binarization_splitIntoChromosomes "${BASE_DIR}/5hmc"
-binarization_createBlankBins "${BASE_DIR}/5hmc"
-binarization_countSignalIntersectionWithBins "${BASE_DIR}/5hmc"
-binarization_createChromhmmBinaryFiles "${BASE_DIR}/5hmc"
+binarization_createDirectories "${output_directory}"
+binarization_splitIntoChromosomes "${output_directory}"
+binarization_createBlankBins "${output_directory}"
+binarization_countSignalIntersectionWithBins "${output_directory}"
+binarization_createChromhmmBinaryFiles "${output_directory}"
 

@@ -39,6 +39,8 @@ source "${ROOT_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files methylation
 
+output_directory="${BASE_DIR}/5mc"
+
 ## ============================ ##
 ##   EXTRACT METHYLATED SITES   ##
 ## ============================ ##
@@ -51,7 +53,7 @@ move_log_files methylation
 # We only want to capture the 5mC signal, so we need to remove the 5hmC signal
 # using oxBS data.
 
-mkdir -p "${BASE_DIR}/5mc"
+mkdir -p "${output_directory}"
 
 if [[ -n ${oxBS_bed_file_location} ]]; then
   module purge
@@ -67,7 +69,7 @@ if [[ -n ${oxBS_bed_file_location} ]]; then
        }
        {OFS="\t"} 
        $10 >= read_threshold {print $1,$2,$3,$5,convert_to_percent($4,$5),convert_to_percent($9,$10)}' > \
-    "${BASE_DIR}/5mc/combined.bed"
+    "${output_directory}/combined.bed"
 
   awk '
       function convert_to_reads(percentage, total_reads) {
@@ -78,63 +80,19 @@ if [[ -n ${oxBS_bed_file_location} ]]; then
       }
       {OFS="\t"}
       {print $1,$2,$3,convert_to_reads(ReLU_distance($5,$10), $4), $4}
-      ' "${BASE_DIR}/5mc/combined.bed" > \
-        "${BASE_DIR}/5mc/WGBS_5hmc_removed.bed"
+      ' "${output_directory}/combined.bed" > \
+        "${output_directory}/WGBS_5hmc_removed.bed"
 else
-  cp "${WGBS_bed_file_location}" "${BASE_DIR}/5mc/WGBS_5hmc_removed.bed"
+  cp "${WGBS_bed_file_location}" "${output_directory}/WGBS_5hmc_removed.bed"
 fi
 
-## ------------------------------- ##
-##   EXTRACT CONFIDENT POSITIONS   ##
-## --------------------------------##
+source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-awk -v percent_threshold="${reference_percentage_threshold_h}" \
-  -v read_threshold="${reference_read_depth_threshold_h}" \
-  'function convert_to_percent(reads, total_reads) {
-     return (int(reads / total_reads * 10000) / 100)
-   }
-   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
-  "${oxBS_bed_file_location}" > \
-    "${BASE_DIR}/5mc/methylated.csv"
-
-awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
-  -v read_threshold="${reference_read_depth_threshold_h}" \
-  'function convert_to_percent(reads, total_reads) {
-     return (int(reads / total_reads * 10000) / 100)
-   }
-   $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
-  "${oxBS_bed_file_location}" > \
-    "${BASE_DIR}/5mc/unmethylated.csv"
-
-awk -v read_threshold="${minimum_read_depth}" \
-  'function convert_to_percent(reads, total_reads) {
-     return (int(reads / total_reads * 10000) / 100)
-   }
-  {OFS="\t"} 
-  $5 >= read_threshold {print $1,$2,$3,"h",$5,"+",convert_to_percent($4,$5)}' \
-  "${oxBS_bed_file_location}" > \
-    "${BASE_DIR}/5mc/filtered_reads.bed"
-
-
-## ------------------------- ##
-##   RUN BINOMIAL ANALYSIS   ##
-## ------------------------- ##
-
-module purge
-module load R/4.2.1-foss-2022a
-
-Rscript "${RSCRIPT_DIR}/binom.R" "${BASE_DIR}/5mc"
-
-module purge
-
-## ----------------------------- ##
-##   REMOVE UNMETHYLATED SITES   ##
-## ----------------------------- ##
-
-awk -v threshold="${binomial_threshold}" \
-  '$9 < threshold' \
-  "${BASE_DIR}/5mc/processed_reads.bed" > \
-  "${BASE_DIR}/5mc/purified_reads.bed"
+purification_extractSitesWithHighMethylation "${output_directory}"
+purification_extractSitesWithLowMethylation "${output_directory}"
+purification_filterOutLowReadDepthSites "${output_directory}"
+purification_calculateSiteMethylationProbability "${output_directory}"
+purification_removeDeterminedUnmethylatedSites "${output_directory}"
 
 ## ======================== ##
 ##   BINARIZATION PROCESS   ##
@@ -142,9 +100,9 @@ awk -v threshold="${binomial_threshold}" \
 #
 source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-binarization_createDirectories "${BASE_DIR}/5mc"
-binarization_splitIntoChromosomes "${BASE_DIR}/5mc"
-binarization_createBlankBins "${BASE_DIR}/5mc"
-binarization_countSignalIntersectionWithBins "${BASE_DIR}/5mc"
-binarization_createChromhmmBinaryFiles "${BASE_DIR}/5mc"
+binarization_createDirectories "${output_directory}"
+binarization_splitIntoChromosomes "${output_directory}"
+binarization_createBlankBins "${output_directory}"
+binarization_countSignalIntersectionWithBins "${output_directory}"
+binarization_createChromhmmBinaryFiles "${output_directory}"
 
