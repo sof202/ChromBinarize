@@ -19,7 +19,7 @@ e2_create_methylation_binary_files.sh
 Purpose: Create binary files for dense and sparse regions of methylation
 from whole genome bisulphite sequencing bed files. Bed files are expected to be 
 in the format:
-  chr \t start \t end \t methylationmethylated_reads \t total_reads  
+  chr \t start \t end \t methylated_reads \t total_reads  
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, awk, bedtools
