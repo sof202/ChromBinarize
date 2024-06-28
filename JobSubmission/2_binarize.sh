@@ -27,11 +27,6 @@ EOF
 
 if [ "$#" -eq 0 ]; then usage; fi 
 
-## ======== ##
-##   MAIN   ##
-## ======== ##
-
-# config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || exit 1
 
@@ -40,88 +35,24 @@ source "${ROOT_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files binarize
 
-if [ "${mark}" == "m" ]; then
-  cd "${BASE_DIR}/5mc" || exit 1
-else
-  cd "${BASE_DIR}/5hmc" || exit 1
-fi
-
-## ======================== ##
-##   SPLITING CHROMOSOMES   ##
-## ======================== ##
-
-rm -rf split blanks bin_counts binarized
-mkdir -p split blanks bin_counts binarized
-
-for chromosome in {1..22} X; do
-  awk \
-    -v chromosome="$chromosome" \
-    '$1 == "chr"chromosome' \
-    "purified_reads.bed" > \
-    "split/purified_chr${chromosome}.bed"
-done
-
 ## ======== ##
-##   BINS   ##
+##   MAIN   ##
 ## ======== ##
 
-module purge
-module load R/4.2.1-foss-2022a
-
-Rscript "$RSCRIPT_DIR/create_blank_bed_files.R" \
-  "$chromosome_sizes" \
-  "$bin_size" \
-  "$(pwd)/blanks"
-
-## ================ ##
-##   INTERSECTION   ##
-## ================ ##
-
-# We want to only use bins that have methylated sites within them when 
-# binarizing. This is so that we can more noticably discern bins with little
-# methylation and those with an actual peak in methylation. This is required
-# as the majority of the genome is unmethylated, using a global 'baseline'
-# signal will not be 'powerful' enough.
-
-module purge
-module load BEDTools
-
-for chromosome in {1..22} X; do
-  bedtools intersect \
-    -wa \
-    -c \
-    -a "blanks/chromosome${chromosome}.bed" \
-    -b "split/purified_chr${chromosome}.bed" > \
-    "bin_counts/chromosome${chromosome}.bed"
-done
-
-## ============ ##
-##   BINARIZE   ##
-## ============ ##
-
-module purge
-module load R/4.2.1-foss-2022a
-
 if [ "${mark}" == "m" ]; then
-  mark="5-methylcytosine"
+  output_directory="${BASE_DIR}/5mc"
+elif [ "${mark}" == "h" ]; then
+  output_directory="${output_directory}"
 else
-  mark="5-hydroxymethylcytosine"
+  >&2 echo "config file needs 'm' or 'h' in the 'mark' field"
+  exit 1
 fi
 
+source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-for chromosome in {1..22} X; do
-  dense_file="binarized/dense/${cell_type}_chr${chromosome}_binary.txt"
-  echo -e "${cell_type}\tchr${chromosome}" > "$dense_file" 
-  echo "$mark" >> "$dense_file"
+binarization_createDirectories "${output_directory}"
+binarization_splitIntoChromosomes "${output_directory}"
+binarization_createBlankBins "${output_directory}"
+binarization_countSignalIntersectionWithBins "${output_directory}"
+binarization_createChromhmmBinaryFiles "${output_directory}"
 
-  sparse_file="binarized/sparse/${cell_type}_chr${chromosome}_binary.txt"
-  echo -e "${cell_type}\tchr${chromosome}" > "$sparse_file" 
-  echo "$mark" >> "$sparse_file"
-
-  Rscript "$RSCRIPT_DIR/binarize.R" \
-    "bin_counts/chromosome${chromosome}.bed" \
-    "$dense_file" \
-    "$sparse_file"
-
-  gzip "$dense_file" "$sparse_file"
-done

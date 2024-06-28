@@ -99,74 +99,11 @@ awk -v threshold="${binomial_threshold}" \
 ##   BINARIZATION PROCESS   ##
 ## ======================== ##
 
-rm -rf "${BASE_DIR}/5hmc/split" "${BASE_DIR}/5hmc/blanks" "${BASE_DIR}/5hmc/bin_counts" "${BASE_DIR}/5hmc/binarized"
-mkdir -p "${BASE_DIR}/5hmc/split" "${BASE_DIR}/5hmc/blanks" "${BASE_DIR}/5hmc/bin_counts" "${BASE_DIR}/5hmc/binarized"
+source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-for chromosome in {1..22} X; do
-  awk \
-    -v chromosome="$chromosome" \
-    '$1 == "chr"chromosome' \
-    "${BASE_DIR}/5hmc/purified_reads.bed" > \
-    "${BASE_DIR}/5hmc/split/purified_chr${chromosome}.bed"
-done
+binarization_createDirectories "${BASE_DIR}/5hmc"
+binarization_splitIntoChromosomes "${BASE_DIR}/5hmc"
+binarization_createBlankBins "${BASE_DIR}/5hmc"
+binarization_countSignalIntersectionWithBins "${BASE_DIR}/5hmc"
+binarization_createChromhmmBinaryFiles "${BASE_DIR}/5hmc"
 
-## ---------------- ##
-##   BIN CREATION   ##
-## ---------------- ##
-
-module purge
-module load R/4.2.1-foss-2022a
-
-Rscript "$RSCRIPT_DIR/create_blank_bed_files.R" \
-  "$chromosome_sizes" \
-  "$bin_size" \
-  "${BASE_DIR}/5hmc/blanks"
-
-## ---------------- ##
-##   INTERSECTION   ##
-## ---------------- ##
-
-# We want to only use bins that have methylated sites within them when 
-# binarizing. This is so that we can more noticably discern bins with little
-# methylation and those with an actual peak in methylation. This is required
-# as the majority of the genome is unmethylated, using a global 'baseline'
-# signal will not be 'powerful' enough.
-
-module purge
-module load BEDTools
-
-for chromosome in {1..22} X; do
-  bedtools intersect \
-    -wa \
-    -c \
-    -a "${BASE_DIR}/5hmc/blanks/chromosome${chromosome}.bed" \
-    -b "${BASE_DIR}/5hmc/split/purified_chr${chromosome}.bed" > \
-    "${BASE_DIR}/5hmc/bin_counts/chromosome${chromosome}.bed"
-done
-
-## ------------ ##
-##   BINARIZE   ##
-## ------------ ##
-
-module purge
-module load R/4.2.1-foss-2022a
-
-mkdir -p "${BASE_DIR}/5hmc/binarized/dense"
-mkdir -p "${BASE_DIR}/5hmc/binarized/sparse"
-
-for chromosome in {1..22} X; do
-  dense_file="${BASE_DIR}/5hmc/binarized/dense/${cell_type}_chr${chromosome}_binary.txt"
-  echo -e "${cell_type}\tchr${chromosome}" > "$dense_file" 
-  echo "5hmC_dense" >> "$dense_file"
-
-  sparse_file="${BASE_DIR}/5hmc/binarized/sparse/${cell_type}_chr${chromosome}_binary.txt"
-  echo -e "${cell_type}\tchr${chromosome}" > "$sparse_file" 
-  echo "5hmC_sparse" >> "$sparse_file"
-
-  Rscript "$RSCRIPT_DIR/binarize.R" \
-    "${BASE_DIR}/5hmc/bin_counts/chromosome${chromosome}.bed" \
-    "$dense_file" \
-    "$sparse_file"
-
-  gzip "$dense_file" "$sparse_file"
-done
