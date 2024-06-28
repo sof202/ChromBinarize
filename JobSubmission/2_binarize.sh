@@ -11,14 +11,6 @@
 #SBATCH --error=binarize%j.err
 #SBATCH --job-name=Binarize
 
-
-SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | \
-  awk '/Command=/{print $1}' | \
-  cut -d= -f1)
-SCRIPT_DIR=$(realpath "$(dirname "$SCRIPT_PATH")")
-ROOT_DIR="${SCRIPT_DIR}/.."
-RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
-
 usage() {
 cat <<EOF
 ================================================================================
@@ -43,6 +35,8 @@ if [ "$#" -eq 0 ]; then usage; fi
 config_file_location=$1
 source "${config_file_location}" || exit 1
 
+source "${ROOT_DIR}/parameters.txt" || exit 1
+
 mkdir -p "${LOG_DIR}/"
 mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.log" \
   "${LOG_DIR}/binarize${SLURM_JOB_ID}.log"
@@ -50,9 +44,9 @@ mv "${SLURM_SUBMIT_DIR}/binarize${SLURM_JOB_ID}.err" \
   "${LOG_DIR}/binarize${SLURM_JOB_ID}.err"
 
 if [ "${mark}" == "m" ]; then
-  cd "${base_folder}/5mc" || exit 1
+  cd "${BASE_DIR}/5mc" || exit 1
 else
-  cd "${base_folder}/5hmc" || exit 1
+  cd "${BASE_DIR}/5hmc" || exit 1
 fi
 
 ## ======================== ##

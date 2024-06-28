@@ -11,14 +11,6 @@
 #SBATCH --error=compare%j.err
 #SBATCH --job-name=compare
 
-SCRIPT_PATH=$(scontrol show job "$SLURM_JOBID" | \
-  awk '/Command=/{print $1}' | \
-  cut -d= -f1)
-SCRIPT_DIR=$(realpath "$(dirname "$SCRIPT_PATH")")
-
-ROOT_DIR="${SCRIPT_DIR}/.."
-RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
-
 usage() {
 cat <<EOF
 ================================================================================
@@ -43,6 +35,8 @@ if [ "$#" -eq 0 ]; then usage; fi
 # config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || exit 1
+
+source "${ROOT_DIR}/parameters.txt" || exit 1
 
 mkdir -p "${LOG_DIR}/"
 mv "${SLURM_SUBMIT_DIR}/compare${SLURM_JOB_ID}.log" \

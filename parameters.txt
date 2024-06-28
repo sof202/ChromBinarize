@@ -1,0 +1,16 @@
+## ============== ##
+##   PARAMETERS   ##
+## ============== ##
+
+# Ideally these don't need to be touched. You can change them if you wish
+# however.
+
+## --------------- ##
+## globally needed ##
+## --------------- ##
+
+LOG_DIR=${BASE_DIR}/LogFiles
+RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
+
+cell_type="bulk"
+

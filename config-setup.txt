@@ -2,18 +2,25 @@
 ##   CONFIG FILE   ##
 ## =============== ##
 
+# This file consists of variables one needs to change to suit their dataset
+# It mainly consists of file paths and data specific features. Some defaults
+# are given for you, but please check all entries.
+
 ## --------------- ##
 ## globally needed ##
 ## --------------- ##
 
-# directory that you want processed data to be sent to
-base_folder=
-bed_file_location=
-LOG_DIR=$(pwd)
+# Full file path to the root of this repository
+ROOT_DIR=
 
-## ------------- ##
-## 1_binomial.sh ##
-## ------------- ##
+# Base directory to send processed data to.
+BASE_DIR=
+
+bed_file_location=
+
+## ------------------------------------- ##
+## ONT (HYDROXY)METHYLATION BINARIZATION ##
+## ------------------------------------- ##
 
 # Thresholds on the read depth considered for filtering input bed files
 minimum_read_depth=30
@@ -28,17 +35,13 @@ reference_percentage_threshold_h=95
 
 binomial_threshold=1.7e-8
 
-
-## ------------- ##
-## 2_binarize.sh ##
-## ------------- ##
-
+# m -> methylation, h -> hydroxymethylation
 mark="m"
-
-# file path to chromosome sizes (for assembly. Should "chromosome size")
-chromosome_sizes=
 bin_size=200
-cell_type="NeuN"
+
+# file path to chromosome sizes for assembly.
+# This file is expected to be of the form "chromosome \t size"
+chromosome_sizes=
 
 ## ------------------------- ##
 ## a1_erroneous_rate_plot.sh ##
