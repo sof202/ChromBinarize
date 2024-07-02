@@ -1,4 +1,4 @@
-# ChromHMM binarization tools
+# ChromHMM Binarization Tools
 
 This is a selection of scripts that will convert various bed files for ONT, 
 oxBS and WGBS datasets into a format compliant with ChromHMM. 
