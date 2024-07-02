@@ -47,10 +47,12 @@ output_directory="${BASE_DIR}/5hmc"
 mkdir -p "${output_directory}"
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-purification_extractSitesWithHighMethylation "${output_directory}"
-purification_extractSitesWithLowMethylation "${output_directory}"
-purification_filterOutLowReadDepthSites "${output_directory}"
-purification_calculateSiteMethylationProbability "${output_directory}"
+purification_convertBSBedToMethylBedFormat "${output_directory}/formatted.bed"
+
+purification_extractSitesWithHighMethylation "${output_directory}" "${output_directory}/formatted.bed" "h"
+purification_extractSitesWithLowMethylation "${output_directory}" "${output_directory}/formatted.bed" "h"
+purification_filterOutLowReadDepthSites "${output_directory}" "${output_directory}/formatted.bed" "h"
+purification_calculateSiteMethylationProbability "${output_directory}" 
 purification_removeDeterminedUnmethylatedSites "${output_directory}"
 
 ## ======================== ##

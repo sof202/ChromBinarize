@@ -72,14 +72,11 @@ if [[ -n ${oxBS_bed_file_location} ]]; then
     "${output_directory}/combined.bed"
 
   awk '
-      function convert_to_reads(percentage, total_reads) {
-        return (int(percentage * total_reads / 100))
-      }
       function ReLU_distance(i,j) {
         return ((i - j) > 0 ? (i - j) : 0)
       }
       {OFS="\t"}
-      {print $1,$2,$3,convert_to_reads(ReLU_distance($5,$10), $4), $4}
+      {print $1,$2,$3,"m",$4,"+",ReLU_distance($5,$6)}
       ' "${output_directory}/combined.bed" > \
         "${output_directory}/WGBS_5hmc_removed.bed"
 else
@@ -88,9 +85,9 @@ fi
 
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-purification_extractSitesWithHighMethylation "${output_directory}"
-purification_extractSitesWithLowMethylation "${output_directory}"
-purification_filterOutLowReadDepthSites "${output_directory}"
+purification_extractSitesWithHighMethylation "${output_directory}" "${output_directory}/WGBS_5hmc_removed.bed" "m"
+purification_extractSitesWithLowMethylation "${output_directory}" "${output_directory}/WGBS_5hmc_removed.bed" "m"
+purification_filterOutLowReadDepthSites "${output_directory}" "${output_directory}/WGBS_5hmc_removed.bed" "m"
 purification_calculateSiteMethylationProbability "${output_directory}"
 purification_removeDeterminedUnmethylatedSites "${output_directory}"
 

@@ -39,67 +39,28 @@ source "${ROOT_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files binomial
 
-rm -rf "${BASE_DIR}/5mc" "${BASE_DIR}5hmc"
-mkdir -p "${BASE_DIR}/5mc" "${BASE_DIR}5hmc"
+rm -rf "${BASE_DIR}/5mc" "${BASE_DIR}/5hmc"
+mkdir -p "${BASE_DIR}/5mc" "${BASE_DIR}/5hmc"
 
-## ================ ##
-##  5mC filtering   ##
-## ================ ##
+source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-awk -v percent_threshold="${reference_percentage_threshold_m}" \
-  -v read_threshold="${reference_read_depth_threshold_m}" \
-  '$4 == "m" && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
-  "${bed_file_location}" > "${BASE_DIR}/5mc/methylated.csv"
+## ==== ##
+##  5mC ##
+## ==== ##
 
-awk -v percent_threshold=$((100 - ${reference_percentage_threshold_m})) \
-  -v read_threshold="${reference_read_depth_threshold_m}" \
-  '$4 == "m" && $5 >= read_threshold && $7 <= percent_threshold {print $5","$7}' \
-  "${bed_file_location}" > "${BASE_DIR}/5mc/unmethylated.csv"
+purification_extractSitesWithHighMethylation "${BASE_DIR}/5mc" "${bed_file_location}" "m"
+purification_extractSitesWithLowMethylation "${BASE_DIR}/5mc" "${bed_file_location}" "m"
+purification_filterOutLowReadDepthSites "${BASE_DIR}/5mc" "${bed_file_location}" "m"
+purification_calculateSiteMethylationProbability "${BASE_DIR}/5mc"
+purification_removeDeterminedUnmethylatedSites "${BASE_DIR}/5mc"
 
-awk -v read_threshold="${minimum_read_depth}" \
-  '$4 == "m" && $5 >= read_threshold' \
-  "${bed_file_location}" > "${BASE_DIR}/5mc/filtered_reads.bed"
+## ===== ##
+##  5hmC ##
+## ===== ##
 
-## ================= ##
-##  5hmC filtering   ##
-## ================= ##
+purification_extractSitesWithHighMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "m"
+purification_extractSitesWithLowMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "m"
+purification_filterOutLowReadDepthSites "${BASE_DIR}/5hmc" "${bed_file_location}" "m"
+purification_calculateSiteMethylationProbability "${BASE_DIR}/5hmc"
+purification_removeDeterminedUnmethylatedSites "${BASE_DIR}/5hmc"
 
-awk -v percent_threshold="${reference_percentage_threshold_h}" \
-  -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$4 == "h" && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
-  "${bed_file_location}" > "${BASE_DIR}/5hmc/methylated.csv"
-
-awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
-  -v read_threshold="${reference_read_depth_threshold_h}" \
-  '$4 == "h" && $5 >= read_threshold && $7 <= percent_threshold {print $5","$7}' \
-  "${bed_file_location}" > "${BASE_DIR}/5hmc/unmethylated.csv"
-
-awk -v read_threshold="${minimum_read_depth}" \
-  '$4 == "h" && $5 >= read_threshold' \
-  "${bed_file_location}" > "${BASE_DIR}/5hmc/filtered_reads.bed"
-
-## ========================= ##
-##   RUN BINOMIAL ANALYSIS   ##
-## ========================= ##
-
-module purge
-module load R/4.2.1-foss-2022a
-
-Rscript "${RSCRIPT_DIR}/binom.R" "${BASE_DIR}/5mc"
-Rscript "${RSCRIPT_DIR}/binom.R" "${BASE_DIR}/5hmc"
-
-module purge
-
-## ============================= ##
-##   REMOVE UNMETHYLATED SITES   ##
-## ============================= ##
-
-awk -v threshold="${binomial_threshold}" \
-  '$9 < threshold' \
-  "${BASE_DIR}/5mc/processed_reads.bed" > \
-  "${BASE_DIR}/5mc/purified_reads.bed"
-
-awk -v threshold="${binomial_threshold}" \
-  '$9 < threshold' \
-  "${BASE_DIR}/5hmc/processed_reads.bed" > \
-  "${BASE_DIR}/5hmc/purified_reads.bed"

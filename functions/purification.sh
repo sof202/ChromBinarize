@@ -1,41 +1,55 @@
 #!/bin/bash
 
-purification_extractSitesWithHighMethylation() {
-  output_directory=$1
+purification_convertBSBedToMethylBedFormat() {
+  output_file_name=$1
+  input_bed_file=$2
+  mark_name=$3
 
-  awk -v percent_threshold="${reference_percentage_threshold_h}" \
-    -v read_threshold="${reference_read_depth_threshold_h}" \
+  awk -v mark_name="$mark_name" \
     'function convert_to_percent(reads, total_reads) {
        return (int(reads / total_reads * 10000) / 100)
      }
-     $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
-    "${oxBS_bed_file_location}" > \
+     {print $1,$2,$3,mark_name,$5,"+",convert_to_percent($4,$5)}' \
+    "${input_bed_file}" > \
+      "${output_file_name}"
+}
+
+purification_extractSitesWithHighMethylation() {
+  output_directory=$1
+  input_bed_file=$2
+  mark_name=$3
+
+  awk -v percent_threshold="${reference_percentage_threshold_h}" \
+    -v read_threshold="${reference_read_depth_threshold_h}" \
+    -v mark_name="$mark_name" \
+     '$4 == mark_name && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
+    "${input_bed_file}" > \
       "${output_directory}/methylated.csv"
 }
 
 purification_extractSitesWithLowMethylation() {
   output_directory=$1
+  input_bed_file=$2
+  mark_name=$3
 
   awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
     -v read_threshold="${reference_read_depth_threshold_h}" \
-    'function convert_to_percent(reads, total_reads) {
-       return (int(reads / total_reads * 10000) / 100)
-     }
-     $5 >= read_threshold && convert_to_percent($4,$5) >= percent_threshold {print $5","convert_to_percent($4,$5)}' \
-    "${oxBS_bed_file_location}" > \
+    -v mark_name="$mark_name" \
+     '$4 == mark_name && $5 >= read_threshold && $7 <= percent_threshold {print $5","$7}' \
+    "${input_bed_file}" > \
       "${output_directory}/unmethylated.csv"
 }
 
 purification_filterOutLowReadDepthSites() {
   output_directory=$1
+  input_bed_file=$2
+  mark_name=$3
 
   awk -v read_threshold="${minimum_read_depth}" \
-    'function convert_to_percent(reads, total_reads) {
-       return (int(reads / total_reads * 10000) / 100)
-     }
-    {OFS="\t"} 
-    $5 >= read_threshold {print $1,$2,$3,"h",$5,"+",convert_to_percent($4,$5)}' \
-    "${oxBS_bed_file_location}" > \
+    -v mark_name="$mark_name" \
+    '{OFS="\t"} 
+    $4 == mark_name && $5 >= read_threshold' \
+    "${input_bed_file}" > \
       "${output_directory}/filtered_reads.bed"
 }
 
