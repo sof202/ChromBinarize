@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-e1_convert_MACS_to_binary.sh
+1_convert_MACS_to_binary.sh
 ================================================================================
 Purpose: Converts narrow peak or broad peaks to binary format for chromHMM
 Author: Sam Fletcher

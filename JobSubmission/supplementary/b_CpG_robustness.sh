@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-b1_CpG_robustness.sh
+b_CpG_robustness.sh
 ================================================================================
 Purpose: Calculates the correlation of percent methylation seen in local 
 clusters of CpGs. High correlation suggests robustness in basecalling.

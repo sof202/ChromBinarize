@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-e2_create_hydroxy_binary_files.sh
+1_binarize_oxBS_files.sh
 ================================================================================
 Purpose: Create binary files for dense and sparse regions of hydroxymethylation 
 from oxidative bisulphite sequencing bed files. Bed files are expected to be 

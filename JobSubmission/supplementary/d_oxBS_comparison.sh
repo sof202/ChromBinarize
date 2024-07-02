@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-d1_oxBS_comparison.sh
+d_oxBS_comparison.sh
 ================================================================================
 Purpose: Creates several plots comparing a two bed files. One for ONT, the 
 other for oxBS data.

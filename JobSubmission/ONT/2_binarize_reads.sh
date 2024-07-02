@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-2_binarize.sh
+2_binarize_reads.sh
 ================================================================================
 Purpose: Turns processed data into binarized data
 Author: Sam Fletcher

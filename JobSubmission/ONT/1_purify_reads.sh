@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-1_binomial.sh
+1_purify_reads.sh
 ================================================================================
 Purpose: Filters input bed file on sites that are significantly (un)methylated
 Author: Sam Fletcher

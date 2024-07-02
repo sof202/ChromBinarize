@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-a1_erroneous_rate_plot.sh
+a_erroneous_rate_plot.sh
 ================================================================================
 Purpose: Outputs plots that show how p1/p2 change with read depth/methylation
 percent thresholds.
