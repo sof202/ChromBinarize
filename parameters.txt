@@ -10,8 +10,8 @@
 ## --------------- ##
 
 LOG_DIR=${BASE_DIR}/LogFiles
-RSCRIPT_DIR="${ROOT_DIR}/Rscripts"
-FUNCTIONS_DIR="${ROOT_DIR}/functions"
+RSCRIPT_DIR="${REPO_DIR}/Rscripts"
+FUNCTIONS_DIR="${REPO_DIR}/functions"
 
 cell_type="bulk"
 

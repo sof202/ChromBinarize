@@ -36,7 +36,7 @@ if [ "$#" -eq 0 ]; then usage; fi
 config_file_location=$1
 source "${config_file_location}" || exit 1
 
-source "${ROOT_DIR}/parameters.txt" || exit 1
+source "${REPO_DIR}/parameters.txt" || exit 1
 
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files compare
@@ -57,8 +57,8 @@ bedtools intersect \
 module purge
 module load R/4.2.1-foss-2022a
 
-mkdir -p "${ROOT_DIR}/plots"
+mkdir -p "${REPO_DIR}/plots"
 
 Rscript "${RSCRIPT_DIR}/WGBS_comparison.R" \
   "${WGBS_folder}/ONT_WGBS_intersect.bed" \
-  "${ROOT_DIR}/plots"
+  "${REPO_DIR}/plots"

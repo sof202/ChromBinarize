@@ -11,7 +11,7 @@
 ## --------------- ##
 
 # Full file path to the root of this repository
-ROOT_DIR=
+REPO_DIR=
 
 # Base directory to send processed data to.
 BASE_DIR=
