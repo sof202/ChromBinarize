@@ -58,9 +58,9 @@ purification_removeDeterminedUnmethylatedSites "${BASE_DIR}/5mc"
 ##  5hmC ##
 ## ===== ##
 
-purification_extractSitesWithHighMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "m"
-purification_extractSitesWithLowMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "m"
-purification_filterOutLowReadDepthSites "${BASE_DIR}/5hmc" "${bed_file_location}" "m"
+purification_extractSitesWithHighMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "h"
+purification_extractSitesWithLowMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "h"
+purification_filterOutLowReadDepthSites "${BASE_DIR}/5hmc" "${bed_file_location}" "h"
 purification_calculateSiteMethylationProbability "${BASE_DIR}/5hmc"
 purification_removeDeterminedUnmethylatedSites "${BASE_DIR}/5hmc"
 
