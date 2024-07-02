@@ -41,18 +41,19 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files compare
 
-module purge
-module load BEDTools
+## =========================== ##
+##   INTERSECT ONT WITH WGBS   ##
+## =========================== ##
 
 WGBS_folder=$(dirname "${WGBS_bed_file}")
 
-bedtools intersect \
-  -wo \
-  -a "${ONT_bed_file}" \
-  -b "${WGBS_bed_file}" | \
-    awk \
-    '{OFS="\t"} {print $1,$2,$3,$4,$5,$7,$12,int($11 / $12 * 10000) / 100}' > \
-    "${WGBS_folder}/ONT_WGBS_intersect.bed"
+source "${FUNCTIONS_DIR}/intersect.sh" || exit 1
+
+intersect_intersectBSWithONT "${WGBS_folder}/ONT_WGBS_intersect.bed" "${WGBS_bed_file}"
+
+## ============== ##
+##   COMPARISON   ##
+## ============== ##
 
 module purge
 module load R/4.2.1-foss-2022a
