@@ -60,7 +60,7 @@ epigenetic_mark=
 input_MACS_file=
 
 ## ------------------------- ##
-## a_erroneous_rate_plot.sh ##
+## a_erroneous_rate_plot.sh  ##
 ## ------------------------- ##
 
 # In some datasets, the maximum value for the read depth of a single site
@@ -77,7 +77,7 @@ plot_type=
 run_type=
 
 ## -------------------- ##
-## b_CpG_robustness.sh ##
+## b_CpG_robustness.sh  ##
 ## -------------------- ##
 
 # Minimum distance between CpGs that you would consider 'close proximity'
@@ -87,7 +87,7 @@ min_distance=0
 max_distance=30
 
 ## --------------------------------------------- ##
-## c_WGBS_comparison.sh / d_oxBS_comparison.sh ##
+## c_WGBS_comparison.sh / d_oxBS_comparison.sh  ##
 ## --------------------------------------------- ##
 
 # ONT file to compare WGBS data to
