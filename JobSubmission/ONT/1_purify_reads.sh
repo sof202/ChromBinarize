@@ -44,23 +44,28 @@ mkdir -p "${BASE_DIR}/5mc" "${BASE_DIR}/5hmc"
 
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
+
 ## ==== ##
 ##  5mC ##
 ## ==== ##
 
-purification_extractSitesWithHighMethylation "${BASE_DIR}/5mc" "${bed_file_location}" "m"
-purification_extractSitesWithLowMethylation "${BASE_DIR}/5mc" "${bed_file_location}" "m"
-purification_filterOutLowReadDepthSites "${BASE_DIR}/5mc" "${bed_file_location}" "m"
-purification_calculateSiteMethylationProbability "${BASE_DIR}/5mc"
-purification_removeDeterminedUnmethylatedSites "${BASE_DIR}/5mc"
+output_directory="${BASE_DIR}/5mc"
+
+purification_extractSitesWithHighMethylation "${output_directory}" "${bed_file_location}" "m"
+purification_extractSitesWithLowMethylation "${output_directory}" "${bed_file_location}" "m"
+purification_filterOutLowReadDepthSites "${output_directory}" "${bed_file_location}" "m"
+purification_calculateSiteMethylationProbability "${output_directory}"
+purification_removeDeterminedUnmethylatedSites "${output_directory}"
 
 ## ===== ##
 ##  5hmC ##
 ## ===== ##
 
-purification_extractSitesWithHighMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "h"
-purification_extractSitesWithLowMethylation "${BASE_DIR}/5hmc" "${bed_file_location}" "h"
-purification_filterOutLowReadDepthSites "${BASE_DIR}/5hmc" "${bed_file_location}" "h"
-purification_calculateSiteMethylationProbability "${BASE_DIR}/5hmc"
-purification_removeDeterminedUnmethylatedSites "${BASE_DIR}/5hmc"
+output_directory="${BASE_DIR}/5hmc"
+
+purification_extractSitesWithHighMethylation "${output_directory}" "${bed_file_location}" "h"
+purification_extractSitesWithLowMethylation "${output_directory}" "${bed_file_location}" "h"
+purification_filterOutLowReadDepthSites "${output_directory}" "${bed_file_location}" "h"
+purification_calculateSiteMethylationProbability "${output_directory}"
+purification_removeDeterminedUnmethylatedSites "${output_directory}"
 
