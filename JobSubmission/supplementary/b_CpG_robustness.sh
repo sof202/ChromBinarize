@@ -48,7 +48,7 @@ awk -v min_read_threshold="${minimum_read_depth}" \
   '$4 == mark && $5 >= min_read_threshold && $5 <= max_read_threshold' \
   "${bed_file_location}" > "${BASE_DIR}/5mc/filtered_reads.bed"
 
-mkdir -p "${REPO_DIR}/plots"
+mkdir -p "${BASE_DIR}/plots"
 
 module purge
 module load R/4.2.1-foss-2022a
@@ -57,6 +57,6 @@ Rscript "${RSCRIPT_DIR}/CpG_robustness.R" \
   "${BASE_DIR}/5mc/filtered_reads.bed" \
   "${min_distance}" \
   "${max_distance}" \
-  "${REPO_DIR}/plots/cpg_robustness_min_${min_distance}_max_${max_distance}.png"
+  "${BASE_DIR}/plots/cpg_robustness_min_${min_distance}_max_${max_distance}.png"
 
 

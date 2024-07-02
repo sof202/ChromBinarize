@@ -41,7 +41,7 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files pvalues
 
-mkdir -p "$REPO_DIR/plots/"
+mkdir -p "${BASE_DIR}/plots/"
 
 module purge
 module load R/4.2.1-foss-2022a
@@ -52,11 +52,11 @@ if [ "$run_type" == "N" ]; then
     "$mark" \
     "$max_N_value" \
     "$plot_type" \
-    "$REPO_DIR/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
+    "${BASE_DIR}/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 else
   Rscript "$RSCRIPT_DIR/erroneous_rate_plot_percent.R" \
     "$bed_file_location" \
     "$mark" \
     "$plot_type" \
-    "$REPO_DIR/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
+    "${BASE_DIR}/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 fi

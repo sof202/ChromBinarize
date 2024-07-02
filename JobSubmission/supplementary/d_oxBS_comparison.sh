@@ -57,6 +57,8 @@ bedtools intersect \
 module purge
 module load R/4.2.1-foss-2022a
 
+mkdir -p "${BASE_DIR}/plots"
+
 Rscript "${RSCRIPT_DIR}/oxBS_comparison.R" \
   "${oxBS_folder}/ONT_oxBS_intersect.bed" \
-  "${oxBS_folder}"
+  "${BASE_DIR}/plots"
