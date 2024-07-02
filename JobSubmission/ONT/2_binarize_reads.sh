@@ -42,7 +42,7 @@ move_log_files binarize
 if [ "${mark}" == "m" ]; then
   output_directory="${BASE_DIR}/5mc"
 elif [ "${mark}" == "h" ]; then
-  output_directory="${output_directory}"
+  output_directory="${BASE_DIR}/5hmc"
 else
   >&2 echo "config file needs 'm' or 'h' in the 'mark' field"
   exit 1
