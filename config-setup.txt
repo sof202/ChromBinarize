@@ -26,8 +26,11 @@ WGBS_bed_file_location=
 oxBS_bed_file_location=
 
 # Thresholds on the read depth considered for filtering input bed files
+# Max read depth is included due to 
+# [this paper](https://doi.org/10.1186/s13059-024-03207-9)
+# If you don't believe this finding, just set this to be a really big number.
 minimum_read_depth=30
-maximum_read_depth=1000
+maximum_read_depth=10000
 
 # Thresholds for creating 'good reference datasets' for obtaining value of p
 # that is used in binomial distribution
