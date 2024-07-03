@@ -88,7 +88,7 @@ The scripts in this repository are split into the following categories:
 - [ONT](#ont)
 - [BS-Seq](#bs-seq)
 - [ChIP-Seq](#chip-seq)
-- [supplementary scripts](#supplementary)
+- [Supplementary scripts](#supplementary)
 
 ## ONT
 
