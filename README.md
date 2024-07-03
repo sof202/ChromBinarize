@@ -23,9 +23,8 @@ calling algorithms (like MACS) exist for ChIP-Seq and ATAC-Seq datasets. As
 such, a separate suite of scripts that binarize these data sets is proposed
 here.
 
+## Usage outside of UoE
 >[!IMPORTANT]
-> ## Usage outside of UoE
->
 >If you are using these scripts and you are not using the University of Exeter's
 >HPC system, these script will likely give some errors. Some SLURM directives
 >are specifically for our HPC and likewise for `module load` statements. If you
