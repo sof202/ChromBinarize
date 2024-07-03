@@ -33,7 +33,7 @@ if [ "$#" -eq 0 ]; then usage; fi
 
 # config will source all of the variables seen below
 config_file_location=$1
-source "${config_file_location}" || exit 1
+source "${config_file_location}" || { usage; exit 1; }
 
 source "${REPO_DIR}/parameters.txt" || exit 1
 
