@@ -35,6 +35,18 @@ After completing this, run scripts sequentially using SLURM workload manager:
 sbatch path/to/script path/to/config/file
 ```
 
+## Software Requirements 
+
+This pipeline requires a unix-flavoured OS and requires the following software
+to be installed. Versions are those that were used during testing, lower minor
+version numbers are likely to still work.
+
+- [bash](https://www.gnu.org/software/bash/) (>=4.2.46(2))
+- [SLURM Workload Manager](https://slurm.schedmd.com/overview.html) (>=20.02.3)
+- [R](https://www.r-project.org) (>=4.2.1)
+- [Bedtools](https://github.com/arq5x/bedtools2) (>=v2.29.2)
+- [GNU gzip](https://www.gnu.org/software/gzip/) (>=1.5)
+
 ## Included scripts
 
 The scripts in this repository are split into the following categories:
