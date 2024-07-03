@@ -61,12 +61,17 @@ mark="m"
 epigenetic_mark=
 input_MACS_file=
 
-## ------------------------- ##
-## a_erroneous_rate_plot.sh  ##
-## ------------------------- ##
 
-# bed file you wish to analyse
+## ------------- ##
+## SUPPLEMENTARY ##
+## ------------- ##
+
+# bed file you wish to analyse further
 bed_file_location="${ONT_bed_file_location}"
+
+## ......................... ##
+## a_erroneous_rate_plot.sh  ##
+## ......................... ##
 
 # In some datasets, the maximum value for the read depth of a single site
 # can be in the thousands. However, most sites are well below this number,
@@ -81,9 +86,9 @@ plot_type=
 # 'percent' for looking at percentage on x axis
 run_type=
 
-## -------------------- ##
+## .................... ##
 ## b_CpG_robustness.sh  ##
-## -------------------- ##
+## .................... ##
 
 # Minimum distance between CpGs that you would consider 'close proximity'
 min_distance=0
