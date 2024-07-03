@@ -1,6 +1,10 @@
 #!/bin/bash
 
 purification_convertBSBedToMethylBedFormat() {
+  # The default format required for BS-Seq files is not the same as ONT. This
+  # is because ONT bed files are usually created with modkit and our lab uses
+  # wgbs_tools for BS-Seq bed file creation. These do not output the same 
+  # format of bed file, as such this function is here to normalise the format.
   output_file_name=$1
   input_bed_file=$2
   mark_name=$3
