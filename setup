@@ -1,0 +1,29 @@
+#!/bin/bash
+# Some code featured in this repository are specific to UoE's HPC system.
+# As such this script should be ran to remove them if required.
+
+SCRIPT_DIR=$(realpath "$(dirname "$0")")
+
+script_list=$(find "${SCRIPT_DIR}" -type f -name "*.sh")
+
+echo "Do you want to remove instances of \"module load\" and \"module purge\"?"
+echo "(y/n)"
+read -r delete_module_lines
+
+if [[ "${delete_module_lines}" == "y" ]]; then
+    for file in $script_list; do
+        sed -i "s/module load.*//g" "${file}"
+        sed -i "s/module purge//g" "${file}"
+    done
+fi
+
+echo "Do you want to remove SLURM directives associated with UoE's HPC?"
+echo "(y/n)"
+read -r delete_slurm_directives
+
+if [[ "${delete_slurm_directives}" == "y" ]]; then
+    for file in $script_list; do
+        sed -i "s/#SBATCH -A Research_Project-MRC190311//g" "${file}"
+        sed -i "s/#SBATCH -p mrcq//g" "${file}"
+    done
+fi
