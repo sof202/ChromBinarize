@@ -39,7 +39,7 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files methylation
 
-output_directory="${BASE_DIR}/WGBS_5mc"
+processing_directory="${BASE_DIR}/WGBS_5mc"
 
 ## ============================ ##
 ##   EXTRACT METHYLATED SITES   ##
@@ -53,7 +53,7 @@ output_directory="${BASE_DIR}/WGBS_5mc"
 # We only want to capture the 5mC signal, so we need to remove the 5hmC signal
 # using oxBS data.
 
-mkdir -p "${output_directory}"
+mkdir -p "${processing_directory}"
 
 if [[ -n ${oxBS_bed_file_location} ]]; then
   module purge
@@ -69,7 +69,7 @@ if [[ -n ${oxBS_bed_file_location} ]]; then
        }
        {OFS="\t"} 
        $10 >= read_threshold {print $1,$2,$3,$5,convert_to_percent($4,$5),convert_to_percent($9,$10)}' > \
-    "${output_directory}/combined.bed"
+    "${processing_directory}/combined.bed"
 
   awk '
       function ReLU_distance(i,j) {
@@ -77,19 +77,19 @@ if [[ -n ${oxBS_bed_file_location} ]]; then
       }
       {OFS="\t"}
       {print $1,$2,$3,"m",$4,"+",ReLU_distance($5,$6)}
-      ' "${output_directory}/combined.bed" > \
-        "${output_directory}/WGBS_5hmc_removed.bed"
+      ' "${processing_directory}/combined.bed" > \
+        "${processing_directory}/WGBS_5hmc_removed.bed"
 else
-  cp "${WGBS_bed_file_location}" "${output_directory}/WGBS_5hmc_removed.bed"
+  cp "${WGBS_bed_file_location}" "${processing_directory}/WGBS_5hmc_removed.bed"
 fi
 
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-purification_extractSitesWithHighMethylation "${output_directory}" "${output_directory}/WGBS_5hmc_removed.bed" "m"
-purification_extractSitesWithLowMethylation "${output_directory}" "${output_directory}/WGBS_5hmc_removed.bed" "m"
-purification_filterOutLowReadDepthSites "${output_directory}" "${output_directory}/WGBS_5hmc_removed.bed" "m"
-purification_calculateSiteMethylationProbability "${output_directory}"
-purification_removeDeterminedUnmethylatedSites "${output_directory}"
+purification_extractSitesWithHighMethylation "${processing_directory}" "${processing_directory}/WGBS_5hmc_removed.bed" "m"
+purification_extractSitesWithLowMethylation "${processing_directory}" "${processing_directory}/WGBS_5hmc_removed.bed" "m"
+purification_filterOutLowReadDepthSites "${processing_directory}" "${processing_directory}/WGBS_5hmc_removed.bed" "m"
+purification_calculateSiteMethylationProbability "${processing_directory}"
+purification_removeDeterminedUnmethylatedSites "${processing_directory}"
 
 ## ======================== ##
 ##   BINARIZATION PROCESS   ##
@@ -97,9 +97,9 @@ purification_removeDeterminedUnmethylatedSites "${output_directory}"
 #
 source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-binarization_createDirectories "${output_directory}"
-binarization_splitIntoChromosomes "${output_directory}"
-binarization_createBlankBins "${output_directory}"
-binarization_countSignalIntersectionWithBins "${output_directory}"
-binarization_createChromhmmBinaryFiles "${output_directory}" "${BINARY_DIR}/WGBS_5mC" "WGBS_5mC"
+binarization_createDirectories "${processing_directory}"
+binarization_splitIntoChromosomes "${processing_directory}"
+binarization_createBlankBins "${processing_directory}"
+binarization_countSignalIntersectionWithBins "${processing_directory}"
+binarization_createChromhmmBinaryFiles "${processing_directory}" "${BINARY_DIR}/WGBS_5mC" "WGBS_5mC"
 

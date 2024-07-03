@@ -49,23 +49,23 @@ source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 ##  5mC ##
 ## ==== ##
 
-output_directory="${BASE_DIR}/5mc"
+processing_directory="${BASE_DIR}/5mc"
 
-purification_extractSitesWithHighMethylation "${output_directory}" "${ONT_bed_file_location}" "m"
-purification_extractSitesWithLowMethylation "${output_directory}" "${ONT_bed_file_location}" "m"
-purification_filterOutLowReadDepthSites "${output_directory}" "${ONT_bed_file_location}" "m"
-purification_calculateSiteMethylationProbability "${output_directory}"
-purification_removeDeterminedUnmethylatedSites "${output_directory}"
+purification_extractSitesWithHighMethylation "${processing_directory}" "${ONT_bed_file_location}" "m"
+purification_extractSitesWithLowMethylation "${processing_directory}" "${ONT_bed_file_location}" "m"
+purification_filterOutLowReadDepthSites "${processing_directory}" "${ONT_bed_file_location}" "m"
+purification_calculateSiteMethylationProbability "${processing_directory}"
+purification_removeDeterminedUnmethylatedSites "${processing_directory}"
 
 ## ===== ##
 ##  5hmC ##
 ## ===== ##
 
-output_directory="${BASE_DIR}/5hmc"
+processing_directory="${BASE_DIR}/5hmc"
 
-purification_extractSitesWithHighMethylation "${output_directory}" "${ONT_bed_file_location}" "h"
-purification_extractSitesWithLowMethylation "${output_directory}" "${ONT_bed_file_location}" "h"
-purification_filterOutLowReadDepthSites "${output_directory}" "${ONT_bed_file_location}" "h"
-purification_calculateSiteMethylationProbability "${output_directory}"
-purification_removeDeterminedUnmethylatedSites "${output_directory}"
+purification_extractSitesWithHighMethylation "${processing_directory}" "${ONT_bed_file_location}" "h"
+purification_extractSitesWithLowMethylation "${processing_directory}" "${ONT_bed_file_location}" "h"
+purification_filterOutLowReadDepthSites "${processing_directory}" "${ONT_bed_file_location}" "h"
+purification_calculateSiteMethylationProbability "${processing_directory}"
+purification_removeDeterminedUnmethylatedSites "${processing_directory}"
 

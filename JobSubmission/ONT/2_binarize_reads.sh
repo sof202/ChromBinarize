@@ -40,10 +40,10 @@ move_log_files binarize
 ## ======== ##
 
 if [ "${mark}" == "m" ]; then
-  output_directory="${BASE_DIR}/ONT_5mc"
+  processing_directory="${BASE_DIR}/ONT_5mc"
   mark_name="ONT_5mC"
 elif [ "${mark}" == "h" ]; then
-  output_directory="${BASE_DIR}/ONT_5hmc"
+  processing_directory="${BASE_DIR}/ONT_5hmc"
   mark_name="ONT_5hmC"
 else
   >&2 echo "config file needs 'm' or 'h' in the 'mark' field"
@@ -52,9 +52,9 @@ fi
 
 source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-binarization_createDirectories "${output_directory}"
-binarization_splitIntoChromosomes "${output_directory}"
-binarization_createBlankBins "${output_directory}"
-binarization_countSignalIntersectionWithBins "${output_directory}"
-binarization_createChromhmmBinaryFiles  "${output_directory}" "${BINARY_DIR}/${mark_name}" "${mark_name}"
+binarization_createDirectories "${processing_directory}"
+binarization_splitIntoChromosomes "${processing_directory}"
+binarization_createBlankBins "${processing_directory}"
+binarization_countSignalIntersectionWithBins "${processing_directory}"
+binarization_createChromhmmBinaryFiles  "${processing_directory}" "${BINARY_DIR}/${mark_name}" "${mark_name}"
 
