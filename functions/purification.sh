@@ -36,7 +36,7 @@ purification_extractSitesWithLowMethylation() {
   input_bed_file=$2
   mark_name=$3
 
-  awk -v percent_threshold=$((100 - ${reference_percentage_threshold_h})) \
+  awk -v percent_threshold=$((100 - reference_percentage_threshold_h)) \
     -v read_threshold="${reference_read_depth_threshold_h}" \
     -v mark_name="$mark_name" \
     '$4 == mark_name && $5 >= read_threshold && $7 <= percent_threshold {print $5","$7}' \
