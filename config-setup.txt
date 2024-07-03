@@ -62,6 +62,9 @@ input_MACS_file=
 ## a_erroneous_rate_plot.sh  ##
 ## ------------------------- ##
 
+# bed file you wish to analyse
+bed_file_location="${ONT_bed_file_location}"
+
 # In some datasets, the maximum value for the read depth of a single site
 # can be in the thousands. However, most sites are well below this number,
 # putting a maximum value here helps with interpretability of plots.
