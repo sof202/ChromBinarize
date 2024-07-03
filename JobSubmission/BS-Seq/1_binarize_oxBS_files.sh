@@ -38,7 +38,7 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files hydroxy
 
-output_directory="${BASE_DIR}/5hmc"
+output_directory="${BASE_DIR}/oxBS_5hmc"
 
 ## =================================== ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
@@ -65,5 +65,5 @@ binarization_createDirectories "${output_directory}"
 binarization_splitIntoChromosomes "${output_directory}"
 binarization_createBlankBins "${output_directory}"
 binarization_countSignalIntersectionWithBins "${output_directory}"
-binarization_createChromhmmBinaryFiles "${output_directory}"
+binarization_createChromhmmBinaryFiles "${output_directory}" "${BINARY_DIR}/oxBS_5hmC" "oxBS_5hmC"
 

@@ -60,26 +60,28 @@ binarization_countSignalIntersectionWithBins() {
 }
 
 binarization_createChromhmmBinaryFiles() {
-   output_directory=$1   
+   input_directory=$1
+   output_directory=$2   
+   mark_name=$3
 
    module purge
    module load R/4.2.1-foss-2022a
 
    for chromosome in {1..22} X; do
-     dense_file="${output_directory}/binarized/dense/${cell_type}_chr${chromosome}_binary.txt"
+     dense_file="${output_directory}/dense/${cell_type}_chr${chromosome}_binary.txt"
      echo -e "${cell_type}\tchr${chromosome}" > "${dense_file}" 
-     echo "5hmC_dense" >> "${dense_file}"
+     echo "${mark_name}_dense" >> "${dense_file}"
 
-     sparse_file="${output_directory}/binarized/sparse/${cell_type}_chr${chromosome}_binary.txt"
+     sparse_file="${output_directory}/sparse/${cell_type}_chr${chromosome}_binary.txt"
      echo -e "${cell_type}\tchr${chromosome}" > "${sparse_file}" 
-     echo "5hmC_sparse" >> "${sparse_file}"
+     echo "${mark_name}_sparse" >> "${sparse_file}"
 
      Rscript "$RSCRIPT_DIR/binarize.R" \
-       "${output_directory}/bin_counts/chromosome${chromosome}.bed" \
+       "${input_directory}/bin_counts/chromosome${chromosome}.bed" \
        "${dense_file}" \
        "${sparse_file}"
 
-     gzip "${dense_file}" "${sparse_file}"
+     gunzip "${dense_file}" "${sparse_file}"
    done
 
    module purge

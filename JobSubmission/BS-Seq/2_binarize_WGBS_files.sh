@@ -39,7 +39,7 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files methylation
 
-output_directory="${BASE_DIR}/5mc"
+output_directory="${BASE_DIR}/WGBS_5mc"
 
 ## ============================ ##
 ##   EXTRACT METHYLATED SITES   ##
@@ -101,5 +101,5 @@ binarization_createDirectories "${output_directory}"
 binarization_splitIntoChromosomes "${output_directory}"
 binarization_createBlankBins "${output_directory}"
 binarization_countSignalIntersectionWithBins "${output_directory}"
-binarization_createChromhmmBinaryFiles "${output_directory}"
+binarization_createChromhmmBinaryFiles "${output_directory}" "${BINARY_DIR}/WGBS_5mC" "WGBS_5mC"
 
