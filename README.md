@@ -8,6 +8,8 @@
         <img src="https://img.shields.io/codefactor/grade/github/sof202/ChromBinarize" /></a>
     <a href="https://img.shields.io/github/commit-activity/m/sof202/ChromBinarize" alt="Commit activity">
         <img src="https://img.shields.io/github/commit-activity/m/sof202/ChromBinarize" /></a>
+    <a href="https://github.com/sof202/ChromBinarize/blob/main/LICENSE" alt="License">
+        <img src="https://img.shields.io/github/license/sof202/ChromBinarize" /></a>
 </p>
 
 # ChromHMM Binarization Tools
