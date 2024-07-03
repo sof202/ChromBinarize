@@ -45,6 +45,8 @@ reference_percentage_threshold_h=95
 # '(hydroxy)methylated'
 binomial_threshold=1.7e-8
 
+# This is the bin size that will be used by ChromHMM. Ensure you use the same
+# value when using ChromHMM. (ChromHMM default is also 200bp)
 bin_size=200
 
 # file path to chromosome sizes for assembly.
@@ -61,7 +63,7 @@ mark="m"
 ## --------------------- ##
 
 # This will appear as the epigenetic mark name in the resultant binary file
-epigenetic_mark=
+epigenetic_mark_name=
 input_MACS_file=
 
 
