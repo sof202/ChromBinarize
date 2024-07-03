@@ -14,5 +14,3 @@ RSCRIPT_DIR="${REPO_DIR}/Rscripts"
 FUNCTIONS_DIR="${REPO_DIR}/functions"
 BINARY_DIR="${BASE_DIR}/BinaryFiles"
 
-cell_type="bulk"
-

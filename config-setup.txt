@@ -16,6 +16,8 @@ REPO_DIR=
 # Base directory to send processed data to.
 BASE_DIR=
 
+cell_type="bulk"
+
 ## -------------- ##
 ## ONT AND BS-SEQ ##
 ## -------------- ##
