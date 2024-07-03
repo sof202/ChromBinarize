@@ -71,7 +71,7 @@ input_MACS_file=
 ## SUPPLEMENTARY ##
 ## ------------- ##
 
-# bed file you wish to analyse further
+# bed file you wish to analyse further in supplementary scripts
 bed_file_location="${ONT_bed_file_location}"
 
 ## ......................... ##
