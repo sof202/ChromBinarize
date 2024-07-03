@@ -46,7 +46,7 @@ here.
 >cd path/to/this/repository
 >script_list=$(find . -type f -name "*.sh")
 >
-># For the R programming lanugage (replace "your-r-module-name")
+># For the R programming lanugage (replace "your-R-module-name")
 >for file in "${script_list}"; do
 >  sed -i "s/R\/4.2.1-foss-2022a/your-R-module-name/" "${file}"
 >done
