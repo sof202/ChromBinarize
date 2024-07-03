@@ -16,6 +16,9 @@ binarization_createDirectories() {
 }
 
 binarization_splitIntoChromosomes() {
+   # ChromHMM requires a binary file for each chromosome, whilst bed files
+   # usually cover the whole genome. Hence, splitting of the bed files is
+   # required
    output_directory=$1
 
    for chromosome in {1..22} X; do
