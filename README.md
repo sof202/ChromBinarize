@@ -23,39 +23,40 @@ calling algorithms (like MACS) exist for ChIP-Seq and ATAC-Seq datasets. As
 such, a separate suite of scripts that binarize these data sets is proposed
 here.
 
-## Usage outside of UoE
-
-If you are using these scripts and you are not using the University of Exeter's
-HPC system, these script will likely give some errors. Some SLURM directives
-are specifically for our HPC and likewise for `module load` statements. If you
-wish to remove these lines from the pipeline, run the `setup` file before
-[using the scripts](#usage) with:
-
-```bash
-./setup
-```
-
-If you plan on using these scripts with a server/HPC that also makes use of
-[modules](https://github.com/cea-hpc/modules/), you may have the
-[software requirements](#software-requirements) installed under different names.
-
-In such a case, you can replace instances of `module load [module]` with the
-correct name used on your server/HPC with the following `sed` commands:
-
-```bash
-cd path/to/this/repository
-script_list=$(find . -type f -name "*.sh")
-
-# For the R programming lanugage (replace "your-r-module-name")
-for file in "${script_list}"; do
-  sed -i "s/R\/4.2.1-foss-2022a/your-R-module-name/" "${file}"
-done
-
-# For bedtools (replace "your-bedtools-module-name")
-for file in "${script_list}"; do
-  sed -i "s/BEDTools/your-bedtools-module-name/" "${file}"
-done
-```
+>[!IMPORTANT]
+> ## Usage outside of UoE
+>
+>If you are using these scripts and you are not using the University of Exeter's
+>HPC system, these script will likely give some errors. Some SLURM directives
+>are specifically for our HPC and likewise for `module load` statements. If you
+>wish to remove these lines from the pipeline, run the `setup` file before
+>[using the scripts](#usage) with:
+>
+>```bash
+>./setup
+>```
+>
+>If you plan on using these scripts with a server/HPC that also makes use of
+>[modules](https://github.com/cea-hpc/modules/), you may have the
+>[software requirements](#software-requirements) installed under different names.
+>
+>In such a case, you can replace instances of `module load [module]` with the
+>correct name used on your server/HPC with the following `sed` commands:
+>
+>```bash
+>cd path/to/this/repository
+>script_list=$(find . -type f -name "*.sh")
+>
+># For the R programming lanugage (replace "your-r-module-name")
+>for file in "${script_list}"; do
+>  sed -i "s/R\/4.2.1-foss-2022a/your-R-module-name/" "${file}"
+>done
+>
+># For bedtools (replace "your-bedtools-module-name")
+>for file in "${script_list}"; do
+>  sed -i "s/BEDTools/your-bedtools-module-name/" "${file}"
+>done
+>```
 
 ## Usage
 
