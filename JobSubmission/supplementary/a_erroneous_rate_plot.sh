@@ -16,8 +16,8 @@ cat <<EOF
 ================================================================================
 a_erroneous_rate_plot.sh
 ================================================================================
-Purpose: Outputs plots that show how p1/p2 change with read depth/methylation
-percent thresholds.
+Purpose: Outputs plots that show how approximated erroneous methylation call 
+probability changes with read depth/methylation percent thresholds.
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R
