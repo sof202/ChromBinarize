@@ -28,9 +28,6 @@ EOF
 
 if [ "$#" -eq 0 ]; then usage; fi 
 
-## ======== ##
-##   MAIN   ##
-## ======== ##
 
 # config will source all of the variables seen below
 config_file_location=$1
@@ -41,12 +38,23 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files robustness
 
-mkdir -p "${BASE_DIR}/5mc"
-awk -v min_read_threshold="${minimum_read_depth}" \
-  -v max_read_threshold="${maximum_read_depth}" \
-  -v mark="${mark}" \
-  '$4 == mark && $5 >= min_read_threshold && $5 <= max_read_threshold' \
-  "${ONT_bed_file_location}" > "${BASE_DIR}/5mc/filtered_reads.bed"
+filtered_reads_directory="${BASE_DIR}/CpG_robustness"
+mkdir -p "${filtered_reads_directory}"
+
+source "${FUNCTIONS_DIR}/purification.sh" || exit 1
+
+number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
+if [[ "${number_of_columns}" -eq 5 ]]; then
+    purification_convertBSBedToMethylBedFormat "${filtered_reads_directory}/converted.bed" "${bed_file_location}" "${mark}"
+
+    bed_file_location="${filtered_reads_directory}/converted.bed"
+fi
+
+purification_filterOutLowReadDepthSites "${filtered_reads_directory}" "${bed_file_location}" "${mark}"
+
+## ============ ##
+##   PLOTTING   ##
+## ============ ##
 
 mkdir -p "${BASE_DIR}/plots"
 
@@ -54,9 +62,9 @@ module purge
 module load R/4.2.1-foss-2022a
 
 Rscript "${RSCRIPT_DIR}/CpG_robustness.R" \
-  "${BASE_DIR}/5mc/filtered_reads.bed" \
+  "${filtered_reads_directory}/filtered_reads.bed" \
   "${min_distance}" \
   "${max_distance}" \
   "${BASE_DIR}/plots/cpg_robustness_min_${min_distance}_max_${max_distance}.png"
 
-
+rm -rf "${filtered_reads_directory}"

@@ -38,6 +38,8 @@ reference_percentage_threshold_m=95
 reference_read_depth_threshold_h=50
 reference_percentage_threshold_h=95
 
+# Default is very strict, loosen this if you want a more lax definition of 
+# '(hydroxy)methylated'
 binomial_threshold=1.7e-8
 
 bin_size=200
@@ -47,7 +49,8 @@ bin_size=200
 # These files are included in the installation of ChromHMM
 chromosome_sizes=
 
-# ONT only: m -> methylation, h -> hydroxymethylation
+# single quoted value
+# m -> methylation, h -> hydroxymethylation
 mark="m"
 
 ## --------------------- ##
