@@ -43,31 +43,32 @@ move_log_files convert
 module purge
 module load R/4.2.1-foss-2022a
 
-mkdir -p "${BASE_DIR}/4_BinarizedFiles/${epigenetic_mark}"
+mkdir -p "${BINARY_DIR}/${epigenetic_mark}"
 
 Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
   "${chromosome_sizes}" \
   "${bin_size}" \
-  "${BASE_DIR}/4_BinarizedFiles/${epigenetic_mark}"
+  "${BINARY_DIR}/${epigenetic_mark}"
 
 module purge
 module load BEDTools
 
 for chr in {1..22} X; do
-  output_binary_file="${BASE_DIR}/4_BinarizedFiles/${epigenetic_mark}/${cell_type}_chr${chr}_binary.txt.gz"
+  output_binary_file="${BINARY_DIR}/${epigenetic_mark}/${cell_type}_chr${chr}_binary.txt.gz"
   echo -e "${cell_type}\tchr${chr}" > "${output_binary_file}"
   echo "${epigenetic_mark}" >> "${output_binary_file}"
 
   bedtools intersect \
     -wa \
     -c \
-    -a "${BASE_DIR}/4_BinarizedFiles/${epigenetic_mark}/chromosome${chr}.bed" \
+    -a "${BINARY_DIR}/${epigenetic_mark}/chromosome${chr}.bed" \
     -b "${input_MACS_file}" | \
-    awk '{OFS="\t"} {print ($4 > 0 ? 1 : 0)}' | \
-    gzip >> \
+    awk '{OFS="\t"} {print ($4 > 0 ? 1 : 0)}' >> \
     "${output_binary_file}"
 
-  rm "${BASE_DIR}/4_BinarizedFiles/${epigenetic_mark}/chromosome${chr}.bed"
+  gunzip "${output_binary_file}"
+
+  rm "${BINARY_DIR}/${epigenetic_mark}/chromosome${chr}.bed"
 done
 
 
