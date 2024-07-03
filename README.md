@@ -1,3 +1,17 @@
+<p align="center">
+  <img src="https://github.com/sof202/ChromBinarize/assets/147140110/811a4728-d701-4d99-a8a6-d3cbd6f145b1" />
+</p>
+
+</p>
+<p align="center">
+    <a href="https://img.shields.io/codefactor/grade/github/sof202/ChromBinarize" alt="CodeFactor">
+        <img src="https://img.shields.io/codefactor/grade/github/sof202/ChromBinarize" /></a>
+    <a href="https://img.shields.io/github/commit-activity/m/sof202/ChromBinarize" alt="Commit activity">
+        <img src="https://img.shields.io/github/commit-activity/m/sof202/ChromBinarize" /></a>
+    <a href="https://github.com/sof202/ChromBinarize/blob/main/LICENSE" alt="License">
+        <img src="https://img.shields.io/github/license/sof202/ChromBinarize" /></a>
+</p>
+
 # ChromHMM Binarization Tools
 
 This is a selection of scripts that will convert various bed files for ONT, 
