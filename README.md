@@ -23,12 +23,14 @@ calling algorithms (like MACS) exist for ChIP-Seq and ATAC-Seq datasets. As
 such, a separate suite of scripts that binarize these data sets is proposed
 here.
 
-## Running
+## Usage
 
 In order to run these scripts you will need to first fill out the config file
 (template provided). Ideally you would then put this config file next to your 
 data (though, realistically you can put this anywhere you wish).
-Then, you would call scripts sequentially using SLURM workload manager with:
+
+After completing this, run scripts sequentially using SLURM workload manager:
+
 ```bash
 sbatch path/to/script path/to/config/file
 ```
