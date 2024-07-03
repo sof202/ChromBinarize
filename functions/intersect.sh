@@ -3,6 +3,7 @@
 intersect_intersectBSWithONT() {
   output_file_path=$1
   BS_bed_file=$2
+  ONT_bed_file=$3
 
   module purge
   module load BEDTools

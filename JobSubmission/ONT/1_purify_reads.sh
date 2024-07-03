@@ -51,9 +51,9 @@ source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
 output_directory="${BASE_DIR}/5mc"
 
-purification_extractSitesWithHighMethylation "${output_directory}" "${bed_file_location}" "m"
-purification_extractSitesWithLowMethylation "${output_directory}" "${bed_file_location}" "m"
-purification_filterOutLowReadDepthSites "${output_directory}" "${bed_file_location}" "m"
+purification_extractSitesWithHighMethylation "${output_directory}" "${ONT_bed_file_location}" "m"
+purification_extractSitesWithLowMethylation "${output_directory}" "${ONT_bed_file_location}" "m"
+purification_filterOutLowReadDepthSites "${output_directory}" "${ONT_bed_file_location}" "m"
 purification_calculateSiteMethylationProbability "${output_directory}"
 purification_removeDeterminedUnmethylatedSites "${output_directory}"
 
@@ -63,9 +63,9 @@ purification_removeDeterminedUnmethylatedSites "${output_directory}"
 
 output_directory="${BASE_DIR}/5hmc"
 
-purification_extractSitesWithHighMethylation "${output_directory}" "${bed_file_location}" "h"
-purification_extractSitesWithLowMethylation "${output_directory}" "${bed_file_location}" "h"
-purification_filterOutLowReadDepthSites "${output_directory}" "${bed_file_location}" "h"
+purification_extractSitesWithHighMethylation "${output_directory}" "${ONT_bed_file_location}" "h"
+purification_extractSitesWithLowMethylation "${output_directory}" "${ONT_bed_file_location}" "h"
+purification_filterOutLowReadDepthSites "${output_directory}" "${ONT_bed_file_location}" "h"
 purification_calculateSiteMethylationProbability "${output_directory}"
 purification_removeDeterminedUnmethylatedSites "${output_directory}"
 

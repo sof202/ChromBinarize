@@ -46,7 +46,7 @@ awk -v min_read_threshold="${minimum_read_depth}" \
   -v max_read_threshold="${maximum_read_depth}" \
   -v mark="${mark}" \
   '$4 == mark && $5 >= min_read_threshold && $5 <= max_read_threshold' \
-  "${bed_file_location}" > "${BASE_DIR}/5mc/filtered_reads.bed"
+  "${ONT_bed_file_location}" > "${BASE_DIR}/5mc/filtered_reads.bed"
 
 mkdir -p "${BASE_DIR}/plots"
 

@@ -45,11 +45,11 @@ move_log_files compare
 ##   INTERSECT ONT WITH WGBS   ##
 ## =========================== ##
 
-WGBS_folder=$(dirname "${WGBS_bed_file}")
+WGBS_folder=$(dirname "${WGBS_bed_file_location}")
 
 source "${FUNCTIONS_DIR}/intersect.sh" || exit 1
 
-intersect_intersectBSWithONT "${WGBS_folder}/ONT_WGBS_intersect.bed" "${WGBS_bed_file}"
+intersect_intersectBSWithONT "${WGBS_folder}/ONT_WGBS_intersect.bed" "${WGBS_bed_file_location}" "${ONT_bed_file_location}"
 
 ## ============== ##
 ##   COMPARISON   ##

@@ -45,11 +45,11 @@ move_log_files compare
 ##   INTERSECT ONT WITH OXBS   ##
 ## =========================== ##
 
-oxBS_folder=$(dirname "${oxBS_bed_file}")
+oxBS_folder=$(dirname "${oxBS_bed_file_location}")
 
 source "${FUNCTIONS_DIR}/intersect.sh" || exit 1
 
-intersect_intersectBSWithONT "${oxBS_folder}/ONT_oxBS_intersect.bed" "${oxBS_bed_file}"
+intersect_intersectBSWithONT "${oxBS_folder}/ONT_oxBS_intersect.bed" "${oxBS_bed_file_location}" "${ONT_bed_file_location}"
 
 ## ============== ##
 ##   COMPARISON   ##

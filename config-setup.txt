@@ -7,7 +7,7 @@
 # are given for you, but please check all entries.
 
 ## --------------- ##
-## globally needed ##
+## GLOBALLY NEEDED ##
 ## --------------- ##
 
 # Full file path to the root of this repository
@@ -16,12 +16,14 @@ REPO_DIR=
 # Base directory to send processed data to.
 BASE_DIR=
 
-## ------------------------------------- ##
-## ONT (HYDROXY)METHYLATION BINARIZATION ##
-## ------------------------------------- ##
+## -------------- ##
+## ONT AND BS-SEQ ##
+## -------------- ##
 
 # ONT bed file location
-bed_file_location=
+ONT_bed_file_location=
+WGBS_bed_file_location=
+oxBS_bed_file_location=
 
 # Thresholds on the read depth considered for filtering input bed files
 minimum_read_depth=30
@@ -29,6 +31,8 @@ maximum_read_depth=1000
 
 # Thresholds for creating 'good reference datasets' for obtaining value of p
 # that is used in binomial distribution
+# This is split into thresholds for 5mC and 5hmC as 5hmC usually has lower
+# read depth and less sites at ~100% hydroxymethylation.
 reference_read_depth_threshold_m=500
 reference_percentage_threshold_m=95
 reference_read_depth_threshold_h=50
@@ -36,8 +40,6 @@ reference_percentage_threshold_h=95
 
 binomial_threshold=1.7e-8
 
-# m -> methylation, h -> hydroxymethylation
-mark="m"
 bin_size=200
 
 # file path to chromosome sizes for assembly.
@@ -45,17 +47,14 @@ bin_size=200
 # These files are included in the installation of ChromHMM
 chromosome_sizes=
 
-## ------------------- ##
-## BS-SEQ BINARIZATION ##
-## ------------------- ##
-
-WGBS_bed_file_location=
-oxBS_bed_file_location=
+# ONT only: m -> methylation, h -> hydroxymethylation
+mark="m"
 
 ## --------------------- ##
 ## CHIP_SEQ BINARIZATION ##
 ## --------------------- ##
 
+# This will appear as the epigenetic mark name in the resultant binary file
 epigenetic_mark=
 input_MACS_file=
 
@@ -72,8 +71,8 @@ max_N_value=750
 # p2 for rate of erroneous methylation calls for unmethylated sites
 plot_type=
 
-# N for looking at read depth on x axis
-# percent (or anything except N) for looking at percentage on x axis
+# 'N' for looking at read depth on x axis
+# 'percent' for looking at percentage on x axis
 run_type=
 
 ## -------------------- ##
@@ -85,17 +84,3 @@ min_distance=0
 
 # Maximum distance between CpGs that you would consider 'close proximity'
 max_distance=30
-
-## --------------------------------------------- ##
-## c_WGBS_comparison.sh / d_oxBS_comparison.sh  ##
-## --------------------------------------------- ##
-
-# ONT file to compare WGBS data to
-# Cols: chr, start, end, mark, sample size, strand, percent methylation
-ONT_bed_file=
-
-# WGBS file to compare ONT data to
-# Cols: chr, start, end, number of methylated reads, total reads
-WGBS_bed_file=
-
-
