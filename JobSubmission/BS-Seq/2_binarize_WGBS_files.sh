@@ -53,6 +53,7 @@ processing_directory="${BASE_DIR}/WGBS_5mc"
 # We only want to capture the 5mC signal, so we need to remove the 5hmC signal
 # using oxBS data.
 
+rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 
 if [[ -n ${oxBS_bed_file_location} ]]; then

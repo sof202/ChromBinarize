@@ -43,6 +43,7 @@ move_log_files convert
 module purge
 module load R/4.2.1-foss-2022a
 
+rm -rf "${BINARY_DIR}/${epigenetic_mark_name:?}"
 mkdir -p "${BINARY_DIR}/${epigenetic_mark_name}"
 
 Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \

@@ -44,6 +44,7 @@ processing_directory="${BASE_DIR}/oxBS_5hmc"
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
 ## =================================== ##
 
+rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 

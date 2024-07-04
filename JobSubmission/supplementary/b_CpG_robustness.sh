@@ -39,6 +39,7 @@ source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files robustness
 
 filtered_reads_directory="${BASE_DIR}/CpG_robustness"
+rm -rf "${filtered_reads_directory}"
 mkdir -p "${filtered_reads_directory}"
 
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
