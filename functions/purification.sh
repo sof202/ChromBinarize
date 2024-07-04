@@ -13,6 +13,7 @@ purification_convertBSBedToMethylBedFormat() {
     'function convert_to_percent(reads, total_reads) {
       return (int(reads / total_reads * 10000) / 100)
     }
+    {OFS="\t"}
     {print $1,$2,$3,mark_name,$5,"+",convert_to_percent($4,$5)}' \
     "${input_bed_file}" > \
       "${output_file_name}"
