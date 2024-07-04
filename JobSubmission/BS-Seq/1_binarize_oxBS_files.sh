@@ -48,7 +48,7 @@ rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-purification_convertBSBedToMethylBedFormat "${processing_directory}/formatted.bed"
+purification_convertBSBedToMethylBedFormat "${processing_directory}/formatted.bed" "${oxBS_bed_file_location}" "h"
 
 purification_extractSitesWithHighMethylation "${processing_directory}" "${processing_directory}/formatted.bed" "h"
 purification_extractSitesWithLowMethylation "${processing_directory}" "${processing_directory}/formatted.bed" "h"
