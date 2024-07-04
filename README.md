@@ -26,7 +26,7 @@ here.
 ## Usage outside of UoE
 >[!IMPORTANT]
 >If you are using these scripts and you are not using the University of Exeter's
->HPC system, these script will likely give some errors. Some SLURM directives
+>HPC system, these scripts will likely give some errors. Some SLURM directives
 >are specifically for our HPC and likewise for `module load` statements. If you
 >wish to remove these lines from the pipeline, run the `setup` file before
 >[using the scripts](#usage) with:
