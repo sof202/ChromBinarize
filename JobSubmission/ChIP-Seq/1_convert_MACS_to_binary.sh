@@ -67,7 +67,7 @@ for chr in {1..22} X; do
     awk '{OFS="\t"} {print ($4 > 0 ? 1 : 0)}' >> \
     "${output_binary_file}"
 
-  gunzip "${output_binary_file}"
+  gzip "${output_binary_file}"
 
   rm "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chr}.bed"
 done

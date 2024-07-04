@@ -84,7 +84,7 @@ binarization_createChromhmmBinaryFiles() {
       "${dense_file}" \
       "${sparse_file}"
 
-    gunzip "${dense_file}" "${sparse_file}"
+    gzip "${dense_file}" "${sparse_file}"
   done
 
   module purge
