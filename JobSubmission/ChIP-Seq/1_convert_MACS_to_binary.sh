@@ -72,6 +72,3 @@ for chr in {1..22} X; do
   rm "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chr}.bed"
 done
 
-
-
-
