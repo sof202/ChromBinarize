@@ -18,6 +18,9 @@ BASE_DIR=
 
 cell_type="bulk"
 
+# Change to "true" to keep certain intermediate files
+debug_mode="false"
+
 ## -------------- ##
 ## ONT AND BS-SEQ ##
 ## -------------- ##

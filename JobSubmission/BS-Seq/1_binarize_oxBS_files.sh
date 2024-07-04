@@ -68,3 +68,6 @@ binarization_createBlankBins "${processing_directory}"
 binarization_countSignalIntersectionWithBins "${processing_directory}"
 binarization_createChromhmmBinaryFiles "${processing_directory}" "${BINARY_DIR}/oxBS_5hmC" "oxBS_5hmC"
 
+if [[ ! "${debug_mode:='false'}" == "true" ]]; then
+  rm -rf "${processing_directory}"
+fi
