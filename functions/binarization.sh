@@ -70,6 +70,9 @@ binarization_createChromhmmBinaryFiles() {
   module purge
   module load R/4.2.1-foss-2022a
 
+  rm -rf "${output_directory}/dense" "${output_directory}/sparse"
+  mkdir -p "${output_directory}/dense" "${output_directory}/sparse"
+
   for chromosome in {1..22} X; do
     dense_file="${output_directory}/dense/${cell_type}_chr${chromosome}_binary.txt"
     echo -e "${cell_type}\tchr${chromosome}" > "${dense_file}" 
