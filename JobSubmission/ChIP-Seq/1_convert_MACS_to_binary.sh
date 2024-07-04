@@ -54,7 +54,7 @@ module purge
 module load BEDTools
 
 for chr in {1..22} X; do
-  output_binary_file="${BINARY_DIR}/${epigenetic_mark_name}/${cell_type}_chr${chr}_binary.txt.gz"
+  output_binary_file="${BINARY_DIR}/${epigenetic_mark_name}/${cell_type}_chr${chr}_binary.txt"
   echo -e "${cell_type}\tchr${chr}" > "${output_binary_file}"
   echo "${epigenetic_mark_name}" >> "${output_binary_file}"
 
