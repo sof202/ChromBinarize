@@ -50,7 +50,7 @@ processing_directory="${BASE_DIR}/WGBS_5mc"
 ## ------------------------------------ ##
 
 # This requires oxBS and WGBS files to work. WGBS captures 5mC AND 5hmC signal.
-# We only want to capture the 5mC signal, so we need to remove the 5hmC signal
+# We only want to capture the 5hmC signal, so we need to remove the 5mc signal
 # using oxBS data.
 
 rm -rf "${processing_directory}"
@@ -79,16 +79,16 @@ if [[ -n ${oxBS_bed_file_location} ]]; then
       {OFS="\t"}
       {print $1,$2,$3,"m",$4,"+",ReLU_distance($5,$6)}
       ' "${processing_directory}/combined.bed" > \
-        "${processing_directory}/WGBS_5hmc_removed.bed"
+        "${processing_directory}/WGBS_5mc_removed.bed"
 else
-  cp "${WGBS_bed_file_location}" "${processing_directory}/WGBS_5hmc_removed.bed"
+  cp "${WGBS_bed_file_location}" "${processing_directory}/WGBS_5mc_removed.bed"
 fi
 
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-purification_extractSitesWithHighMethylation "${processing_directory}" "${processing_directory}/WGBS_5hmc_removed.bed" "m"
-purification_extractSitesWithLowMethylation "${processing_directory}" "${processing_directory}/WGBS_5hmc_removed.bed" "m"
-purification_filterOutLowReadDepthSites "${processing_directory}" "${processing_directory}/WGBS_5hmc_removed.bed" "m"
+purification_extractSitesWithHighMethylation "${processing_directory}" "${processing_directory}/WGBS_5mc_removed.bed" "m"
+purification_extractSitesWithLowMethylation "${processing_directory}" "${processing_directory}/WGBS_5mc_removed.bed" "m"
+purification_filterOutLowReadDepthSites "${processing_directory}" "${processing_directory}/WGBS_5mc_removed.bed" "m"
 purification_calculateSiteMethylationProbability "${processing_directory}"
 purification_removeDeterminedUnmethylatedSites "${processing_directory}"
 

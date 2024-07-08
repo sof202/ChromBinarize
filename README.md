@@ -172,8 +172,8 @@ pipeline. The main difference is the expected format of the input file:
 
 If you have oxidative bisulphite sequencing data (alongside regular bisulphite 
 sequencing data), you can use them in tandem to extract sites that are exactly
-5mC. Oxidative bisulphite sequencing allows you to discern which sites are
-hydroxymethylated, and as such this can be used to disentangle your bisulphite
+5hmC. Oxidative bisulphite sequencing allows you to discern which sites are
+exactly 5mC, and as such this can be used to disentangle your bisulphite
 sequencing data into 5mC and 5hmC.
 
 ## ChIP-Seq

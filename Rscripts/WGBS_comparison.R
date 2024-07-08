@@ -19,7 +19,8 @@ colnames(methylation_data) <- c(
   "WGBS_percent_methylation"
 )
 
-# Here we combine 5mC and 5hmC as WGBS only has 5mC data
+# Here we combine 5mC and 5hmC as WGBS captures both signals without separating
+# them
 methylation_data <- methylation_data |>
   dplyr::mutate(
     "hydroxy_lag" = dplyr::lag(ONT_percent_methylation)
