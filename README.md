@@ -20,8 +20,8 @@ oxBS and WGBS datasets into a format compliant with ChromHMM.
 ChromHMM is great at binarizing at a simple level, but struggles for datasets
 that are not traditionally peak called. In addition to this, 'better' peak
 calling algorithms (like MACS) exist for ChIP-Seq and ATAC-Seq datasets. As
-such, a separate suite of scripts that binarize these data sets is proposed
-here.
+such, a separate suite of scripts that binarize these datasets (into a format
+recognised by ChromHMM) is proposed here.
 
 >[!NOTE]
 >In the following README (and greater repository), the word 'methylation' means
