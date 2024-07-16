@@ -7,7 +7,7 @@ folder <- args[1]
 
 # Sites we are reasonably sure are in fact unmethylated
 unmethylated_positions <-
-  data.table::fread(paste0(folder, "/unmethylated_reads.bed"))
+  data.table::fread(file.path(folder, "unmethylated_reads.bed"))
 
 names(unmethylated_positions) <- c("reads", "percent_methylated")
 
@@ -32,7 +32,7 @@ reverse_binomial <- function(n, p, percent_methylation) {
   return(1 - pbinom(x - 1, n, p))
 }
 
-methylation_data <- data.table::fread(paste0(folder, "/filtered_reads.bed"))
+methylation_data <- data.table::fread(file.path(folder, "filtered_reads.bed"))
 names(methylation_data) <- c(
   "Chr",
   "start",
@@ -55,7 +55,7 @@ methylation_data <- dplyr::mutate(methylation_data,
 )
 
 data.table::fwrite(methylation_data,
-  file = paste0(folder, "/processed_reads.bed"),
+  file = file.path(folder, "processed_reads.bed"),
   sep = "\t",
   quote = FALSE,
   col.names = FALSE,
