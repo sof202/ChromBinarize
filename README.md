@@ -63,6 +63,14 @@ In order to run these scripts you will need to first fill out the config file
 (template provided). Ideally you would then put this config file next to your 
 data (though, realistically you can put this anywhere you wish).
 
+If you do not have the required R package dependencies (given in 
+[software requirements](#software-requirements)), please run the following:
+
+```bash
+cd path/to/this/repository
+Rscript Rscripts/install_R_libraries.R
+```
+
 After completing this, run scripts sequentially using SLURM workload manager:
 
 ```bash
@@ -102,7 +110,7 @@ The scripts in this repository are split into the following categories:
 This pipeline expects input bed files of the following format (standard output
 of ONT's [modkit](https://github.com/nanoporetech/modkit)):
 
-|Chromosome|Start|End|methylation-type|coverage|strand|percent-methylation|
+|Chromosome|Start|End|Methylation type|Coverage|Strand|Percent methylation|
 |----------|-----|---|----------------|--------|------|-------------------|
 
 These scripts have been created in an attempt to binarize the methylation and
@@ -177,7 +185,7 @@ assumed format is that of the output from
 [wgbs_tools](https://github.com/nloyfer/wgbs_tools). Specifically the `beta2bed`
 command.
 
-|Chromosome|Start|End|number of methylated reads|total reads|
+|Chromosome|Start|End|Number of methylated reads|Total reads|
 |----------|-----|---|--------------------------|-----------|
 
 
