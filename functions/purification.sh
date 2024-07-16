@@ -35,9 +35,10 @@ purification_extractSitesWithLowMethylation() {
   awk -v percent_threshold=$((100 - reference_percent_threshold)) \
     -v read_threshold="${reference_read_depth_threshold}" \
     -v mark_name="$mark_name" \
-    '$4 == mark_name && $5 >= read_threshold && $7 <= percent_threshold {print $5","$7}' \
+    '{OFS="\t"}
+    $4 == mark_name && $5 >= read_threshold && $7 <= percent_threshold {print $5","$7}' \
     "${input_bed_file}" > \
-      "${output_directory}/unmethylated.csv"
+      "${output_directory}/unmethylated_reads.bed"
 }
 
 purification_filterOutLowReadDepthSites() {

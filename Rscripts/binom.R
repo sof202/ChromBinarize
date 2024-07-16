@@ -6,7 +6,8 @@ folder <- args[1]
 ## =============== ##
 
 # Sites we are reasonably sure are in fact unmethylated
-unmethylated_positions <- data.table::fread(paste0(folder, "/unmethylated.csv"))
+unmethylated_positions <-
+  data.table::fread(paste0(folder, "/unmethylated_reads.bed"))
 
 names(unmethylated_positions) <- c("reads", "percent_methylated")
 
