@@ -23,6 +23,12 @@ calling algorithms (like MACS) exist for ChIP-Seq and ATAC-Seq datasets. As
 such, a separate suite of scripts that binarize these data sets is proposed
 here.
 
+>[!NOTE]
+>In the following README (and greater repository), the word 'methylation' means
+>*any* type of DNA methylation. As such, when more precise language is required,
+>you will see instead '5mC' or '5hmC' (*etc.*). If at any point the wording 
+>feels ambiguous when it shouldn't be, please raise an issue.
+
 ## Usage outside of UoE
 >[!IMPORTANT]
 >If you are using these scripts and you are not using the University of Exeter's
