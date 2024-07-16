@@ -16,7 +16,7 @@ cat <<EOF
 ================================================================================
 1_binarize_oxBS_files.sh
 ================================================================================
-Purpose: Create binary files for dense and sparse regions of hydroxymethylation 
+Purpose: Create binary files for dense and sparse regions of pure methylation 
 from oxidative bisulphite sequencing bed files. Bed files are expected to be 
 in the format:
   chr \t start \t end \t hydroxymethylated_reads \t total_reads  
