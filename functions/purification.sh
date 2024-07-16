@@ -19,28 +19,6 @@ purification_convertBSBedToMethylBedFormat() {
       "${output_file_name}"
 }
 
-purification_extractSitesWithHighMethylation() {
-  output_directory=$1
-  input_bed_file=$2
-  mark_name=$3
-
-  if [[ "${mark_name}" == "m" ]]; then
-    reference_percent_threshold="${reference_percentage_threshold_m:=95}"
-    reference_read_depth_threshold="${reference_read_depth_threshold_m:=500}"
-  elif [[ "${mark_name}" == "h" ]]; then
-    reference_percent_threshold="${reference_percentage_threshold_h:=95}"
-    reference_read_depth_threshold="${reference_read_depth_threshold_h:=50}"
-  fi
-
-
-  awk -v percent_threshold="${reference_percent_threshold}" \
-    -v read_threshold="${reference_read_depth_threshold}" \
-    -v mark_name="$mark_name" \
-    '$4 == mark_name && $5 >= read_threshold && $7 >= percent_threshold {print $5","$7}' \
-    "${input_bed_file}" > \
-      "${output_directory}/methylated.csv"
-}
-
 purification_extractSitesWithLowMethylation() {
   output_directory=$1
   input_bed_file=$2
@@ -90,7 +68,7 @@ purification_removeDeterminedUnmethylatedSites() {
   output_directory=$1
 
   awk -v threshold="${binomial_threshold}" \
-    '$9 < threshold' \
+    '$8 < threshold' \
     "${output_directory}/processed_reads.bed" > \
       "${output_directory}/purified_reads.bed"
 }

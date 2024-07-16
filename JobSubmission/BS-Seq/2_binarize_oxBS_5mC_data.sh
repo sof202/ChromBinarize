@@ -52,9 +52,6 @@ purification_convertBSBedToMethylBedFormat "${processing_directory}/formatted.be
   "${oxBS_bed_file_location}" \
   "m"
 
-purification_extractSitesWithHighMethylation "${processing_directory}" \
-  "${processing_directory}/formatted.bed" \
-  "m"
 purification_extractSitesWithLowMethylation "${processing_directory}" \
   "${processing_directory}/formatted.bed" \
   "m"

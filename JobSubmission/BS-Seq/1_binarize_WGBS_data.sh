@@ -52,9 +52,6 @@ purification_convertBSBedToMethylBedFormat "${processing_directory}/formatted.be
   "${WGBS_bed_file_location}" \
   "mh"
 
-purification_extractSitesWithHighMethylation "${processing_directory}" \
-  "${processing_directory}/formatted.bed" \
-  "mh"
 purification_extractSitesWithLowMethylation "${processing_directory}" \
   "${processing_directory}/formatted.bed" \
   "mh"
