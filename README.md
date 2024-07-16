@@ -102,7 +102,7 @@ The scripts in this repository are split into the following categories:
 
 - [ONT](#ont)
 - [BS-Seq](#bs-seq)
-- [ChIP-Seq](#chip-seq)
+- [ChIP-Seq and ATAC-Seq](#chip-seq-and-atac-seq)
 - [Supplementary scripts](#supplementary)
 
 ## ONT
@@ -221,10 +221,11 @@ If the answer to this question is yes, then we can infer that the contribution
 to the signal that 5hmC makes is significant. As such we can say that the site
 in question is significantly hydroxymethylated.
 
-## ChIP-Seq
+## ChIP-Seq and ATAC-Seq
 
-It is currently assumed that your ChIP-Seq data has already been peak called
-by an external program such as [MACS](https://github.com/macs3-project/MACS).
+It is currently assumed that your ChIP-Seq/ATAC-Seq data has already been peak 
+called by an external program such as 
+[MACS](https://github.com/macs3-project/MACS).
 
 This is a very simple script that converts the peaks called by such a program
 into the binary format that is expected by ChromHMM. Make sure your input bed
