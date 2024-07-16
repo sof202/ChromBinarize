@@ -63,6 +63,13 @@ chromosome_sizes=
 # m -> methylation, h -> hydroxymethylation
 mark="m"
 
+# Specifically for extracting 5hmC, this is the significance level to use with
+# confidence intervals. Please see README.md for more information.
+# WARNING: Going for anything more strict than a 99% confidence interval will
+# result in zero hydroxymethylation signal unless you have very high average
+# read depth.
+significance_level=0.05
+
 ## --------------------- ##
 ## CHIP_SEQ BINARIZATION ##
 ## --------------------- ##
