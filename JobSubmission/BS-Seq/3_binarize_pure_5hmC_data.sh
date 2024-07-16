@@ -14,12 +14,12 @@
 usage() {
 cat <<EOF
 ================================================================================
-2_binarize_WGBS_files.sh
+3_binarize_pure_5hmC_data.
 ================================================================================
-Purpose: Create binary files for dense and sparse regions of methylation
-from whole genome bisulphite sequencing bed files. Bed files are expected to be 
-in the format:
-  chr \t start \t end \t methylated_reads \t total_reads  
+Purpose: Create binary files for dense and sparse regions of 5hmc using a
+combination of whole genome bisulphite sequencing and oxidative bisulphite
+sequencing bed files. Bed files are expected to be in the format:
+  chr \t start \t end \t number_of_methylated_reads \t total_reads  
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, awk, bedtools

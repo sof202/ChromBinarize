@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-1_binarize_oxBS_files.sh
+2_binarize_oxBS_5mC_data.sh
 ================================================================================
 Purpose: Create binary files for dense and sparse regions of 5mC from 
 oxidative bisulphite sequencing bed files. Bed files are expected to be in the 
