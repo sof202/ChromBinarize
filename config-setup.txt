@@ -25,7 +25,7 @@ debug_mode="false"
 ## ONT AND BS-SEQ ##
 ## -------------- ##
 
-# ONT bed file location
+# Bed file locations
 ONT_bed_file_location=
 WGBS_bed_file_location=
 oxBS_bed_file_location=
