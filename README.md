@@ -78,9 +78,15 @@ version numbers are likely to still work.
 - [bash](https://www.gnu.org/software/bash/) (>=4.2.46(2))
 - [SLURM Workload Manager](https://slurm.schedmd.com/overview.html) (>=20.02.3)
 - [GNU awk](https://www.gnu.org/software/gawk/) (>=4.0.2)
-- [R](https://www.r-project.org) (>=4.2.1)
 - [Bedtools](https://github.com/arq5x/bedtools2) (>=v2.29.2)
 - [GNU gzip](https://www.gnu.org/software/gzip/) (>=1.5)
+- [R](https://www.r-project.org) (>=4.2.1)
+    - [dplyr](https://dplyr.tidyverse.org)
+    - [data.table](https://github.com/Rdatatable/data.table)
+    - Supplementary scripts only:
+        - [grid](https://github.com/cran/grid)
+        - [gridExtra](https://github.com/baptiste/gridExtra)
+        - [cowplot](https://github.com/wilkelab/cowplot)
 
 ## Included scripts
 
