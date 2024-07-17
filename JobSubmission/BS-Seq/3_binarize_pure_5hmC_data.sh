@@ -61,6 +61,11 @@ awk -v min_read_threshold="${minimum_read_depth}" \
   "${WGBS_bed_file_location}" > \
   "${processing_directory}/WGBS_filtered.bed"
 
+if [[ ! -s "${processing_directory}/WGBS_filtered.bed" ]]; then
+errors "${processing_directory}/WGBS_filtered.bed is empty. 
+The most likely cause of this is your read threshold is too strict."
+fi
+
 # We remove oxBS reads with 100% methylation as there cannot be
 # hydroxymethylation here (it is shown to be 100% methylation). This saves
 # computational time later.
@@ -69,6 +74,11 @@ awk -v min_read_threshold="${minimum_read_depth}" \
   '$5 >= min_read_threshold && $5 <= max_read_depth && $4 < $5' \
   "${oxBS_bed_file_location}" > \
   "${processing_directory}/oxBS_filtered.bed"
+
+if [[ ! -s "${processing_directory}/oxBS_filtered.bed" ]]; then
+errors "${processing_directory}/oxBS_filtered.bed is empty. 
+The most likely cause of this is your read threshold is too strict."
+fi
 
 ## -------------------------------- ##
 ##   GENERATE CONFIDENCE INTERVAL   ##
@@ -129,6 +139,11 @@ purification_convertBSBedToMethylBedFormat \
   "h" \
   "${processing_directory}/WGBS_5mC_removed.bed" \
   "${processing_directory}/purified_reads.bed"
+
+if [[ ! -s "${processing_directory}/purified_reads.bed" ]]; then
+errors "${processing_directory}/purified_reads.bed is empty. 
+The most likely cause of this is your significance level is too small."
+fi
 
 ## ======================== ##
 ##   BINARIZATION PROCESS   ##
