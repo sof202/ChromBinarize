@@ -44,7 +44,7 @@ Number of reads for sites are at least ${reference_read_depth_threshold}."
     -v read_threshold="${reference_read_depth_threshold}" \
     -v mark_name="$mark_name" \
     '{OFS="\t"}
-    $4 == mark_name && $5 >= read_threshold && $7 <= percent_threshold {print $5","$7}' \
+    $4 == mark_name && $5 >= read_threshold && $7 <= percent_threshold {print $5,$7}' \
     "${input_bed_file}" > \
       "${output_file_name}"
 
