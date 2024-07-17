@@ -10,7 +10,7 @@ logs() {
   if [[ is_logged -eq 1 ]]; then
 cat << LOG_MESSAGE
 [LOG: ${current_time}]
-"${message}"
+${message}
 LOG_MESSAGE
   fi
 }
@@ -21,6 +21,6 @@ errors() {
 
 cat 1>&2 << ERROR_MESSAGE
 [ERROR: ${current_time}]
-"${message}"
+${message}
 ERROR_MESSAGE
 }
