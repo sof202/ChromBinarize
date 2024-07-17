@@ -50,7 +50,7 @@ purification_extractSitesWithLowMethylation \
   "m" \
   "${ONT_bed_file_location}" \
   "${processing_directory}/unmethylated_reads.bed"
-purification_filterOutLowReadDepthSites \
+purification_filterOnReadDepth \
   "m" \
   "${ONT_bed_file_location}" \
   "${processing_directory}/filtered_reads.bed" 
@@ -73,7 +73,7 @@ purification_extractSitesWithLowMethylation \
   "h" \
   "${ONT_bed_file_location}" \
   "${processing_directory}/unmethylated_reads.bed"
-purification_filterOutLowReadDepthSites \
+purification_filterOnReadDepth \
   "h" \
   "${ONT_bed_file_location}" \
   "${processing_directory}/filtered_reads.bed" 

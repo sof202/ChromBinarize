@@ -57,7 +57,7 @@ if [[ "${number_of_columns}" -eq 5 ]]; then
     bed_file_location="${filtered_reads_directory}/converted.bed"
 fi
 
-purification_filterOutLowReadDepthSites \
+purification_filterOnReadDepth \
   "${mark}" \
   "${bed_file_location}" \
   "${filtered_reads_directory}"

@@ -58,7 +58,7 @@ purification_extractSitesWithLowMethylation \
   "m" \
   "${processing_directory}/formatted.bed" \
   "${processing_directory}/unmethylated_reads.bed"
-purification_filterOutLowReadDepthSites \
+purification_filterOnReadDepth \
   "m" \
   "${processing_directory}/formatted.bed" \
   "${processing_directory}/filtered_reads.bed"

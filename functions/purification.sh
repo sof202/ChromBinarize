@@ -54,7 +54,7 @@ Your thresholds in the config file are likely too high for your dataset."
   fi
 }
 
-purification_filterOutLowReadDepthSites() {
+purification_filterOnReadDepth() {
   mark_name=$1
   input_bed_file=$2
   output_file_name=$3
