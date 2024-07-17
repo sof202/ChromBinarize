@@ -63,10 +63,11 @@ logs "${DEBUG_MODE:0}" \
 "Filtering sites from ${input_bed_file} where \
 the number of reads is at least ${reference_read_depth_threshold}."
 
-  awk -v read_threshold="${minimum_read_depth}" \
+  awk -v min_read_threshold="${minimum_read_depth}" \
+    -v max_read_thresholds="${maximum_read_depth}" \
     -v mark_name="$mark_name" \
     '{OFS="\t"} 
-    $4 == mark_name && $5 >= read_threshold' \
+    $4 == mark_name && $5 >= min_read_threshold && $5 <= max_read_threshold' \
     "${input_bed_file}" > \
       "${output_file_name}"
 

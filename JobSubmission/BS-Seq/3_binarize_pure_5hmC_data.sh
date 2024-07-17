@@ -55,16 +55,18 @@ mkdir -p "${processing_directory}"
 
 # We remove WGBS reads with 0% methylation as there cannot be hydroxymethylation
 # here (saves computational time later)
-awk -v read_threshold="${minimum_read_depth}" \
-  '$5 > read_threshold && $4 > 0' \
+awk -v min_read_threshold="${minimum_read_depth}" \
+  -v max_read_threshold="${maximum_read_depth}" \
+  '$5 >= min_read_threshold && $5 <= max_read_depth && $4 > 0' \
   "${WGBS_bed_file_location}" > \
   "${processing_directory}/WGBS_filtered.bed"
 
 # We remove oxBS reads with 100% methylation as there cannot be
 # hydroxymethylation here (it is shown to be 100% methylation). This saves
 # computational time later.
-awk -v read_threshold="${minimum_read_depth}" \
-  '$5 > read_threshold && $4 < $5' \
+awk -v min_read_threshold="${minimum_read_depth}" \
+  -v max_read_threshold="${maximum_read_depth}" \
+  '$5 >= min_read_threshold && $5 <= max_read_depth && $4 < $5' \
   "${oxBS_bed_file_location}" > \
   "${processing_directory}/oxBS_filtered.bed"
 
