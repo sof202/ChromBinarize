@@ -28,11 +28,6 @@ EOF
 
 if [ "$#" -eq 0 ]; then usage; fi 
 
-## ======== ##
-##   MAIN   ##
-## ======== ##
-
-# config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || usage
 

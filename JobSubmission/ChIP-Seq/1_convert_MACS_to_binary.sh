@@ -27,11 +27,6 @@ EOF
 
 if [ "$#" -eq 0 ]; then usage; fi 
 
-## ======== ##
-##   MAIN   ##
-## ======== ##
-
-# config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || usage
 
@@ -43,6 +38,10 @@ move_log_files convert
 
 module purge
 module load R/4.2.1-foss-2022a
+
+## ================ ##
+##   BINARIZATION   ##
+## ================ ##
 
 rm -rf "${BINARY_DIR}/${epigenetic_mark_name:?}"
 mkdir -p "${BINARY_DIR}/${epigenetic_mark_name}"

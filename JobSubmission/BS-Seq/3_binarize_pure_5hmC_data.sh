@@ -30,7 +30,6 @@ EOF
 
 if [ "$#" -eq 0 ]; then usage; fi 
 
-# config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || usage 
 
@@ -40,8 +39,6 @@ for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
 move_log_files methylation
 
-processing_directory="${BASE_DIR}/WGBS_5hmc"
-
 ## =================================== ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
 ## =================================== ##
@@ -49,6 +46,8 @@ processing_directory="${BASE_DIR}/WGBS_5hmc"
 ## ------------- ##
 ##   FILTERING   ##
 ## ------------- ##
+
+processing_directory="${BASE_DIR}/WGBS_5hmc"
 
 rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"

@@ -16,7 +16,8 @@ cat <<EOF
 ================================================================================
 2_binarize_reads.sh
 ================================================================================
-Purpose: Turns processed data into binarized data
+Purpose: Turns processed ONT data into dense and sparsed ChromHMM compliable
+binarized data.
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, bedtools
@@ -36,9 +37,9 @@ for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
 move_log_files binarize
 
-## ======== ##
-##   MAIN   ##
-## ======== ##
+## ================ ##
+##   BINARIZATION   ##
+## ================ ##
 
 if [ "${mark}" == "m" ]; then
   processing_directory="${BASE_DIR}/ONT_5mc"

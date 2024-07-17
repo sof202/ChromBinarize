@@ -39,11 +39,11 @@ for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
 move_log_files oxBS_5mc
 
-processing_directory="${BASE_DIR}/oxBS_5mc"
-
 ## =================================== ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
 ## =================================== ##
+
+processing_directory="${BASE_DIR}/oxBS_5mc"
 
 rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"

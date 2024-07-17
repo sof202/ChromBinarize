@@ -16,7 +16,7 @@ cat <<EOF
 ================================================================================
 1_purify_reads.sh
 ================================================================================
-Purpose: Filters input bed file on sites that are significantly (un)methylated
+Purpose: Filters input ONT file on sites that are significantly methylated
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, awk
@@ -26,10 +26,6 @@ EOF
 }
 
 if [ "$#" -eq 0 ]; then usage; fi 
-
-## ======== ##
-##   MAIN   ##
-## ======== ##
 
 config_file_location=$1
 source "${config_file_location}" || usage

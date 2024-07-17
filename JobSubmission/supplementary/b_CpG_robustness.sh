@@ -28,8 +28,6 @@ EOF
 
 if [ "$#" -eq 0 ]; then usage; fi 
 
-
-# config will source all of the variables seen below
 config_file_location=$1
 source "${config_file_location}" || usage 
 
@@ -38,6 +36,10 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
 move_log_files robustness
+
+## ============= ##
+##   FILTERING   ##
+## ============= ##
 
 filtered_reads_directory="${BASE_DIR}/CpG_robustness"
 rm -rf "${filtered_reads_directory}"

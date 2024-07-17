@@ -37,6 +37,10 @@ for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
 move_log_files pvalues
 
+## ======================== ##
+##   CONVERT BS-SEQ FILES   ##
+## ======================== ##
+
 number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
 
 if [[ "${number_of_columns}" -eq 5 ]]; then
