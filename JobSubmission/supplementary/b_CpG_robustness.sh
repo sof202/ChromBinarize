@@ -35,14 +35,14 @@ source "${config_file_location}" || usage
 
 source "${REPO_DIR}/parameters.txt" || exit 1
 
-source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
+for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
+
 move_log_files robustness
 
 filtered_reads_directory="${BASE_DIR}/CpG_robustness"
 rm -rf "${filtered_reads_directory}"
 mkdir -p "${filtered_reads_directory}"
 
-source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
 number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
 if [[ "${number_of_columns}" -eq 5 ]]; then

@@ -38,7 +38,8 @@ source "${config_file_location}" || usage
 
 source "${REPO_DIR}/parameters.txt" || exit 1
 
-source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
+for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
+
 move_log_files compare
 
 ## =========================== ##
@@ -47,7 +48,6 @@ move_log_files compare
 
 oxBS_folder=$(dirname "${oxBS_bed_file_location}")
 
-source "${FUNCTIONS_DIR}/intersect.sh" || exit 1
 
 intersect_intersectBSWithONT \
   "${ONT_bed_file_location}" \

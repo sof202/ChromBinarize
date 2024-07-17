@@ -36,7 +36,8 @@ source "${config_file_location}" || usage
 
 source "${REPO_DIR}/parameters.txt" || exit 1
 
-source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
+for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
+
 move_log_files methylation
 
 processing_directory="${BASE_DIR}/WGBS_5hmc"
@@ -122,8 +123,6 @@ awk \
   "${processing_directory}/WGBS_oxBS_combined.bed" > \
   "${processing_directory}/WGBS_5mC_removed.bed"
 
-source "${FUNCTIONS_DIR}/purification.sh" || exit 1
-
 purification_convertBSBedToMethylBedFormat \
   "h" \
   "${processing_directory}/WGBS_5mC_removed.bed" \
@@ -132,8 +131,6 @@ purification_convertBSBedToMethylBedFormat \
 ## ======================== ##
 ##   BINARIZATION PROCESS   ##
 ## ======================== ##
-#
-source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
 binarization_createDirectories \
   "${processing_directory}"

@@ -32,7 +32,8 @@ source "${config_file_location}" || usage
 
 source "${REPO_DIR}/parameters.txt" || exit 1
 
-source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
+for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
+
 move_log_files binarize
 
 ## ======== ##
@@ -50,7 +51,6 @@ else
   exit 1
 fi
 
-source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
 binarization_createDirectories \
   "${processing_directory}"
