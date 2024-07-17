@@ -90,6 +90,6 @@ binarization_createChromhmmBinaryFiles \
   "${BINARY_DIR}/oxBS_5mC" \
   "oxBS_5mC"
 
-if [[ ! "${debug_mode:='false'}" == "true" ]]; then
+if [[ ! "${DEBUG_MODE:='false'}" == "true" ]]; then
   rm -rf "${processing_directory}"
 fi
