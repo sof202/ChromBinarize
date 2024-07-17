@@ -37,11 +37,11 @@ maximum_read_depth=10000
 # Thresholds for creating 'good reference datasets' for obtaining value of p
 # that is used in binomial distribution (look at README.md for more info)
 # This is split into thresholds for 5mC and 5hmC as 5hmC usually has lower
-# read depth and less sites at ~100% hydroxymethylation.
+# read depth and less sites at high levels of hydroxymethylation.
 reference_read_depth_threshold_m=500
-reference_percentage_threshold_m=95
+reference_percentage_threshold_m=5
 reference_read_depth_threshold_h=50
-reference_percentage_threshold_h=95
+reference_percentage_threshold_h=5
 
 # Default is very strict, loosen this if you want a more lax definition of 
 # '(hydroxy)methylated'

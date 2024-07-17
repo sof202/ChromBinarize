@@ -28,10 +28,10 @@ purification_extractSitesWithLowMethylation() {
   output_file_name=$3
 
   if [[ "${mark_name}" =~ "m" ]]; then
-    reference_percent_threshold="${reference_percentage_threshold_m:=95}"
+    reference_percent_threshold="${reference_percentage_threshold_m:=5}"
     reference_read_depth_threshold="${reference_read_depth_threshold_m:=500}"
   elif [[ "${mark_name}" == "h" ]]; then
-    reference_percent_threshold="${reference_percentage_threshold_h:=95}"
+    reference_percent_threshold="${reference_percentage_threshold_h:=5}"
     reference_read_depth_threshold="${reference_read_depth_threshold_h:=50}"
   fi
 
@@ -40,7 +40,7 @@ logs "${DEBUG_MODE:0}" \
 Percent methylation for sites are at most ${reference_percent_threshold},
 Number of reads for sites are at least ${reference_read_depth_threshold}."
 
-  awk -v percent_threshold=$((100 - reference_percent_threshold)) \
+  awk -v percent_threshold="${reference_percent_threshold}" \
     -v read_threshold="${reference_read_depth_threshold}" \
     -v mark_name="$mark_name" \
     '{OFS="\t"}
