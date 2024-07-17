@@ -5,6 +5,12 @@ intersect_intersectBSWithONT() {
   BS_bed_file=$2
   output_file_path=$3
 
+logs "${DEBUG_MODE:0}" \
+"Intersecting:
+Bisulphite sequencing file: ${BS_bed_file}
+with
+Oxford Nanopore sequencing file: ${ONT_bed_file}."
+
   module purge
   module load BEDTools
 
