@@ -22,6 +22,9 @@ binarization_splitIntoChromosomes() {
   processing_directory=$1
   input_file_name=$2
 
+logs "${DEBUG_MODE:0}" \
+"Splitting ${input_file_name} into chromosomes 1-22 and X..."
+
   for chromosome in {1..22} X; do
     awk \
       -v chromosome="$chromosome" \
@@ -34,6 +37,23 @@ binarization_splitIntoChromosomes() {
 binarization_createBlankBins() {
   output_directory=$1
 
+logs "${DEBUG_MODE:0}" \
+"Creating blank bed files for chromosomes 1-22 and X..."
+
+  if [[ ! -f "${chromosome_sizes}" ]]; then
+error "Could not find your chromosome sizes file at:
+${chromosomes_sizes}.
+Make sure the variable in the config file is pointing to the correct location."
+  fi
+
+  if [[ $(awk '{print NR}' "${chromosome_sizes}") -eq 2 ]]; then
+error "Your chromosome sizes file at:
+${chromosome_sizes}
+does not have 2 columns. This is likely to cause the script to fail.
+This file should be of the form:
+chromosome    size"
+  fi
+  
   module purge
   module load R/4.2.1-foss-2022a
 
@@ -50,6 +70,9 @@ binarization_countSignalIntersectionWithBins() {
 
   module purge
   module load BEDTools
+
+logs "${DEBUG_MODE:0}" \
+"Calculating the number of methylated sites in each ${bin_size}bp bin..."
 
   for chromosome in {1..22} X; do
     bedtools intersect \
@@ -71,6 +94,11 @@ binarization_createChromhmmBinaryFiles() {
   module purge
   module load R/4.2.1-foss-2022a
 
+logs "${DEBUG_MODE:0}" \
+"Generating ChromHMM binary files...
+Sparse files will be placed in: ${output_directory}/sparse
+Dense files will be placed in: ${output_directory}/dense"
+
   rm -rf "${output_directory}/dense" "${output_directory}/sparse"
   mkdir -p "${output_directory}/dense" "${output_directory}/sparse"
 
@@ -89,6 +117,12 @@ binarization_createChromhmmBinaryFiles() {
       "${sparse_file}"
 
     gzip "${dense_file}" "${sparse_file}"
+
+    if [[ $(awk 'NR>2 && $1>0' "${dense_file}" | wc -l) -eq 0 ]]; then
+error "${dense_file} has no true/1 entries. 
+Either this chromosome is too sparse, or your 'binomial threshold' in the \
+config file is too strict."
+    fi
   done
 
   module purge
