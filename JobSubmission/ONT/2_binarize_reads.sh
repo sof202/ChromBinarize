@@ -52,11 +52,19 @@ fi
 
 source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-binarization_createDirectories "${processing_directory}"
-binarization_splitIntoChromosomes "${processing_directory}"
-binarization_createBlankBins "${processing_directory}"
-binarization_countSignalIntersectionWithBins "${processing_directory}"
-binarization_createChromhmmBinaryFiles  "${processing_directory}" "${BINARY_DIR}/${mark_name}" "${mark_name}"
+binarization_createDirectories \
+  "${processing_directory}"
+binarization_splitIntoChromosomes \
+  "${processing_directory}" \
+  "purified_reads.bed"
+binarization_createBlankBins \
+  "${processing_directory}"
+binarization_countSignalIntersectionWithBins \
+  "${processing_directory}"
+binarization_createChromhmmBinaryFiles \
+  "${processing_directory}" \
+  "${BINARY_DIR}/${mark_name}" \
+  "${mark_name}"
 
 if [[ ! "${debug_mode:='false'}" == "true" ]]; then
   rm -rf "${processing_directory}"

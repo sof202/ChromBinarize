@@ -49,7 +49,10 @@ WGBS_folder=$(dirname "${WGBS_bed_file_location}")
 
 source "${FUNCTIONS_DIR}/intersect.sh" || exit 1
 
-intersect_intersectBSWithONT "${WGBS_folder}/ONT_WGBS_intersect.bed" "${WGBS_bed_file_location}" "${ONT_bed_file_location}"
+intersect_intersectBSWithONT \
+  "${ONT_bed_file_location}" \
+  "${WGBS_bed_file_location}" \
+  "${WGBS_folder}/ONT_WGBS_intersect.bed"  
 
 ## ============== ##
 ##   COMPARISON   ##

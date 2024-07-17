@@ -39,7 +39,7 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 source "${FUNCTIONS_DIR}/move_log_files.sh" || exit 1
 move_log_files methylation
 
-processing_directory="${BASE_DIR}/WGBS_5mc"
+processing_directory="${BASE_DIR}/WGBS_5hmc"
 
 ## =================================== ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
@@ -125,9 +125,9 @@ awk \
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
 purification_convertBSBedToMethylBedFormat \
-  "${processing_directory}/purified_reads.bed" \
+  "h" \
   "${processing_directory}/WGBS_5mC_removed.bed" \
-  "h"
+  "${processing_directory}/purified_reads.bed"
 
 ## ======================== ##
 ##   BINARIZATION PROCESS   ##
@@ -135,14 +135,19 @@ purification_convertBSBedToMethylBedFormat \
 #
 source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-binarization_createDirectories "${processing_directory}"
-binarization_splitIntoChromosomes "${processing_directory}"
-binarization_createBlankBins "${processing_directory}"
-binarization_countSignalIntersectionWithBins "${processing_directory}"
-
-binarization_createChromhmmBinaryFiles "${processing_directory}" \
-  "${BINARY_DIR}/WGBS_5mC" \
-  "WGBS_5mC"
+binarization_createDirectories \
+  "${processing_directory}"
+binarization_splitIntoChromosomes \
+  "${processing_directory}" \
+  "purified_reads.bed"
+binarization_createBlankBins \
+  "${processing_directory}"
+binarization_countSignalIntersectionWithBins \
+  "${processing_directory}"
+binarization_createChromhmmBinaryFiles \
+  "${processing_directory}" \
+  "${BINARY_DIR}/WGBS_5hmC" \
+  "WGBS_5hmC"
 
 if [[ ! "${debug_mode:='false'}" == "true" ]]; then
   rm -rf "${processing_directory}"

@@ -19,14 +19,15 @@ binarization_splitIntoChromosomes() {
   # ChromHMM requires a binary file for each chromosome, whilst bed files
   # usually cover the whole genome. Hence, splitting of the bed files is
   # required
-  output_directory=$1
+  processing_directory=$1
+  input_file_name=$2
 
   for chromosome in {1..22} X; do
     awk \
       -v chromosome="$chromosome" \
       '$1 == "chr"chromosome' \
-      "${output_directory}/purified_reads.bed" > \
-      "${output_directory}/split/purified_chr${chromosome}.bed"
+      "${processing_directory}/${input_file_name}" > \
+      "${processing_directory}/split/purified_chr${chromosome}.bed"
     done
 }
 

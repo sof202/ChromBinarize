@@ -41,7 +41,10 @@ number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
 if [[ "${number_of_columns}" -eq 5 ]]; then
     source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-    purification_convertBSBedToMethylBedFormat "${BASE_DIR}/converted.bed" "${bed_file_location}" "${mark}"
+    purification_convertBSBedToMethylBedFormat \
+      "${mark}" \
+      "${bed_file_location}" \
+      "${BASE_DIR}/converted.bed"
 
     bed_file_location="${BASE_DIR}/converted.bed"
 fi

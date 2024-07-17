@@ -48,16 +48,27 @@ rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
-purification_convertBSBedToMethylBedFormat "${processing_directory}/formatted.bed" \
+purification_convertBSBedToMethylBedFormat \
+  "m" \
   "${oxBS_bed_file_location}" \
-  "m"
+  "${processing_directory}/formatted.bed"
 
-purification_extractSitesWithLowMethylation "${processing_directory}" \
+purification_extractSitesWithLowMethylation \
+  "m" \
   "${processing_directory}/formatted.bed" \
-  "m"
-purification_filterOutLowReadDepthSites "${processing_directory}" "${processing_directory}/formatted.bed" "h"
-purification_calculateSiteMethylationProbability "${processing_directory}" 
-purification_removeDeterminedUnmethylatedSites "${processing_directory}"
+  "${processing_directory}/unmethylated_reads.bed"
+purification_filterOutLowReadDepthSites \
+  "m" \
+  "${processing_directory}/formatted.bed" \
+  "${processing_directory}/filtered_reads.bed"
+purification_calculateSiteMethylationProbability \
+  "${processing_directory}" \
+  "unmethylated_reads.bed" \
+  "filtered_reads.bed" \
+  "processed_reads.bed"
+purification_removeDeterminedUnmethylatedSites \
+  "${processing_directory}/processed_reads.bed" \
+  "${processing_directory}/purified_reads.bed"
 
 ## ======================== ##
 ##   BINARIZATION PROCESS   ##
@@ -65,11 +76,17 @@ purification_removeDeterminedUnmethylatedSites "${processing_directory}"
 
 source "${FUNCTIONS_DIR}/binarization.sh" || exit 1
 
-binarization_createDirectories "${processing_directory}"
-binarization_splitIntoChromosomes "${processing_directory}"
-binarization_createBlankBins "${processing_directory}"
-binarization_countSignalIntersectionWithBins "${processing_directory}"
-binarization_createChromhmmBinaryFiles "${processing_directory}" \
+binarization_createDirectories \
+  "${processing_directory}"
+binarization_splitIntoChromosomes \
+  "${processing_directory}" \
+  "purified_reads.bed"
+binarization_createBlankBins \
+  "${processing_directory}"
+binarization_countSignalIntersectionWithBins \
+  "${processing_directory}"
+binarization_createChromhmmBinaryFiles \
+  "${processing_directory}" \
   "${BINARY_DIR}/oxBS_5mC" \
   "oxBS_5mC"
 

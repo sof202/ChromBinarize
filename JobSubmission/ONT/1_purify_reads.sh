@@ -51,10 +51,22 @@ source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
 processing_directory="${BASE_DIR}/5mc"
 
-purification_extractSitesWithLowMethylation "${processing_directory}" "${ONT_bed_file_location}" "m"
-purification_filterOutLowReadDepthSites "${processing_directory}" "${ONT_bed_file_location}" "m"
-purification_calculateSiteMethylationProbability "${processing_directory}"
-purification_removeDeterminedUnmethylatedSites "${processing_directory}"
+purification_extractSitesWithLowMethylation \
+  "m" \
+  "${ONT_bed_file_location}" \
+  "${processing_directory}/unmethylated_reads.bed"
+purification_filterOutLowReadDepthSites \
+  "m" \
+  "${ONT_bed_file_location}" \
+  "${processing_directory}/filtered_reads.bed" 
+purification_calculateSiteMethylationProbability \
+  "${processing_directory}" \
+  "unmethylated_reads.bed" \
+  "filtered_reads.bed" \
+  "processed_reads.bed"
+purification_removeDeterminedUnmethylatedSites \
+  "${processing_directory}/processed_reads.bed" \
+  "${processing_directory}/purified_reads.bed"
 
 ## ===== ##
 ##  5hmC ##
@@ -62,8 +74,19 @@ purification_removeDeterminedUnmethylatedSites "${processing_directory}"
 
 processing_directory="${BASE_DIR}/5hmc"
 
-purification_extractSitesWithLowMethylation "${processing_directory}" "${ONT_bed_file_location}" "h"
-purification_filterOutLowReadDepthSites "${processing_directory}" "${ONT_bed_file_location}" "h"
-purification_calculateSiteMethylationProbability "${processing_directory}"
-purification_removeDeterminedUnmethylatedSites "${processing_directory}"
-
+purification_extractSitesWithLowMethylation \
+  "h" \
+  "${ONT_bed_file_location}" \
+  "${processing_directory}/unmethylated_reads.bed"
+purification_filterOutLowReadDepthSites \
+  "h" \
+  "${ONT_bed_file_location}" \
+  "${processing_directory}/filtered_reads.bed" 
+purification_calculateSiteMethylationProbability \
+  "${processing_directory}" \
+  "unmethylated_reads.bed" \
+  "filtered_reads.bed" \
+  "processed_reads.bed"
+purification_removeDeterminedUnmethylatedSites \
+  "${processing_directory}/processed_reads.bed" \
+  "${processing_directory}/purified_reads.bed"

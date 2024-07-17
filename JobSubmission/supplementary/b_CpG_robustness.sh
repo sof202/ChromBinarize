@@ -46,12 +46,18 @@ source "${FUNCTIONS_DIR}/purification.sh" || exit 1
 
 number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
 if [[ "${number_of_columns}" -eq 5 ]]; then
-    purification_convertBSBedToMethylBedFormat "${filtered_reads_directory}/converted.bed" "${bed_file_location}" "${mark}"
+    purification_convertBSBedToMethylBedFormat \
+      "${mark}" \
+      "${bed_file_location}" \
+      "${filtered_reads_directory}/converted.bed"
 
     bed_file_location="${filtered_reads_directory}/converted.bed"
 fi
 
-purification_filterOutLowReadDepthSites "${filtered_reads_directory}" "${bed_file_location}" "${mark}"
+purification_filterOutLowReadDepthSites \
+  "${mark}" \
+  "${bed_file_location}" \
+  "${filtered_reads_directory}"
 
 ## ============ ##
 ##   PLOTTING   ##
