@@ -7,9 +7,9 @@
 #SBATCH --ntasks-per-node=16
 #SBATCH --mem=4G 
 #SBATCH --mail-type=END 
-#SBATCH --output=methylation%j.log
-#SBATCH --error=methylation%j.err
-#SBATCH --job-name=methylation
+#SBATCH --output=5mC%j.log
+#SBATCH --error=5mC%j.err
+#SBATCH --job-name=5mC
 
 usage() {
 cat <<EOF
@@ -38,7 +38,7 @@ source "${REPO_DIR}/parameters.txt" || exit 1
 
 for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
-move_log_files methylation
+move_log_files 5mC
 
 ## =================================== ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
