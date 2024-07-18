@@ -58,7 +58,7 @@ methylation_data <- dplyr::mutate(methylation_data,
 )
 
 data.table::fwrite(methylation_data,
-  file = file.path(folder, ouput_file_name),
+  file = file.path(folder, output_file_name),
   sep = "\t",
   quote = FALSE,
   col.names = FALSE,
