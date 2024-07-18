@@ -41,13 +41,13 @@ logs "${DEBUG_MODE:0}" \
 "Creating blank bed files for chromosomes 1-22 and X..."
 
   if [[ ! -f "${chromosome_sizes}" ]]; then
-error "Could not find your chromosome sizes file at:
+errors "Could not find your chromosome sizes file at:
 ${chromosomes_sizes}.
 Make sure the variable in the config file is pointing to the correct location."
   fi
 
   if [[ $(awk 'NR == 1 {print NF}' "${chromosome_sizes}") -eq 2 ]]; then
-error "Your chromosome sizes file at:
+errors "Your chromosome sizes file at:
 ${chromosome_sizes}
 does not have 2 columns. This is likely to cause the script to fail.
 This file should be of the form:
@@ -119,7 +119,7 @@ Dense files will be placed in: ${output_directory}/dense"
     gzip "${dense_file}" "${sparse_file}"
 
     if [[ $(awk 'NR>2 && $1>0' "${dense_file}" | wc -l) -eq 0 ]]; then
-error "${dense_file} has no true/1 entries. 
+errors "${dense_file} has no true/1 entries. 
 Either this chromosome is too sparse, or your 'binomial threshold' in the \
 config file is too strict."
     fi
