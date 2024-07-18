@@ -53,7 +53,8 @@ bin_size=200
 
 # file path to chromosome sizes for assembly.
 # This file is expected to be of the form "chromosome \t size"
-# These files are included in the installation of ChromHMM
+# These files are included in the installation of ChromHMM, not using these
+# files might cause some errors.
 chromosome_sizes=
 
 # single quoted value
