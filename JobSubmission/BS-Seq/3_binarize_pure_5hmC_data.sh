@@ -163,6 +163,6 @@ binarization_createChromhmmBinaryFiles \
   "${BINARY_DIR}/WGBS_5hmC" \
   "WGBS_5hmC"
 
-if [[ ! "${DEBUG_MODE:=0}" -eq 1 ]]; then
+if [[ "${DEBUG_MODE:=0}" -eq 0 ]]; then
   rm -rf "${processing_directory}"
 fi

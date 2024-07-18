@@ -68,6 +68,6 @@ binarization_createChromhmmBinaryFiles \
   "${BINARY_DIR}/${mark_name}" \
   "${mark_name}"
 
-if [[ ! "${DEBUG_MODE:=0}" -eq 1 ]]; then
+if [[ "${DEBUG_MODE:=0}" -eq 0 ]]; then
   rm -rf "${processing_directory}"
 fi
