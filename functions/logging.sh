@@ -5,7 +5,7 @@ logs() {
   is_logged=$1
   message=$2
 
-  current_time=$(date -u +'%-d-%m ~ %T')
+  current_time=$(date +'%-d-%m ~ %T')
 
   if [[ is_logged -eq 1 ]]; then
 cat << LOG_MESSAGE
@@ -17,7 +17,7 @@ LOG_MESSAGE
 
 errors() {
   message=$1
-  current_time=$(date -u +'%-d-%m ~ %T')
+  current_time=$(date +'%-d-%m ~ %T')
 
 cat 1>&2 << ERROR_MESSAGE
 [ERROR: ${current_time}]
