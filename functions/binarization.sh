@@ -116,13 +116,13 @@ Dense files will be placed in: ${output_directory}/dense"
       "${dense_file}" \
       "${sparse_file}"
 
-    gzip "${dense_file}" "${sparse_file}"
-
     if [[ $(awk 'NR>2 && $1>0' "${dense_file}" | wc -l) -eq 0 ]]; then
 errors "${dense_file} has no true/1 entries. 
 Either this chromosome is too sparse, or your 'binomial threshold' in the \
 config file is too strict."
     fi
+
+    gzip "${dense_file}" "${sparse_file}"
   done
 
   module purge
