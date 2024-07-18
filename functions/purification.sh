@@ -101,7 +101,7 @@ basecalling errors."
 
 purification_removeDeterminedUnmethylatedSites() {
   input_file=$1
-  output_file=$1
+  output_file=$2
 
 logs "${DEBUG_MODE:0}" \
 "Removing sites that are deemed unmethylated (non-significantly methylated)"
