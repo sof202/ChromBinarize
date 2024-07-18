@@ -227,9 +227,9 @@ If the answer to this question is yes, then we can infer that the contribution
 to the signal that 5hmC makes is significant. As such we can say that the site
 in question is significantly hydroxymethylated.
 
-## ChIP-Seq and ATAC-Seq
+## Peak called data (ChIP, ATAC *etc.*)
 
-It is currently assumed that your ChIP-Seq/ATAC-Seq data has already been peak 
+It is currently assumed that your peak called data has already been peak 
 called by an external program such as 
 [MACS](https://github.com/macs3-project/MACS).
 
