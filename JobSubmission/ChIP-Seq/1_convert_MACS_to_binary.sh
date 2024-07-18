@@ -55,21 +55,35 @@ Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
 module purge
 module load BEDTools
 
-for chr in {1..22} X; do
-  output_binary_file="${BINARY_DIR}/${epigenetic_mark_name}/${cell_type}_chr${chr}_binary.txt"
-  echo -e "${cell_type}\tchr${chr}" > "${output_binary_file}"
+logs "${DEBUG_MODE:0}" \
+"Generating ChromHMM binary files..."
+
+for chromosome in {1..22} X; do
+  output_binary_file="${BINARY_DIR}/${epigenetic_mark_name}/${cell_type}_chr${chromosome}_binary.txt"
+  echo -e "${cell_type}\tchr${chromosome}" > "${output_binary_file}"
   echo "${epigenetic_mark_name}" >> "${output_binary_file}"
 
   bedtools intersect \
     -wa \
     -c \
-    -a "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chr}.bed" \
+    -a "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chromosome}.bed" \
     -b "${input_MACS_file}" | \
     awk '{OFS="\t"} {print ($4 > 0 ? 1 : 0)}' >> \
     "${output_binary_file}"
 
+  number_of_signatures=$(awk 'NR>2 && $1>0' "${output_binary_file}" | wc -l)
+
+logs 1 \
+"chromosome ${chromosome} has:
+${number_of_signatures} signatures."
+
+    if [[ "${number_of_signatures}" -eq 0 ]]; then
+errors "${chromosome}'s binary file has no true/1 entries. 
+Please check to see if your input MACS file is empty."
+    fi
+
   gzip "${output_binary_file}"
 
-  rm "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chr}.bed"
+  rm "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chromosome}.bed"
 done
 
