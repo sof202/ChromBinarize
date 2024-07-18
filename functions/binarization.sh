@@ -125,7 +125,7 @@ ${number_of_dense_signatures} dense signatures,
 ${number_of_sparse_signatures} sparse signatures."
 
     if [[ "${number_of_dense_signatures}" -eq 0 ]]; then
-errors "${dense_file} has no true/1 entries. 
+errors "${chromosome}'s binary file has no true/1 entries. 
 Either this chromosome's signatures are too sparse, \
 or your 'binomial threshold' in the config file is too strict."
     fi
