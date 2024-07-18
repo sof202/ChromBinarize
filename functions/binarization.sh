@@ -46,7 +46,7 @@ ${chromosomes_sizes}.
 Make sure the variable in the config file is pointing to the correct location."
   fi
 
-  if [[ $(awk 'NR == 1 {print NF}' "${chromosome_sizes}") -eq 2 ]]; then
+  if [[ $(awk 'NR == 1 {print NF}' "${chromosome_sizes}") -ne 2 ]]; then
 errors "Your chromosome sizes file at:
 ${chromosome_sizes}
 does not have 2 columns. This is likely to cause the script to fail.
