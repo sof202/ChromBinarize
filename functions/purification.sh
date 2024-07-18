@@ -61,7 +61,7 @@ purification_filterOnReadDepth() {
 
 logs "${DEBUG_MODE:0}" \
 "Filtering sites from ${input_bed_file} where \
-the number of reads is at least ${reference_read_depth_threshold}."
+the number of reads is at least ${minimum_read_depth}."
 
   awk -v min_read_depth="${minimum_read_depth}" \
     -v max_read_depth="${maximum_read_depth}" \
