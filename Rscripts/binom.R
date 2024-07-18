@@ -1,8 +1,8 @@
 args <- commandArgs(trailingOnly = TRUE)
 folder <- args[1]
 reference_set <- args[2]
-input_bed_file <- args[2]
-output_file_name <- args[3]
+input_bed_file <- args[3]
+output_file_name <- args[4]
 
 ## =============== ##
 ##   OBTAINING P   ##
@@ -12,7 +12,7 @@ output_file_name <- args[3]
 unmethylated_positions <-
   data.table::fread(file.path(folder, reference_set))
 
-names(unmethylated_positions) <- c("reads", "percent_methylated")
+colnames(unmethylated_positions) <- c("reads", "percent_methylated")
 
 unmethylated_positions <-
   dplyr::mutate(
@@ -36,7 +36,7 @@ reverse_binomial <- function(n, p, percent_methylation) {
 }
 
 methylation_data <- data.table::fread(file.path(folder, input_bed_file))
-names(methylation_data) <- c(
+colnames(methylation_data) <- c(
   "Chr",
   "start",
   "end",
