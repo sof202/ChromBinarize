@@ -11,6 +11,7 @@ logs() {
 cat << LOG_MESSAGE
 [LOG: ${current_time}]
 ${message}
+
 LOG_MESSAGE
   fi
 }
@@ -22,5 +23,6 @@ errors() {
 cat 1>&2 << ERROR_MESSAGE
 [ERROR: ${current_time}]
 ${message}
+
 ERROR_MESSAGE
 }
