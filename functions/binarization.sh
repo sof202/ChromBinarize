@@ -116,15 +116,15 @@ Dense files will be placed in: ${output_directory}/dense"
       "${dense_file}" \
       "${sparse_file}"
 
-    number_of_dense_signitures=$(awk 'NR>2 && $1>0' "${dense_file}" | wc -l)
-    number_of_sparse_signitures=$(awk 'NR>2 && $1>0' "${sparse_file}" | wc -l)
+    number_of_dense_signatures=$(awk 'NR>2 && $1>0' "${dense_file}" | wc -l)
+    number_of_sparse_signatures=$(awk 'NR>2 && $1>0' "${sparse_file}" | wc -l)
 
 logs 1 \
 "chromosome ${chromosome} has:
-${number_of_dense_signitures} dense signatures,
-${number_of_sparse_signitures} sparse signatures."
+${number_of_dense_signatures} dense signatures,
+${number_of_sparse_signatures} sparse signatures."
 
-    if [[ "${number_of_dense_signitures}" -eq 0 ]]; then
+    if [[ "${number_of_dense_signatures}" -eq 0 ]]; then
 errors "${dense_file} has no true/1 entries. 
 Either this chromosome's signatures are too sparse, \
 or your 'binomial threshold' in the config file is too strict."
