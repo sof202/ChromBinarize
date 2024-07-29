@@ -32,8 +32,6 @@ config_file_location=$1
 source "${config_file_location}" || { echo "could not find config file at:
 ${config_file_location}"; exit 1; }
 
-source "${REPO_DIR}/parameters.txt" || exit 1
-
 for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
 move_log_files pvalues

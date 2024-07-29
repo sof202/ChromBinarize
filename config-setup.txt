@@ -110,3 +110,20 @@ min_distance=0
 
 # Maximum distance between CpGs that you would consider 'close proximity'
 max_distance=30
+
+## ============== ##
+##   PARAMETERS   ##
+## ============== ##
+
+# Ideally these don't need to be touched. You can change them if you wish
+# however.
+
+LOG_DIR=${BASE_DIR}/LogFiles
+RSCRIPT_DIR="${REPO_DIR}/Rscripts"
+FUNCTIONS_DIR="${REPO_DIR}/functions"
+AWK_DIR="${REPO_DIR}/AWKscripts"
+BINARY_DIR="${BASE_DIR}/BinaryFiles"
+
+# Change to 1 to keep certain intermediate files and print debug logs
+DEBUG_MODE=0
+
