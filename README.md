@@ -66,8 +66,9 @@ recognised by ChromHMM) is proposed here.
 ## Usage
 
 In order to run these scripts you will need to first fill out the config file
-(template provided). Ideally you would then put this config file next to your 
-data (though, realistically you can put this anywhere you wish).
+(template provided). It is recommended that you put this config file near your 
+data (note: this is not a requirement, you can actually put this file anywhere 
+you wish).
 
 If you do not have the required R package dependencies (given in 
 [software requirements](#software-requirements)), please run the following:
