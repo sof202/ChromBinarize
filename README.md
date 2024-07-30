@@ -98,6 +98,7 @@ version numbers are likely to still work.
 - [R](https://www.r-project.org) (>=4.2.1)
     - [dplyr](https://dplyr.tidyverse.org)
     - [data.table](https://github.com/Rdatatable/data.table)
+    - [fitdistrplus](https://cran.r-project.org/web/packages/fitdistrplus/index.html)
     - Supplementary scripts only:
         - [grid](https://github.com/cran/grid)
         - [gridExtra](https://github.com/baptiste/gridExtra)
@@ -180,7 +181,7 @@ This step converts the now 'purified' ONT reads into the binarized data format
 that ChromHMM expects. That is, a single vector of 0s and 1s for each genomic
 bin/window/region.
 
-It is hard to binarize methylation data. Identifying regions that are ~200bp in
+It is hard to binarize methylation data. For example, identifying regions that are 200bp in
 size that have a single CpG with methylation signal as 'regions characterised
 by methylation' feels wrong. However, restricting genomic bins that are 
 'characterised by methylation' to those with lots of methylated sites is very
@@ -190,11 +191,11 @@ regions of (hydroxy)methylation.
 
 Dense regions of (hydroxy)methylation are defined as:
 
-> Bins that have abnormally high numbers of methylated CpGs in comparison to
-the background
+> Bins that have significantly high numbers of methylated CpGs 
+in comparison to the background
 
-'Abnormally high' is determined using the Poisson distribution with a threshold
-of 0.0001.
+'Significantly high' is determined using the beta distribution
+(with a default threshold of 0.001).
 
 Sparse regions of (hydroxy)methylation are defined as the remaining bins that
 have at least one site that is methylated.
