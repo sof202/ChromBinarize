@@ -29,10 +29,21 @@ purification_extractSitesInCpGIslands() {
   module purge
   module load BEDTools
 
+logs "${DEBUG_MODE:0}" \
+"Extracting CpGs that reside in CpG islands only using reference file:
+${CPG_ISLAND_REFERENCE}."
+
   bedtools intersect -wa \
     -a "${input_bed_file}" \
     -b "${CPG_ISLAND_REFERENCE}" > \
     "${output_bed_file}"
+
+  if [[ ! -s "${output_bed_file}" ]]; then
+errors "${output_bed_file} is empty.
+Your dataset might not have any CpGs inside of CpG islands or the wrong
+assembly might be being used. Check the reference file you provided:
+${CPG_ISLAND_REFERENCE}."
+  fi
 
   module purge
 }
