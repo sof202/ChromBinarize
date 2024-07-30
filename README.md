@@ -84,6 +84,11 @@ After completing this, run scripts sequentially using SLURM workload manager:
 sbatch path/to/script path/to/config/file
 ```
 
+> [!NOTE]
+> If you want to get a quick summary of what a script does, run the script
+> without any positional parameters (you can just run it like a normal bash
+> script in this case, `sbatch` is not required).
+
 ## Software Requirements 
 
 This pipeline requires a unix-flavoured OS and requires the following software
