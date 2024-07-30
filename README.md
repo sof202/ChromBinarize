@@ -31,9 +31,9 @@ recognised by ChromHMM) is proposed here.
 
 ## Setup
 In order to run these scripts you will need to first fill out the config file
-(template provided). It is recommended that you put this config file near your 
-data (note: this is not a requirement, you can actually put this file anywhere 
-you wish).
+(template provided in `./config-setup.txt`). It is recommended that you put 
+this config file near your data (note: this is not a requirement, you can 
+actually put this file anywhere you wish).
 
 Next run the setup script with:
 
