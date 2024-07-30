@@ -1,21 +1,31 @@
 #!/bin/bash
-# Some code featured in this repository are specific to UoE's HPC system.
-# As such this script should be ran to remove them if required.
 
-SCRIPT_DIR=$(realpath "$(dirname "$0")")
+usage() {
+cat <<EOF
+================================================================================
+setup
+================================================================================
+Purpose: Sets up the conda and renv environments for the scripts to run.
+Also deletes possible unwanted SLURM directives.
+Author: Sam Fletcher
+Contact: s.o.fletcher@exeter.ac.uk
+Dependencies: conda
+================================================================================
+EOF
+    exit 0
+}
 
-script_list=$(find "${SCRIPT_DIR}" -type f -name "*.sh")
+if [ "$#" -eq 0 ]; then usage; fi 
 
-echo "Do you want to remove instances of \"module load\" and \"module purge\"?"
-echo "(y/n)"
-read -r delete_module_lines
+config_file_location=$1
+source "${config_file_location}" || { echo "could not find config file at:
+${config_file_location}"; exit 1; }
 
-if [[ "${delete_module_lines}" == "y" ]]; then
-    for file in $script_list; do
-        sed -i "s/module load.*//g" "${file}"
-        sed -i "s/module purge//g" "${file}"
-    done
-fi
+## =========================== ##
+##   REMOVE SLURM DIRECITVES   ##
+## =========================== ##
+
+script_list=$(find "${REPO_DIR}" -type f -name "*.sh")
 
 echo "Do you want to remove SLURM directives associated with UoE's HPC?"
 echo "(y/n)"
@@ -27,3 +37,20 @@ if [[ "${delete_slurm_directives}" == "y" ]]; then
         sed -i "s/#SBATCH -p mrcq//g" "${file}"
     done
 fi
+
+## ===================== ##
+##   CONDA ENVIRONMENT   ##
+## ===================== ##
+
+. "${CONDA_SHELL}" || { echo "Could not find conda shell at:
+${CONDA_SHELL}"; exit 1; }
+conda create --name ChromBinarizea --file "${REPO_DIR}/requirements.txt"
+
+conda activate ChromBinarizea
+
+## ==================== ##
+##   RENV ENVIRONMENT   ##
+## ==================== ##
+
+cd "${REPO_DIR}" || exit 1
+Rscript -e "library(fitdistrplus); print('success')"
