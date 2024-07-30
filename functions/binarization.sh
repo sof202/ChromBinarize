@@ -114,7 +114,8 @@ Dense files will be placed in: ${output_directory}/dense"
     Rscript "$RSCRIPT_DIR/binarize.R" \
       "${input_directory}/bin_counts/chromosome${chromosome}.bed" \
       "${dense_file}" \
-      "${sparse_file}"
+      "${sparse_file}" \
+      "${bin_size}"
 
     number_of_dense_signatures=$(awk 'NR>2 && $1>0' "${dense_file}" | wc -l)
     number_of_sparse_signatures=$(awk 'NR>2 && $1>0' "${sparse_file}" | wc -l)
