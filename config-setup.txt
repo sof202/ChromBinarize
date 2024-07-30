@@ -71,6 +71,10 @@ mark="m"
 # read depth.
 significance_level=0.05
 
+# The threshold used by the beta distribution when determining densely
+# methylated bins
+beta_threshold=0.001
+
 ## --------------------- ##
 ## CHIP_SEQ BINARIZATION ##
 ## --------------------- ##
