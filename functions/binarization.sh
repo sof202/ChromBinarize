@@ -61,7 +61,7 @@ chromosome    size"
   module load R/4.2.1-foss-2022a
 
   Rscript "${RSCRIPT_DIR}/create_blank_bed_files.R" \
-    "$chromosome_sizes" \
+    "${chromosome_sizes}" \
     "${bin_size}" \
     "${output_directory}/blanks"
 
