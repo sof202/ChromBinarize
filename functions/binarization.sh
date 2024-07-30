@@ -96,18 +96,18 @@ binarization_createChromhmmBinaryFiles() {
 
 logs "${DEBUG_MODE:0}" \
 "Generating ChromHMM binary files...
-Sparse files will be placed in: ${output_directory}/sparse
-Dense files will be placed in: ${output_directory}/dense"
+Sparse files will be placed in: ${output_directory}-sparse
+Dense files will be placed in: ${output_directory}-dense"
 
-  rm -rf "${output_directory}/dense" "${output_directory}/sparse"
-  mkdir -p "${output_directory}/dense" "${output_directory}/sparse"
+  rm -rf "${output_directory}-dense" "${output_directory}-sparse"
+  mkdir -p "${output_directory}-dense" "${output_directory}-sparse"
 
   for chromosome in {1..22} X; do
-    dense_file="${output_directory}/dense/${cell_type}_chr${chromosome}_binary.txt"
+    dense_file="${output_directory}-dense/${cell_type}_chr${chromosome}_binary.txt"
     echo -e "${cell_type}\tchr${chromosome}" > "${dense_file}" 
     echo "${mark_name}_dense" >> "${dense_file}"
 
-    sparse_file="${output_directory}/sparse/${cell_type}_chr${chromosome}_binary.txt"
+    sparse_file="${output_directory}-sparse/${cell_type}_chr${chromosome}_binary.txt"
     echo -e "${cell_type}\tchr${chromosome}" > "${sparse_file}" 
     echo "${mark_name}_sparse" >> "${sparse_file}"
 
