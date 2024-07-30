@@ -36,6 +36,9 @@ logs "${DEBUG_MODE:0}" \
 
 binarization_createBlankBins() {
   output_directory=$1
+  bin_size=$2
+
+  if [[ -z "${bin_size}" ]]; then bin_size="${BIN_SIZE}"; fi
 
 logs "${DEBUG_MODE:0}" \
 "Creating blank bed files for chromosomes 1-22 and X..."
@@ -59,7 +62,7 @@ chromosome    size"
 
   Rscript "${RSCRIPT_DIR}/create_blank_bed_files.R" \
     "$chromosome_sizes" \
-    "$bin_size" \
+    "${bin_size}" \
     "${output_directory}/blanks"
 
   module purge
