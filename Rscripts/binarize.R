@@ -31,10 +31,10 @@ remove_zero_bins <- function(bin_counts) {
 }
 
 is_densely_methylated <-
-  function(bin_count, shape1, shape2, threshold) {
+  function(bin_density, shape1, shape2, threshold) {
     return(
       as.numeric( # Numeric is used as T/F is not as transferable as 0/1
-        pbeta(bin_count, shape1, shape2, lower.tail = FALSE) < threshold
+        pbeta(bin_density, shape1, shape2, lower.tail = FALSE) < threshold
       )
     )
   }
@@ -61,14 +61,12 @@ shape2 <- beta_parameters[[2]]
 
 bin_counts <- bin_counts |>
   dplyr::mutate(
-    "densely_methylated" = is_densely_methylated(
-      count,
+    "cumulative_probability" = is_densely_methylated(
+      density,
       shape1,
       shape2,
       beta_threshold
-    )
-  ) |>
-  dplyr::mutate(
+    ),
     "methylation_present" = as.numeric(count > 0)
   )
 
