@@ -29,56 +29,23 @@ recognised by ChromHMM) is proposed here.
 >you will see instead '5mC' or '5hmC' (*etc.*). If at any point the wording 
 >feels ambiguous when it shouldn't be, please raise an issue.
 
-## Usage outside of UoE
->[!IMPORTANT]
->If you are using these scripts and you are not using the University of Exeter's
->HPC system, these scripts will likely give some errors. Some SLURM directives
->are specifically for our HPC and likewise for `module load` statements. If you
->wish to remove these lines from the pipeline, run the `setup` file before
->[using the scripts](#usage) with:
->
->```bash
->./setup
->```
->
->If you plan on using these scripts with a server/HPC that also makes use of
->[modules](https://github.com/cea-hpc/modules/), you may have the
->[software requirements](#software-requirements) installed under different names.
->
->In such a case, you can replace instances of `module load [module]` with the
->correct name used on your server/HPC with the following `sed` commands:
->
->```bash
->cd path/to/this/repository
->script_list=$(find . -type f -name "*.sh")
->
-># For the R programming lanugage (replace "your-R-module-name")
->for file in "${script_list}"; do
->  sed -i "s/R\/4.2.1-foss-2022a/your-R-module-name/" "${file}"
->done
->
-># For bedtools (replace "your-bedtools-module-name")
->for file in "${script_list}"; do
->  sed -i "s/BEDTools/your-bedtools-module-name/" "${file}"
->done
->```
-
-## Usage
-
+## Setup
 In order to run these scripts you will need to first fill out the config file
 (template provided). It is recommended that you put this config file near your 
 data (note: this is not a requirement, you can actually put this file anywhere 
 you wish).
 
-If you do not have the required R package dependencies (given in 
-[software requirements](#software-requirements)), please run the following:
+Next run the setup script with:
 
 ```bash
-cd path/to/this/repository
-Rscript Rscripts/install_R_libraries.R
+./setup
 ```
 
-After completing this, run scripts sequentially using SLURM workload manager:
+This setup script will take quite some time due to the dependency tree (~49
+packages) for R. 
+
+## Usage
+After completing setup, run scripts sequentially using SLURM workload manager:
 
 ```bash
 sbatch path/to/script path/to/config/file
@@ -98,8 +65,12 @@ version numbers are likely to still work.
 - [bash](https://www.gnu.org/software/bash/) (>=4.2.46(2))
 - [SLURM Workload Manager](https://slurm.schedmd.com/overview.html) (>=20.02.3)
 - [GNU awk](https://www.gnu.org/software/gawk/) (>=4.0.2)
-- [Bedtools](https://github.com/arq5x/bedtools2) (>=v2.29.2)
 - [GNU gzip](https://www.gnu.org/software/gzip/) (>=1.5)
+
+The following software and R packages are installed for you in the `setup`
+script:
+
+- [Bedtools](https://github.com/arq5x/bedtools2) (>=v2.29.2)
 - [R](https://www.r-project.org) (>=4.2.1)
     - [dplyr](https://dplyr.tidyverse.org)
     - [data.table](https://github.com/Rdatatable/data.table)
