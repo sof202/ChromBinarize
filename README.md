@@ -306,3 +306,29 @@ This is the same as WGBS comparison, but now expects oxBS data instead. This
 allows the user to specifically look at how the hydroxymethylation calls 
 compare between ONT and oxidative bisulphite sequencing. 
 
+### Changing bin size
+
+This is a script that allows the user to change the bin size used for a
+binary file. This can be very useful when working with multiple modalities.
+For example, you may want to use a bin size of 150bp for ATAC data, but use a
+bin size of 300 for your BS-Seq data. This script allows you to do both of
+these things, but still keep the binary files compatible within ChromHMM. You
+can now convert the 300bp binary file into a 150bp binary file so that both
+binary files have the same number of lines.
+
+This works in the simplest way possible. Each bin in the new binary file
+(that lies within a bin of the original binary file) will take on the same 
+value as in the original binary file.
+
+> [!WARNING]
+> It is not reccomended that you convert a binary file to have a larger bin
+> size using this script. This is because you can't make the assumption that
+> you would still have a peak in a wider area. Imagine you combined 3 bins
+> together where only one bin had a peak, you probably would agree that the
+> combined bin shouldn't have a peak. But what about the case where you
+> combine two bins, one with a peak and the other without. What should you do
+> then? It is better to just avoid this entirely and recall the binarization
+> script for a larger bin size.
+
+To learn how the script works (in terms of positional arguments), run the
+script without any arguments.
