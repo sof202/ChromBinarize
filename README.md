@@ -332,7 +332,7 @@ value as in the original binary file.
 > together where only one bin had a peak, you probably would agree that the
 > combined bin shouldn't have a peak. But what about the case where you
 > combine two bins, one with a peak and the other without. What should you do
-> then? It is better to just avoid this entirely and recall the binarization
+> then? It is better to just avoid this entirely and re-call the binarization
 > script for a larger bin size.
 
 To learn how the script works (in terms of positional arguments), run the
