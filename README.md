@@ -52,6 +52,9 @@ You will see the following message on success:
 [1] "success"
 ```
 
+If you do not see this success message, please open up an
+[issue](https://github.com/sof202/ChromBinarize/issues).
+
 ## Usage
 After completing setup, run scripts sequentially using SLURM workload manager:
 
