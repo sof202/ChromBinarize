@@ -116,7 +116,7 @@ basecalling errors."
   module purge
   module load R/4.2.1-foss-2022a
 
-  Rscript "${RSCRIPT_DIR}/binom.R" \
+  Rscript "${RSCRIPT_DIR}/determine_unmethylated_sites.R" \
     "${processing_directory}" \
     "${reference_set}" \
     "${input_file}" \
