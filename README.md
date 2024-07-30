@@ -41,8 +41,16 @@ Next run the setup script with:
 ./setup
 ```
 
-This setup script will take quite some time due to the dependency tree (~49
-packages) for R. 
+This setup script requires user input for removing SLURM directives and also
+when setting up the conda environment. This was a conscious decision as you may
+want to check what is being installed by conda first. Also, this setup script
+will take quite some time due to the dependency tree (~49 packages) for R. 
+
+You will see the following message on success:
+
+```bash
+[1] "success"
+```
 
 ## Usage
 After completing setup, run scripts sequentially using SLURM workload manager:

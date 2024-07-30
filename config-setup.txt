@@ -10,13 +10,18 @@
 ## GLOBALLY NEEDED ##
 ## --------------- ##
 
-# Full file path to the root of this repository
-REPO_DIR=
+# Full file path to the root of this repository.
+# Ensure to surround in quotes
+REPO_DIR=""
 
 # Base directory to send processed data to.
-BASE_DIR=
+BASE_DIR=""
 
 cell_type="bulk"
+
+# Full file path to conda.sh found in your conda's installation directory
+# specifically in path/to/conda/etc/profile.d/conda.sh
+CONDA_SHELL=""
 
 ## -------------- ##
 ## ONT AND BS-SEQ ##
