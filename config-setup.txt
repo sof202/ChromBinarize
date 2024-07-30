@@ -27,6 +27,9 @@ ONT_bed_file_location=
 WGBS_bed_file_location=
 oxBS_bed_file_location=
 
+# See README.md for details
+CPG_ISLANDS_REFERENCE="${REPO_DIR}/references/cpg_islands_hg19.bed.gz"
+
 # Thresholds on the read depth considered for filtering input bed files
 # Max read depth is included due to 
 # [this paper](https://doi.org/10.1186/s13059-024-03207-9)

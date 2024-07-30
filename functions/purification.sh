@@ -22,6 +22,21 @@ logs "${DEBUG_MODE:0}" \
       "${output_file_name}"
 }
 
+purification_extractSitesInCpGIslands() {
+  input_bed_file=$1
+  output_bed_file=$2
+
+  module purge
+  module load BEDTools
+
+  bedtools intersect -wa \
+    -a "${input_bed_file}" \
+    -b "${CPG_ISLAND_REFERENCE}" > \
+    "${output_bed_file}"
+
+  module purge
+}
+
 purification_extractSitesWithLowMethylation() {
   mark_name=$1
   input_bed_file=$2

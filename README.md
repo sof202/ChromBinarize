@@ -140,10 +140,28 @@ errors from the base caller itself. We don't know what the true methylation
 signal looks like, so we can only remove sites that are 'unlikely' to be true
 methylation signal. 
 
-Sites are determined to be true methylation signal if they have a high enough
-read depth (user determined) and they pass a statistical test using a binomial
-distribution. The test attempts to answer this question:
+> [!NOTE]
+> Optionally, you can pass the `-c` flag into the purification step to further
+> filter the CpGs in the reference set to only be those that exist within
+> known CpG islands (CGIs). CpG islands are usually unmethylated, making them
+> a more reliable set (for CpGs that are truly unmethylated).
+>
+> However, if you are convinced that modified basecallers (such as dorado)
+> perform worse when it comes to calling the methylation status of isolated
+> CpGs: Do not use this option. Isolated CpGs have less context around them
+> and so modified basecallers may have less accuracy.
+>
+> Two cpg islands files are provided out of the box in the 'references'
+> directory of this repository (hg19 and hg38). These were obtained from
+> UCSC's [data integrator](https://genome.ucsc.edu/cgi-bin/hgIntegrator).
+> If your data is not in these assemblies, you might be able to find the
+> reference CGI file for your dataset here aswell.
 
+Once a suitable reference set is created, sites are determined to be true 
+methylation signal if:
+- They have a high enough read depth (user determined) 
+- They pass a statistical test using a binomial distribution. The test 
+attempts to answer this question:
 
 > How probable is it that unmethylated cells are erroroneous or 
 unrepresentative cell types (of the total population)?

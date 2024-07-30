@@ -17,6 +17,7 @@ cat <<EOF
 1_purify_reads.sh
 ================================================================================
 Purpose: Filters input ONT file on sites that are significantly methylated
+Optional argument: -c -> train erroneous reads probability on CpGs in CGIs only
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, awk
@@ -26,6 +27,14 @@ EOF
 }
 
 if [ "$#" -eq 0 ]; then usage; fi 
+
+while getopts c OPT; do
+    case "$OPT" in
+        c )       use_cpg_islands="TRUE" ;;
+        * )       usage ;;
+    esac
+done
+shift $((OPTIND-1))
 
 config_file_location=$1
 source "${config_file_location}" || { echo "could not find config file at:
@@ -44,13 +53,23 @@ mkdir -p "${BASE_DIR}/5mc" "${BASE_DIR}/5hmc"
 
 processing_directory="${BASE_DIR}/5mc"
 
+if [[ -n "${use_cpg_islands}" ]]; then
+  purification_extractSitesInCpGIslands \
+    "${ONT_bed_file_location}" \
+    "${processing_directory}/cgi_only.bed"
+
+  reference_set_base="${processing_directory}/cgi_only.bed"
+else
+  reference_set_base="${ONT_bed_file_location}"
+fi
+
 purification_extractSitesWithLowMethylation \
   "m" \
-  "${ONT_bed_file_location}" \
+  "${reference_set_base}" \
   "${processing_directory}/unmethylated_reads.bed"
 purification_filterOnReadDepth \
   "m" \
-  "${ONT_bed_file_location}" \
+  "${reference_set_base}" \
   "${processing_directory}/filtered_reads.bed" 
 purification_calculateSiteMethylationProbability \
   "${processing_directory}" \
@@ -67,13 +86,23 @@ purification_removeDeterminedUnmethylatedSites \
 
 processing_directory="${BASE_DIR}/5hmc"
 
+if [[ -n "${use_cpg_islands}" ]]; then
+  purification_extractSitesInCpGIslands \
+    "${ONT_bed_file_location}" \
+    "${processing_directory}/cgi_only.bed"
+
+  reference_set_base="${processing_directory}/cgi_only.bed"
+else
+  reference_set_base="${ONT_bed_file_location}"
+fi
+
 purification_extractSitesWithLowMethylation \
   "h" \
-  "${ONT_bed_file_location}" \
+  "${reference_set_base}" \
   "${processing_directory}/unmethylated_reads.bed"
 purification_filterOnReadDepth \
   "h" \
-  "${ONT_bed_file_location}" \
+  "${reference_set_base}" \
   "${processing_directory}/filtered_reads.bed" 
 purification_calculateSiteMethylationProbability \
   "${processing_directory}" \

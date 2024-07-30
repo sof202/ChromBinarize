@@ -20,6 +20,7 @@ Purpose: Create binary files for dense and sparse regions of methylation
 from whole genome bisulphite sequencing bed files. Bed files are expected to be 
 in the format:
   chr \t start \t end \t methylated_reads \t total_reads  
+Optional argument: -c -> train erroneous reads probability on CpGs in CGIs only
 Author: Sam Fletcher
 Contact: s.o.fletcher@exeter.ac.uk
 Dependencies: R, awk, bedtools
@@ -29,6 +30,14 @@ EOF
 }
 
 if [ "$#" -eq 0 ]; then usage; fi 
+
+while getopts c OPT; do
+    case "$OPT" in
+        c )       use_cpg_islands="TRUE" ;;
+        * )       usage ;;
+    esac
+done
+shift $((OPTIND-1))
 
 config_file_location=$1
 source "${config_file_location}" || { echo "could not find config file at:
@@ -51,6 +60,15 @@ purification_convertBSBedToMethylBedFormat \
   "mh" \
   "${WGBS_bed_file_location}" \
   "${processing_directory}/formatted.bed"
+
+if [[ -n "${use_cpg_islands}" ]]; then
+  mv "${processing_directory}/formatted.bed" \
+    "${processing_directory}/formatted_all_cpgs.bed"
+
+  purification_extractSitesInCpGIslands \
+    "${processing_directory}/formatted_all_cpgs.bed" \
+    "${processing_directory}/formatted.bed"
+fi
 
 purification_extractSitesWithLowMethylation \
   "mh" \
