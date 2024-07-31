@@ -144,7 +144,8 @@ binarization_splitIntoChromosomes \
   "${processing_directory}" \
   "purified_reads.bed"
 binarization_createBlankBins \
-  "${processing_directory}"
+  "${processing_directory}" \
+  "${BIN_SIZE}"
 binarization_countSignalIntersectionWithBins \
   "${processing_directory}"
 binarization_createChromhmmBinaryFiles \

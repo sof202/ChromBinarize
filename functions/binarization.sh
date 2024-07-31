@@ -38,8 +38,6 @@ binarization_createBlankBins() {
   output_directory=$1
   bin_size=$2
 
-  if [[ -z "${bin_size}" ]]; then bin_size="${BIN_SIZE}"; fi
-
 logs "${DEBUG_MODE:0}" \
 "Creating blank bed files for chromosomes 1-22 and X..."
 
