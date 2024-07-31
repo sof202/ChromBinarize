@@ -66,9 +66,6 @@ purification_filterOnReadDepth \
 
 mkdir -p "${BASE_DIR}/plots"
 
-module purge
-module load R/4.2.1-foss-2022a
-
 Rscript "${RSCRIPT_DIR}/CpG_robustness.R" \
   "${filtered_reads_directory}/filtered_reads.bed" \
   "${min_distance}" \

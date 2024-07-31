@@ -26,9 +26,6 @@ purification_extractSitesInCpGIslands() {
   input_bed_file=$1
   output_bed_file=$2
 
-  module purge
-  module load BEDTools
-
 logs "${DEBUG_MODE:0}" \
 "Extracting CpGs that reside in CpG islands only using reference file:
 ${CPG_ISLAND_REFERENCE}."
@@ -44,8 +41,6 @@ Your dataset might not have any CpGs inside of CpG islands or the wrong
 assembly might be being used. Check the reference file you provided:
 ${CPG_ISLAND_REFERENCE}."
   fi
-
-  module purge
 }
 
 purification_extractSitesWithLowMethylation() {
@@ -113,16 +108,11 @@ logs "${DEBUG_MODE:0}" \
 "Calculating the probability that methylated reads are due to sequencing or \
 basecalling errors."
 
-  module purge
-  module load R/4.2.1-foss-2022a
-
   Rscript "${RSCRIPT_DIR}/determine_unmethylated_sites.R" \
     "${processing_directory}" \
     "${reference_set}" \
     "${input_file}" \
     "${output_file}"
-
-  module purge
 }
 
 purification_removeDeterminedUnmethylatedSites() {

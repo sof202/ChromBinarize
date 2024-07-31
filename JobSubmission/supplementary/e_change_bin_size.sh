@@ -117,9 +117,6 @@ done
 ##   CREATE NEW BINARY FILES   ##
 ## --------------------------- ##
 
-module purge
-module load BEDTools
-
 for chromosome in {1..22}X; do
 logs "${DEBUG_MODE:0}" \
 "Generating new binary file for chromosome ${chromosome}..."

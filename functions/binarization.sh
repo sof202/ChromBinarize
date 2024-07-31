@@ -57,22 +57,15 @@ This file should be of the form:
 chromosome    size"
   fi
   
-  module purge
-  module load R/4.2.1-foss-2022a
 
   Rscript "${RSCRIPT_DIR}/create_blank_bed_files.R" \
     "${chromosome_sizes}" \
     "${bin_size}" \
     "${output_directory}/blanks"
-
-  module purge
 }
 
 binarization_countSignalIntersectionWithBins() {
   output_directory=$1   
-
-  module purge
-  module load BEDTools
 
 logs "${DEBUG_MODE:0}" \
 "Calculating the number of methylated sites in each ${bin_size}bp bin..."
@@ -85,17 +78,12 @@ logs "${DEBUG_MODE:0}" \
       -b "${output_directory}/split/purified_chr${chromosome}.bed" > \
       "${output_directory}/bin_counts/chromosome${chromosome}.bed"
     done
-
-    module purge
 }
 
 binarization_createChromhmmBinaryFiles() {
   input_directory=$1
   output_directory=$2   
   mark_name=$3
-
-  module purge
-  module load R/4.2.1-foss-2022a
 
 logs "${DEBUG_MODE:0}" \
 "Generating ChromHMM binary files...
@@ -137,6 +125,4 @@ or your 'binomial threshold' in the config file is too strict."
 
     gzip "${dense_file}" "${sparse_file}"
   done
-
-  module purge
 }

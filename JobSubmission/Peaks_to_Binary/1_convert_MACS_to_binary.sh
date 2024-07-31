@@ -35,9 +35,6 @@ for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
 move_log_files convert
 
-module purge
-module load R/4.2.1-foss-2022a
-
 ## ================ ##
 ##   BINARIZATION   ##
 ## ================ ##
@@ -49,9 +46,6 @@ Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
   "${chromosome_sizes}" \
   "${bin_size}" \
   "${BINARY_DIR}/${epigenetic_mark_name}"
-
-module purge
-module load BEDTools
 
 logs "${DEBUG_MODE:0}" \
 "Generating ChromHMM binary files..."

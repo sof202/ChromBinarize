@@ -57,9 +57,6 @@ fi
 
 mkdir -p "${BASE_DIR}/plots/"
 
-module purge
-module load R/4.2.1-foss-2022a
-
 if [[ "${run_type}" == "N" ]]; then
   Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_N.R" \
     "${bed_file_location}" \

@@ -52,9 +52,6 @@ intersect_intersectBSWithONT \
 ##   COMPARISON   ##
 ## ============== ##
 
-module purge
-module load R/4.2.1-foss-2022a
-
 mkdir -p "${BASE_DIR}/plots"
 
 Rscript "${RSCRIPT_DIR}/WGBS_comparison.R" \
