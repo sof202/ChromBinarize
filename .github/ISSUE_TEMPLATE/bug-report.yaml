@@ -20,7 +20,6 @@ body:
     attributes:
       label: "What OS are you on?"
       description: Please select your OS.
-      multiple: true
       options:
         - Windows
         - MacOS
