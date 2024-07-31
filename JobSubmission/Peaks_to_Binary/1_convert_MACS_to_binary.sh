@@ -42,11 +42,13 @@ move_log_files convert
 rm -rf "${BINARY_DIR}/${epigenetic_mark_name:?}"
 mkdir -p "${BINARY_DIR}/${epigenetic_mark_name}"
 
+conda activate ChromBinarize.R
 Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
   "${REPO_DIR}" \
   "${chromosome_sizes}" \
   "${BIN_SIZE}" \
   "${BINARY_DIR}/${epigenetic_mark_name}"
+conda deactivate
 
 logs "${DEBUG_MODE:0}" \
 "Generating ChromHMM binary files..."
@@ -56,6 +58,7 @@ for chromosome in {1..22} X; do
   echo -e "${cell_type}\tchr${chromosome}" > "${output_binary_file}"
   echo "${epigenetic_mark_name}" >> "${output_binary_file}"
 
+  conda activate ChromBinarize-bedtools
   bedtools intersect \
     -wa \
     -c \
@@ -63,6 +66,7 @@ for chromosome in {1..22} X; do
     -b "${input_MACS_file}" | \
     awk '{OFS="\t"} {print ($4 > 0 ? 1 : 0)}' >> \
     "${output_binary_file}"
+  conda deactivate
 
   number_of_signatures=$(awk 'NR>2 && $1>0' "${output_binary_file}" | wc -l)
 

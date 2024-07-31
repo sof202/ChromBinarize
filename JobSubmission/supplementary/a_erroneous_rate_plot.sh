@@ -57,6 +57,7 @@ fi
 
 mkdir -p "${BASE_DIR}/plots/"
 
+conda activate ChromBinarize.R
 if [[ "${run_type}" == "N" ]]; then
   Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_N.R" \
     "${REPO_DIR}" \
@@ -73,6 +74,7 @@ elif [[ "${run_type}" == "percent" ]]; then
     "${plot_type}" \
     "${BASE_DIR}/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 fi
+conda deactivate
 
 if [[ "${number_of_columns}" -eq 5 ]]; then
     rm "${BASE_DIR}/converted.bed" 

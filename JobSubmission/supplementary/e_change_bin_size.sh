@@ -117,6 +117,7 @@ done
 ##   CREATE NEW BINARY FILES   ##
 ## --------------------------- ##
 
+conda activate ChromBinarize-bedtools
 for chromosome in {1..22} X; do
 logs "${DEBUG_MODE:0}" \
 "Generating new binary file for chromosome ${chromosome}..."
@@ -131,6 +132,7 @@ logs "${DEBUG_MODE:0}" \
     awk '{OFS="\t"} {print $7}' >> \
       "${new_binary_file}"
 done 
+conda deactivate
 
 ## ============ ##
 ##   CLEAN UP   ##

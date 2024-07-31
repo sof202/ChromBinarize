@@ -82,7 +82,9 @@ fi
 ##   GENERATE CONFIDENCE INTERVAL   ##
 ## -------------------------------- ##
 
+conda activate ChromBinarize.R
 za=$(Rscript -e "cat(qnorm(1 - ${confidence_interval_alpha:=0.05}/2))")
+conda deactivate
 
 # We use Agresti-Coull interval for obtaining the binomial confidence interval 
 # as it is inexpensive whilst still providing good coverage (i.e in pratical 
@@ -106,10 +108,12 @@ awk \
 ##   INTERSECT OXBS AND WGBS   ##
 ## --------------------------- ##
 
+conda activate ChromBinarize-bedtools
 bedtools intersect -wo \
   -a "${processing_directory}/WGBS_Agresti_Coull.bed" \
   -b "${processing_directory}/oxBS_Agresti_Coull.bed" > \
   "${processing_directory}/WGBS_oxBS_combined.bed"
+conda deactivate
 
 ## ----------------------------------- ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##

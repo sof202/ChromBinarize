@@ -56,11 +56,13 @@ chromosome    size"
   fi
   
 
+  conda activate ChromBinarize-R
   Rscript "${RSCRIPT_DIR}/create_blank_bed_files.R" \
     "${REPO_DIR}" \
     "${chromosome_sizes}" \
     "${bin_size}" \
     "${output_directory}/blanks"
+  conda deactivate
 }
 
 binarization_countSignalIntersectionWithBins() {
@@ -69,6 +71,7 @@ binarization_countSignalIntersectionWithBins() {
 logs "${DEBUG_MODE:0}" \
 "Calculating the number of methylated sites in each ${bin_size}bp bin..."
 
+  conda activate ChromBinarize-bedtools
   for chromosome in {1..22} X; do
     bedtools intersect \
       -wa \
@@ -77,6 +80,7 @@ logs "${DEBUG_MODE:0}" \
       -b "${output_directory}/split/purified_chr${chromosome}.bed" > \
       "${output_directory}/bin_counts/chromosome${chromosome}.bed"
     done
+  conda deactivate
 }
 
 binarization_createChromhmmBinaryFiles() {
@@ -92,6 +96,7 @@ Dense files will be placed in: ${output_directory}-dense"
   rm -rf "${output_directory}-dense" "${output_directory}-sparse"
   mkdir -p "${output_directory}-dense" "${output_directory}-sparse"
 
+  conda activate ChromBinarize.R
   for chromosome in {1..22} X; do
     dense_file="${output_directory}-dense/${cell_type}_chr${chromosome}_binary.txt"
     echo -e "${cell_type}\tchr${chromosome}" > "${dense_file}" 
@@ -108,6 +113,7 @@ Dense files will be placed in: ${output_directory}-dense"
       "${sparse_file}" \
       "${bin_size}" \
       "${beta_threshold}"
+    
 
     number_of_dense_signatures=$(awk 'NR>2 && $1>0' "${dense_file}" | wc -l)
     number_of_sparse_signatures=$(awk 'NR>2 && $1>0' "${sparse_file}" | wc -l)
@@ -125,4 +131,5 @@ or your 'binomial threshold' in the config file is too strict."
 
     gzip "${dense_file}" "${sparse_file}"
   done
+  conda deactivate
 }

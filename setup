@@ -38,9 +38,9 @@ if [[ "${delete_slurm_directives}" == "y" ]]; then
     done
 fi
 
-## ===================== ##
-##   CONDA ENVIRONMENT   ##
-## ===================== ##
+## ====================== ##
+##   CONDA ENVIRONMENTS   ##
+## ====================== ##
 
 source "${CONDA_SHELL}" || { echo "Could not find conda shell at:
 ${CONDA_SHELL}"; exit 1; }
@@ -48,9 +48,10 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 conda config --add channels anaconda
 
-conda create --name ChromBinarize --file "${REPO_DIR}/requirements.txt"
+conda create --name ChromBinarize-R --file "${REPO_DIR}/requirements-R.txt"
+conda create --name ChromBinarize-bedtools --file "${REPO_DIR}/requirements-bedtools.txt"
 
-conda activate ChromBinarize
+conda activate ChromBinarize-R
 
 ## ==================== ##
 ##   RENV ENVIRONMENT   ##

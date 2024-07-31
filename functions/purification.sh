@@ -30,10 +30,12 @@ logs "${DEBUG_MODE:0}" \
 "Extracting CpGs that reside in CpG islands only using reference file:
 ${CPG_ISLAND_REFERENCE}."
 
+  conda activate ChromBinarize-bedtools
   bedtools intersect -wa \
     -a "${input_bed_file}" \
     -b "${CPG_ISLAND_REFERENCE}" > \
     "${output_bed_file}"
+  conda deactivate
 
   if [[ ! -s "${output_bed_file}" ]]; then
 errors "${output_bed_file} is empty.
@@ -108,12 +110,14 @@ logs "${DEBUG_MODE:0}" \
 "Calculating the probability that methylated reads are due to sequencing or \
 basecalling errors."
 
+  conda activate ChromBinarize.R
   Rscript "${RSCRIPT_DIR}/determine_unmethylated_sites.R" \
     "${REPO_DIR}" \
     "${processing_directory}" \
     "${reference_set}" \
     "${input_file}" \
     "${output_file}"
+  conda deactivate
 }
 
 purification_removeDeterminedUnmethylatedSites() {

@@ -54,7 +54,9 @@ intersect_intersectBSWithONT \
 
 mkdir -p "${BASE_DIR}/plots"
 
+conda activate ChromBinarize.R
 Rscript "${RSCRIPT_DIR}/oxBS_comparison.R" \
   "${REPO_DIR}" \
   "${oxBS_folder}/ONT_oxBS_intersect.bed" \
   "${BASE_DIR}/plots"
+conda deactivate

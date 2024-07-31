@@ -66,11 +66,13 @@ purification_filterOnReadDepth \
 
 mkdir -p "${BASE_DIR}/plots"
 
+conda activate ChromBinarize.R
 Rscript "${RSCRIPT_DIR}/CpG_robustness.R" \
   "${REPO_DIR}" \
   "${filtered_reads_directory}/filtered_reads.bed" \
   "${min_distance}" \
   "${max_distance}" \
   "${BASE_DIR}/plots/cpg_robustness_min_${min_distance}_max_${max_distance}.png"
+conda deactivate
 
 rm -rf "${filtered_reads_directory}"

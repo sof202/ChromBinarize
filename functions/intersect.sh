@@ -11,6 +11,7 @@ Bisulphite sequencing file: ${BS_bed_file}
 with
 Oxford Nanopore sequencing file: ${ONT_bed_file}."
 
+  conda activate ChromBinarize-bedtools
   bedtools intersect \
     -wo \
     -a "${ONT_bed_file}" \
@@ -22,4 +23,5 @@ Oxford Nanopore sequencing file: ${ONT_bed_file}."
     {OFS="\t"} 
     {print $1,$2,$3,$4,$5,$7,$12,convert_to_percent($11,$12)}' > \
       "${output_file_path}"
+  conda deactivate
 }
