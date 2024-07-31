@@ -42,11 +42,11 @@ fi
 ##   CONDA ENVIRONMENT   ##
 ## ===================== ##
 
-. "${CONDA_SHELL}" || { echo "Could not find conda shell at:
+source "${CONDA_SHELL}" || { echo "Could not find conda shell at:
 ${CONDA_SHELL}"; exit 1; }
-conda create --name ChromBinarizea --file "${REPO_DIR}/requirements.txt"
+conda create --name ChromBinarize --file "${REPO_DIR}/requirements.txt"
 
-conda activate ChromBinarizea
+conda activate ChromBinarize
 
 ## ==================== ##
 ##   RENV ENVIRONMENT   ##
