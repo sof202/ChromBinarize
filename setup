@@ -44,6 +44,10 @@ fi
 
 source "${CONDA_SHELL}" || { echo "Could not find conda shell at:
 ${CONDA_SHELL}"; exit 1; }
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --add channels anaconda
+
 conda create --name ChromBinarize --file "${REPO_DIR}/requirements.txt"
 
 conda activate ChromBinarize
@@ -53,4 +57,4 @@ conda activate ChromBinarize
 ## ==================== ##
 
 cd "${REPO_DIR}" || exit 1
-Rscript -e "library(fitdistrplus); print('success')"
+Rscript -e "renv::restore(); library(fitdistrplus); print('success')"
