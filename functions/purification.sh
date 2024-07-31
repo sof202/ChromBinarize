@@ -110,7 +110,7 @@ logs "${DEBUG_MODE:0}" \
 "Calculating the probability that methylated reads are due to sequencing or \
 basecalling errors."
 
-  conda activate ChromBinarize.R
+  conda activate ChromBinarize-R
   Rscript "${RSCRIPT_DIR}/determine_unmethylated_sites.R" \
     "${REPO_DIR}" \
     "${processing_directory}" \

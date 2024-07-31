@@ -54,7 +54,7 @@ intersect_intersectBSWithONT \
 
 mkdir -p "${BASE_DIR}/plots"
 
-conda activate ChromBinarize.R
+conda activate ChromBinarize-R
 Rscript "${RSCRIPT_DIR}/WGBS_comparison.R" \
   "${REPO_DIR}" \
   "${WGBS_folder}/ONT_WGBS_intersect.bed" \

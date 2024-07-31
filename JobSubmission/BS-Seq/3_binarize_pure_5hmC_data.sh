@@ -82,7 +82,7 @@ fi
 ##   GENERATE CONFIDENCE INTERVAL   ##
 ## -------------------------------- ##
 
-conda activate ChromBinarize.R
+conda activate ChromBinarize-R
 za=$(Rscript -e "cat(qnorm(1 - ${confidence_interval_alpha:=0.05}/2))")
 conda deactivate
 

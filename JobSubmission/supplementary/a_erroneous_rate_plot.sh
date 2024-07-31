@@ -57,7 +57,7 @@ fi
 
 mkdir -p "${BASE_DIR}/plots/"
 
-conda activate ChromBinarize.R
+conda activate ChromBinarize-R
 if [[ "${run_type}" == "N" ]]; then
   Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_N.R" \
     "${REPO_DIR}" \

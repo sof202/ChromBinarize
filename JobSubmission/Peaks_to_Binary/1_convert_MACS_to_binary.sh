@@ -42,7 +42,7 @@ move_log_files convert
 rm -rf "${BINARY_DIR}/${epigenetic_mark_name:?}"
 mkdir -p "${BINARY_DIR}/${epigenetic_mark_name}"
 
-conda activate ChromBinarize.R
+conda activate ChromBinarize-R
 Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
   "${REPO_DIR}" \
   "${chromosome_sizes}" \

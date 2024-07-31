@@ -96,7 +96,7 @@ Dense files will be placed in: ${output_directory}-dense"
   rm -rf "${output_directory}-dense" "${output_directory}-sparse"
   mkdir -p "${output_directory}-dense" "${output_directory}-sparse"
 
-  conda activate ChromBinarize.R
+  conda activate ChromBinarize-R
   for chromosome in {1..22} X; do
     dense_file="${output_directory}-dense/${cell_type}_chr${chromosome}_binary.txt"
     echo -e "${cell_type}\tchr${chromosome}" > "${dense_file}" 

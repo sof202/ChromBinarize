@@ -66,7 +66,7 @@ purification_filterOnReadDepth \
 
 mkdir -p "${BASE_DIR}/plots"
 
-conda activate ChromBinarize.R
+conda activate ChromBinarize-R
 Rscript "${RSCRIPT_DIR}/CpG_robustness.R" \
   "${REPO_DIR}" \
   "${filtered_reads_directory}/filtered_reads.bed" \
