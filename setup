@@ -56,5 +56,7 @@ conda activate ChromBinarize
 ##   RENV ENVIRONMENT   ##
 ## ==================== ##
 
+Rscript -e "install.packages('renv', repo='https://cloud.r-project.org')"
+
 cd "${REPO_DIR}" || exit 1
 Rscript -e "renv::restore(); library(fitdistrplus); print('success')"
