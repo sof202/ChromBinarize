@@ -84,8 +84,8 @@ version numbers are likely to still work.
 The following software and R packages are installed for you in the `setup`
 script:
 
-- [Bedtools](https://github.com/arq5x/bedtools2) (>=v2.29.2)
-- [R](https://www.r-project.org) (>=4.2.1)
+- [Bedtools](https://github.com/arq5x/bedtools2) (v2.29.2)
+- [R](https://www.r-project.org) (4.4.1)
     - [dplyr](https://dplyr.tidyverse.org)
     - [data.table](https://github.com/Rdatatable/data.table)
     - [fitdistrplus](https://cran.r-project.org/web/packages/fitdistrplus/index.html)
