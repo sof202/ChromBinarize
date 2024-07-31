@@ -35,6 +35,8 @@ body:
         - Pipeline bug
         - Unexpected outputs
         - Other
+    validations:
+      required: true
   - type: textarea
     id: what-happened
     attributes:
