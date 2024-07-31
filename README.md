@@ -77,6 +77,7 @@ version numbers are likely to still work.
 - [SLURM Workload Manager](https://slurm.schedmd.com/overview.html) (>=20.02.3)
 - [Conda](https://conda.io/projects/conda/en/latest/index.html)
     - Any installation will do, this has worked on Miniconda 4.5.2 (from 2020)
+    - Make sure conda can be found on your `PATH` (check with `which conda`)
 - [GNU awk](https://www.gnu.org/software/gawk/) (>=4.0.2)
 - [GNU gzip](https://www.gnu.org/software/gzip/) (>=1.5)
 
