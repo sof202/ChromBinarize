@@ -94,7 +94,7 @@ mkdir -p "${new_binary_directory}/blanks" \
 binarization_createBlankBins "${new_binary_directory}" "${new_bin_size}"
 binarization_createBlankBins "${old_binary_directory}" "${original_bin_size}"
 
-for chromosome in {1..22}X; do
+for chromosome in {1..22} X; do
   binary_file=$(find "${old_binary_directory}" -name "*chr${chromosome}*binary.txt.gz")
 
 logs "${DEBUG_MODE:0}" \
@@ -117,7 +117,7 @@ done
 ##   CREATE NEW BINARY FILES   ##
 ## --------------------------- ##
 
-for chromosome in {1..22}X; do
+for chromosome in {1..22} X; do
 logs "${DEBUG_MODE:0}" \
 "Generating new binary file for chromosome ${chromosome}..."
 
