@@ -43,6 +43,7 @@ rm -rf "${BINARY_DIR}/${epigenetic_mark_name:?}"
 mkdir -p "${BINARY_DIR}/${epigenetic_mark_name}"
 
 Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
+  "${REPO_DIR}" \
   "${chromosome_sizes}" \
   "${bin_size}" \
   "${BINARY_DIR}/${epigenetic_mark_name}"

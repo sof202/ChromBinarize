@@ -1,10 +1,11 @@
 args <- commandArgs(trailingOnly = TRUE)
+renv_environment <- args[1]
+bed_file_location <- args[2]
+min_distance <- as.numeric(args[3])
+max_distance <- as.numeric(args[4])
+output_file <- args[5]
 
-bed_file_location <- args[1]
-min_distance <- as.numeric(args[2])
-max_distance <- as.numeric(args[3])
-output_file <- args[4]
-
+renv::load(renv_environment)
 library(ggplot2)
 
 ## ===================== ##

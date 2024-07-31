@@ -1,18 +1,12 @@
-# Required packages:
-#  ggplot2
-#  data.table
-#  dplyr
-#  cowplot
-#  grid
-#  gridExtra
-
 args <- commandArgs(trailingOnly = TRUE)
-bed_file <- args[1]
-mark <- args[2] # m for 5mc and h for 5hmc
-max_read_depth <- as.numeric(args[3]) # you don't need to consider N = 2000
-plot_type <- as.name(args[4])
-output_file <- args[5]
+renv_environment <- args[1]
+bed_file <- args[2]
+mark <- args[3] # m for 5mc and h for 5hmc
+max_read_depth <- as.numeric(args[4]) # you don't need to consider N = 2000
+plot_type <- as.name(args[5])
+output_file <- args[6]
 
+renv::load(renv_environment)
 library(ggplot2)
 
 ## =============== ##

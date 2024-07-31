@@ -1,7 +1,9 @@
 args <- commandArgs(trailingOnly = TRUE)
-input_bed_file <- args[1] # Expects 7 columns
-output_directory <- args[2]
+renv_environment <- args[1]
+input_bed_file <- args[2] # Expects 7 columns
+output_directory <- args[3]
 
+renv::load(renv_environment)
 library(ggplot2)
 
 ## ===================== ##
@@ -67,8 +69,10 @@ methylation_correlation_plot <-
     aes(x = ONT_percent_methylation, y = oxBS_percent_methylation)
   ) +
   geom_bin2d(bins = 100) +
-  scale_fill_gradient(name = "count", trans = "log",
-                        breaks = breaks, labels = breaks) +
+  scale_fill_gradient(
+    name = "count", trans = "log",
+    breaks = breaks, labels = breaks
+  ) +
   theme_bw() +
   labs(x = "percent methylation in ONT", y = "percent methylation in oxBS")
 

@@ -1,9 +1,12 @@
 args <- commandArgs(trailingOnly = TRUE)
-bin_counts_file <- args[1]
-dense_output_file <- args[2]
-sparse_output_file <- args[3]
-bin_size <- as.numeric(args[4])
-beta_threshold <- as.numeric(args[5])
+renv_environment <- args[1]
+bin_counts_file <- args[2]
+dense_output_file <- args[3]
+sparse_output_file <- args[4]
+bin_size <- as.numeric(args[5])
+beta_threshold <- as.numeric(args[6])
+
+renv::load(renv_environment)
 
 ## ======================== ##
 ##   DISTRIBUTION FITTING   ##

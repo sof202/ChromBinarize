@@ -109,6 +109,7 @@ logs "${DEBUG_MODE:0}" \
 basecalling errors."
 
   Rscript "${RSCRIPT_DIR}/determine_unmethylated_sites.R" \
+    "${REPO_DIR}" \
     "${processing_directory}" \
     "${reference_set}" \
     "${input_file}" \

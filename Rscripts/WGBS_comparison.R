@@ -1,7 +1,9 @@
 args <- commandArgs(trailingOnly = TRUE)
-input_bed_file <- args[1] # Expects 7 columns
-output_directory <- args[2]
+renv_environment <- args[1]
+input_bed_file <- args[2] # Expects 7 columns
+output_directory <- args[3]
 
+renv::load(renv_environment)
 library(ggplot2)
 
 ## ===================== ##

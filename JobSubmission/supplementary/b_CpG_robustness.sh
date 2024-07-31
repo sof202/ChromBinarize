@@ -67,6 +67,7 @@ purification_filterOnReadDepth \
 mkdir -p "${BASE_DIR}/plots"
 
 Rscript "${RSCRIPT_DIR}/CpG_robustness.R" \
+  "${REPO_DIR}" \
   "${filtered_reads_directory}/filtered_reads.bed" \
   "${min_distance}" \
   "${max_distance}" \

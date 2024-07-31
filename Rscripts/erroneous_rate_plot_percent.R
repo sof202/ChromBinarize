@@ -1,17 +1,11 @@
-# Required packages:
-#  ggplot2
-#  data.table
-#  dplyr
-#  cowplot
-#  grid
-#  gridExtra
-
 args <- commandArgs(trailingOnly = TRUE)
-bed_file <- args[1]
-mark <- args[2] # m for 5mc and h for 5hmc
-plot_type <- as.name(args[3])
-output_file <- args[4]
+renv_environment <- args[1]
+bed_file <- args[2]
+mark <- args[3] # m for 5mc and h for 5hmc
+plot_type <- as.name(args[4])
+output_file <- args[5]
 
+renv::load(renv_environment)
 library(ggplot2)
 `%nin%` <- Negate(`%in%`)
 

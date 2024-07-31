@@ -59,6 +59,7 @@ mkdir -p "${BASE_DIR}/plots/"
 
 if [[ "${run_type}" == "N" ]]; then
   Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_N.R" \
+    "${REPO_DIR}" \
     "${bed_file_location}" \
     "${mark}" \
     "${max_N_value}" \
@@ -66,6 +67,7 @@ if [[ "${run_type}" == "N" ]]; then
     "${BASE_DIR}/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
 elif [[ "${run_type}" == "percent" ]]; then
   Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_percent.R" \
+    "${REPO_DIR}" \
     "${bed_file_location}" \
     "${mark}" \
     "${plot_type}" \

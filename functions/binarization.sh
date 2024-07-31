@@ -59,6 +59,7 @@ chromosome    size"
   
 
   Rscript "${RSCRIPT_DIR}/create_blank_bed_files.R" \
+    "${REPO_DIR}" \
     "${chromosome_sizes}" \
     "${bin_size}" \
     "${output_directory}/blanks"
@@ -103,6 +104,7 @@ Dense files will be placed in: ${output_directory}-dense"
     echo "${mark_name}_sparse" >> "${sparse_file}"
 
     Rscript "$RSCRIPT_DIR/binarize.R" \
+      "${REPO_DIR}" \
       "${input_directory}/bin_counts/chromosome${chromosome}.bed" \
       "${dense_file}" \
       "${sparse_file}" \

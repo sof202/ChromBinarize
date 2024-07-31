@@ -1,7 +1,10 @@
 args <- commandArgs(trailingOnly = TRUE)
-chromosome_sizes_file <- args[1]
-bin_size <- as.numeric(args[2])
-output_directory <- args[3]
+renv_environment <- args[1]
+chromosome_sizes_file <- args[2]
+bin_size <- as.numeric(args[3])
+output_directory <- args[4]
+
+renv::load(renv_environment)
 
 process_chromosome_sizes <- function(chromosome_sizes_file) {
   chromosome_sizes_table <- data.table::fread(chromosome_sizes_file)

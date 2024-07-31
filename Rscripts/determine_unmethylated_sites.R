@@ -1,8 +1,11 @@
 args <- commandArgs(trailingOnly = TRUE)
-folder <- args[1]
-reference_set <- args[2]
-input_bed_file <- args[3]
-output_file_name <- args[4]
+renv_environment <- args[1]
+folder <- args[2]
+reference_set <- args[3]
+input_bed_file <- args[4]
+output_file_name <- args[5]
+
+renv::load(renv_environment)
 
 ## =============== ##
 ##   OBTAINING P   ##
