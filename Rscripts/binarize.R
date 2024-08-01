@@ -64,7 +64,7 @@ shape2 <- beta_parameters[[2]]
 
 bin_counts <- bin_counts |>
   dplyr::mutate(
-    "cumulative_probability" = is_densely_methylated(
+    "densely_methylated" = is_densely_methylated(
       density,
       shape1,
       shape2,
