@@ -57,6 +57,11 @@ conda activate ChromBinarize-R
 ##   RENV ENVIRONMENT   ##
 ## ==================== ##
 
+# Loading an R script whilst in REPO_DIR will automatically download renv
+# but only for that R session. The next R session will not have access to 
+# renv, resulting in errors. There is no renv environment in RSCRIPT_DIR so
+# we execute the install packages function from there to avoid this.
+cd "${RSCRIPT_DIR}" || exit 1
 Rscript -e "install.packages('renv', repo='https://cloud.r-project.org')"
 
 cd "${REPO_DIR}" || exit 1
