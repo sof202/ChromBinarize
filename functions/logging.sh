@@ -8,9 +8,9 @@ logs() {
   current_time=$(date +'%-d-%m ~ %T')
 
   if [[ is_logged -eq 1 ]]; then
-    cat <<- LOG_MESSAGE
-    [LOG: ${current_time}]
-    ${message}
+cat << LOG_MESSAGE
+[LOG: ${current_time}]
+${message}
 
 LOG_MESSAGE
   fi
