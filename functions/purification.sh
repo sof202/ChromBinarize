@@ -52,7 +52,7 @@ purification_extractSitesWithLowMethylation() {
 
   if [[ "${mark_name}" =~ "m" ]]; then
     reference_percent_threshold="${reference_percentage_threshold_m:=5}"
-    reference_read_depth_threshold="${reference_read_depth_threshold_m:=500}"
+    reference_read_depth_threshold="${reference_read_depth_threshold_m:=50}"
   elif [[ "${mark_name}" == "h" ]]; then
     reference_percent_threshold="${reference_percentage_threshold_h:=5}"
     reference_read_depth_threshold="${reference_read_depth_threshold_h:=50}"
