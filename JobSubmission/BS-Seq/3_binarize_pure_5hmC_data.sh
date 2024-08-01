@@ -7,9 +7,9 @@
 #SBATCH --ntasks-per-node=16
 #SBATCH --mem=4G 
 #SBATCH --mail-type=END 
-#SBATCH --output=5mC%j.log
-#SBATCH --error=5mC%j.err
-#SBATCH --job-name=5mC
+#SBATCH --output=5hmC%j.log
+#SBATCH --error=5hmC%j.err
+#SBATCH --job-name=5hmC
 
 usage() {
 cat <<EOF
@@ -36,7 +36,7 @@ ${config_file_location}"; exit 1; }
 
 for file in "${FUNCTIONS_DIR}"/*; do source "$file" || exit 1; done
 
-move_log_files 5mC
+move_log_files 5hmC
 
 ## =================================== ##
 ##   EXTRACT HYDROXYMETHYLATED SITES   ##
