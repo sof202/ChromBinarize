@@ -46,7 +46,7 @@ move_log_files 5hmC
 ##   FILTERING   ##
 ## ------------- ##
 
-processing_directory="${BASE_DIR}/WGBS_5hmc"
+processing_directory="${BASE_DIR}/5hmc"
 
 rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
@@ -154,8 +154,8 @@ binarization_countSignalIntersectionWithBins \
   "${processing_directory}"
 binarization_createChromhmmBinaryFiles \
   "${processing_directory}" \
-  "${BINARY_DIR}/WGBS_5hmC" \
-  "WGBS_5hmC"
+  "${BINARY_DIR}/5hmC" \
+  "5hmC"
 
 if [[ "${DEBUG_MODE:=0}" -eq 0 ]]; then
   rm -rf "${processing_directory}"
