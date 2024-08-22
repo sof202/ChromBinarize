@@ -1,0 +1,15 @@
+site_name: ChromBinarize Documentation
+repo_url: https://github.com/sof202/ChromBinarize
+site_description: "Documentation for ChromBinarize"
+site_author: "Sam Fletcher"
+copyright: "© 2024, Sam Fletcher"
+theme:
+  logo: logo.svg
+  favicon: logo.svg
+  name: material
+  palette:
+    scheme: slate
+    primary: black
+    accent: green
+
+
