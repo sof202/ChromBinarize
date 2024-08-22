@@ -4,5 +4,12 @@ site_description: "Documentation for ChromBinarize"
 site_author: "Sam Fletcher"
 copyright: "© 2024, Sam Fletcher"
 theme:
-  name: readthedocs
+  logo: logo.svg
+  favicon: logo.svg
+  name: material
+  palette:
+    scheme: slate
+    primary: black
+    accent: green
+
 
