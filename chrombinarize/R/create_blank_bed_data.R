@@ -114,8 +114,8 @@ create_bins <- function(chromosome_name, chromosome_length, bin_size) {
 #'
 #' @export
 create_blank_bed_data <- function(chromosome_sizes_file,
-                                   bin_size = 200,
-                                   chromosomes = c(seq(1, 22), "X")) {
+                                  bin_size = 200,
+                                  chromosomes = c(seq(1, 22), "X")) {
   chromosome_sizes <- process_chromosome_sizes(chromosome_sizes_file)
 
   blank_bed_data <- lapply(chromosomes, function(chromosome) {
