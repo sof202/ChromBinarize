@@ -11,16 +11,17 @@ reference_set_path <- file.path(folder, reference_set)
 binomial_p <- chrombinarize::estimate_error_rate(reference_set_path)
 
 methylation_data_path <- file.path(folder, input_bed_file)
-methylation_data <- data.table::fread(methylation_data_path)
-
-colnames(methylation_data) <- c(
-  "Chr",
-  "start",
-  "end",
-  "name",
-  "sample_size",
-  "strand",
-  "percent_methylation"
+methylation_data <- data.table::fread(
+  methylation_data_path,
+  col.names = c(
+    "Chr",
+    "start",
+    "end",
+    "name",
+    "sample_size",
+    "strand",
+    "percent_methylation"
+  )
 )
 
 methylation_data <- methylation_data |>
