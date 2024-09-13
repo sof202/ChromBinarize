@@ -2,4 +2,3 @@
 
 export(create_blank_bed_data)
 export(estimate_error_rate)
-export(reverse_binomial)
