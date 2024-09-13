@@ -8,7 +8,8 @@ renv::load(renv_environment)
 
 blank_bed_data <-
   chrombinarize::create_blank_bed_data(
-    chromosome_sizes_file
+    chromosome_sizes_file,
+    bin_size
   )
 
 invisible(lapply(names(blank_bed_data), function(file) {
