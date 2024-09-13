@@ -1,7 +1,9 @@
 #' @export
 estimate_error_rate <- function(reference_set_path) {
-  unmethylated_positions <- data.table::fread(reference_set_path)
-  colnames(unmethylated_positions) <- c("reads", "percent_methylated")
+  unmethylated_positions <- data.table::fread(
+    reference_set_path,
+    col.names = c("reads", "percent_methylated")
+  )
 
   unmethylated_positions <-
     dplyr::mutate(
