@@ -18,7 +18,7 @@ methylation_data <- data.table::fread(
     "start",
     "end",
     "name",
-    "sample_size",
+    "read_depth",
     "strand",
     "percent_methylation"
   )
@@ -26,12 +26,12 @@ methylation_data <- data.table::fread(
 
 methylation_data <- methylation_data |>
   dplyr::mutate(
-    sample_size = as.numeric(sample_size),
+    read_depth = as.numeric(read_depth),
     percent_methylation = as.numeric(percent_methylation),
-    number_of_methylated_reads = sample_size * percent_methylation / 100,
+    number_of_methylated_reads = read_depth * percent_methylation / 100,
     "likelihood of methylated reads being erroneous" = pbinom(
       number_of_methylated_reads,
-      sample_size,
+      read_depth,
       binomial_p,
       lower.tail = FALSE
     )
