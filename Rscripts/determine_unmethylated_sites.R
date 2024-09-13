@@ -23,16 +23,21 @@ colnames(methylation_data) <- c(
   "percent_methylation"
 )
 
-methylation_data <- dplyr::mutate(methylation_data,
-  sample_size = as.numeric(sample_size),
-  percent_methylation = as.numeric(percent_methylation),
-  "likelihood of methylated reads being erroneous" =
-    chrombinarize::reverse_binomial(
+methylation_data <- methylation_data |>
+  dplyr::mutate(
+    sample_size = as.numeric(sample_size),
+    percent_methylation = as.numeric(percent_methylation),
+    number_of_methylated_reads = sample_size * percent_methylation / 100,
+    "likelihood of methylated reads being erroneous" = pbinom(
+      number_of_methylated_reads,
       sample_size,
       binomial_p,
-      percent_methylation
+      lower.tail = FALSE
     )
-)
+  ) |>
+  dplyr::select(
+    -number_of_methylated_reads
+  )
 
 data.table::fwrite(methylation_data,
   file = file.path(folder, output_file_name),
