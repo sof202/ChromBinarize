@@ -31,7 +31,7 @@ testthat::test_that("Main function returns correct output for valid input", {
   small_bed_data <- create_blank_bed_data(
     chromosome_sizes_test_file,
     200,
-    1
+    "Y"
   )
 
   expect_true(is.list(bed_data))
