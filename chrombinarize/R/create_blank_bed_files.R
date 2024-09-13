@@ -1,11 +1,9 @@
 #' @title Read and process a chromosome lengths file
 #'
 #' @description Convert a file detailing the sizes of each chromosome
-#'  into a datatable with the correct column headings
+#'  into a vector to be used by `create_blank_bed_files()`
 #'
-#' @param chromosome_sizes_file
-#'  A file path (string) to a text file detailing the length of each chromosome.
-#'  The file should contain two columns: chromosome name and chromosome length.
+#' @inheritParams create_blank_bed_files
 #'
 #' @details It is assumed that the input file is coming from ChromHMM's
 #'  included files. However, if this is not the case, you will need to ensure
@@ -16,6 +14,14 @@
 #'
 #' @examples
 #' process_chromosome_sizes("path/to/chromosome_sizes.txt")
+#'
+#'      chr1                  chr2                  chr3
+#' 249250621             243199373             198022430
+#'      chr4                  chr5                  chr6
+#' 191154276             180915260             171115067
+#'      chr7                  chrX                  chr8
+#' 159138663             155270560             146364022
+#' ...
 process_chromosome_sizes <- function(chromosome_sizes_file) {
   chromosome_sizes_table <- data.table::fread(chromosome_sizes_file)
   names(chromosome_sizes_table) <- c("chromosome", "size")
@@ -29,10 +35,10 @@ process_chromosome_sizes <- function(chromosome_sizes_file) {
 #' @description Given a chromosome and its size this creates a data.table
 #'  that details regions of a fixed length spanning the chromosome
 #'
-#' @param chromsome The name of the chromsome (string). This must be of the
-#'  form "chrxyz" as ChromHMM expects this form.
+#' @param chromosome_name The name of the chromsome (string).
+#'  This must be of the form "chrxyz" as ChromHMM expects this form.
 #' @param chromosome_length The length of the given chromosome (integer)
-#' @param bin_size The desired size of each region (integer)
+#' @inheritParams create_blank_bed_files
 #'
 #' @return A data.table with columns "chromosome",
 #' "starting base pair position" and "end base pair position"
@@ -40,7 +46,6 @@ process_chromosome_sizes <- function(chromosome_sizes_file) {
 #' @examples
 #'  create_bins("chr22", "1000000", 200)
 #'
-#'  Generates a data.table of the form:
 #'  chr22	0	200
 #'  chr22	200	400
 #'  chr22	400	600

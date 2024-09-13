@@ -16,7 +16,7 @@ Each entry has a name equal to the chromosome name given in the input file
 }
 \description{
 Convert a file detailing the sizes of each chromosome
-into a datatable with the correct column headings
+into a vector to be used by \code{create_blank_bed_files()}
 }
 \details{
 It is assumed that the input file is coming from ChromHMM's
@@ -25,4 +25,12 @@ that chromosomes are given in the form "chr22", "chrX" etc. (chr prefixed)
 }
 \examples{
 process_chromosome_sizes("path/to/chromosome_sizes.txt")
+
+     chr1                  chr2                  chr3
+249250621             243199373             198022430
+     chr4                  chr5                  chr6
+191154276             180915260             171115067
+     chr7                  chrX                  chr8
+159138663             155270560             146364022
+...
 }

@@ -7,12 +7,12 @@
 create_bins(chromosome_name, chromosome_length, bin_size)
 }
 \arguments{
+\item{chromosome_name}{The name of the chromsome (string).
+This must be of the form "chrxyz" as ChromHMM expects this form.}
+
 \item{chromosome_length}{The length of the given chromosome (integer)}
 
-\item{bin_size}{The desired size of each region (integer)}
-
-\item{chromsome}{The name of the chromsome (string). This must be of the
-form "chrxyz" as ChromHMM expects this form.}
+\item{bin_size}{The desired size of each region (integer). Defaults to 200.}
 }
 \value{
 A data.table with columns "chromosome",
@@ -25,7 +25,6 @@ that details regions of a fixed length spanning the chromosome
 \examples{
  create_bins("chr22", "1000000", 200)
 
- Generates a data.table of the form:
  chr22	0	200
  chr22	200	400
  chr22	400	600
