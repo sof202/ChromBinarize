@@ -7,38 +7,12 @@ output_file_name <- args[5]
 
 renv::load(renv_environment)
 
-## =============== ##
-##   OBTAINING P   ##
-## =============== ##
+reference_set_path <- file.path(folder, reference_set)
+binomial_p <- chrombinarize::estimate_error_rate(reference_set_path)
 
-# Sites we are reasonably sure are in fact unmethylated
-unmethylated_positions <-
-  data.table::fread(file.path(folder, reference_set))
+methylation_data_path <- file.path(folder, input_bed_file)
+methylation_data <- data.table::fread(methylation_data_path)
 
-colnames(unmethylated_positions) <- c("reads", "percent_methylated")
-
-unmethylated_positions <-
-  dplyr::mutate(
-    unmethylated_positions,
-    "incorrectly_methylated" = reads * percent_methylated / 100
-  )
-
-incorrectly_methylated_total <-
-  sum(unmethylated_positions$incorrectly_methylated)
-total_reads <- sum(unmethylated_positions$reads)
-erroneous_methylated_p <-
-  incorrectly_methylated_total / total_reads
-
-## ======= ##
-##   MAIN  ##
-## ======= ##
-
-reverse_binomial <- function(n, p, percent_methylation) {
-  x <- ceiling(n * percent_methylation / 100)
-  return(1 - pbinom(x - 1, n, p))
-}
-
-methylation_data <- data.table::fread(file.path(folder, input_bed_file))
 colnames(methylation_data) <- c(
   "Chr",
   "start",
@@ -53,9 +27,9 @@ methylation_data <- dplyr::mutate(methylation_data,
   sample_size = as.numeric(sample_size),
   percent_methylation = as.numeric(percent_methylation),
   "likelihood of methylated reads being erroneous" =
-    reverse_binomial(
+    chrombinarize::reverse_binomial(
       sample_size,
-      erroneous_methylated_p,
+      binomial_p,
       percent_methylation
     )
 )
