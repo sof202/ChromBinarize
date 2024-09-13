@@ -6,13 +6,9 @@ output_directory <- args[4]
 
 renv::load(renv_environment)
 
-chromosome_sizes <-
-  chrombinarize::process_chromosome_sizes(chromosome_sizes_file)
-
 blank_bed_files <-
   chrombinarize::create_blank_bed_files(
-    chromosome_sizes = chromosome_sizes,
-    bin_size = bin_size
+    chromosome_sizes_file
   )
 
 invisible(lapply(names(blank_bed_files), function(file) {

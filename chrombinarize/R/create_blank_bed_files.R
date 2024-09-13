@@ -1,32 +1,57 @@
+#' @title Read and process a chromosome lengths file
+#'
+#' @description Convert a file detailing the sizes of each chromosome
+#'  into a datatable with the correct column headings
+#'
+#' @param chromosome_sizes_file
+#'  A file path (string) to a text file detailing the length of each chromosome.
+#'  The file should contain two columns: chromosome name and chromosome length.
+#'
+#' @details It is assumed that the input file is coming from ChromHMM's
+#'  included files. However, if this is not the case, you will need to ensure
+#'  that chromosomes are given in the form "chr22", "chrX" etc. (chr prefixed)
+#'
+#' @return An integer vector with values equal to the given chromosome lengths.
+#' Each entry has a name equal to the chromosome name given in the input file
+#'
+#' @examples
+#' process_chromosome_sizes("path/to/chromosome_sizes.txt")
+process_chromosome_sizes <- function(chromosome_sizes_file) {
+  chromosome_sizes_table <- data.table::fread(chromosome_sizes_file)
+  names(chromosome_sizes_table) <- c("chromosome", "size")
+  chromosome_sizes <- chromosome_sizes_table[["size"]]
+  names(chromosome_sizes) <- chromosome_sizes_table[["chromosome"]]
+  return(chromosome_sizes)
+}
+
 #' @title Create genomic windows for a chromosome
 #'
 #' @description Given a chromosome and its size this creates a data.table
 #'  that details regions of a fixed length spanning the chromosome
 #'
-#' @param chromsome The name of the chromsome (string)
-#' @param chromosome_sizes a data.table detailing the length of each chromosome
-#'  with columns "chromosome name" and "chromosome size"
+#' @param chromsome The name of the chromsome (string). This must be of the
+#'  form "chrxyz" as ChromHMM expects this form.
+#' @param chromosome_length The length of the given chromosome (integer)
 #' @param bin_size The desired size of each region (integer)
 #'
 #' @return A data.table with columns "chromosome",
 #' "starting base pair position" and "end base pair position"
 #'
 #' @examples
-#'  create_bins("22", chromosome_sizes, 200)
+#'  create_bins("chr22", "1000000", 200)
 #'
 #'  Generates a data.table of the form:
 #'  chr22	0	200
 #'  chr22	200	400
 #'  chr22	400	600
 #'  ...
-create_bins <- function(chromosome, chromosome_sizes, bin_size) {
-  chromosome_length <- chromosome_sizes[[paste0("chr", chromosome)]]
+#'  chr22	999800	1000000
+create_bins <- function(chromosome_name, chromosome_length, bin_size) {
   bin_starts <- seq(0, chromosome_length, bin_size)
   bins <- data.table::data.table("start" = bin_starts)
-  chromsome_name <- paste0("chr", chromosome)
   bins <- bins |>
     dplyr::mutate(
-      "chr" = chromsome_name,
+      "chr" = chromosome_name,
       "end" = start + bin_size
     ) |>
     dplyr::select(chr, start, end)
@@ -35,33 +60,65 @@ create_bins <- function(chromosome, chromosome_sizes, bin_size) {
 
 #' @title A wrapper for `create_bins()`
 #'
-#' @description Using a desired bin size, creates data.tables in the form of
-#'  a bed file for chromosomes 1 to X. Each row is the next subsequent window
-#'  equal to the bin size.
+#' @description Using a desired bin size, this creates data.tables for each
+#'  chromosome requested in the form of a bed file. Each row gives the
+#'  coordinates of a genomic window each equal to the bin size.
 #'
-#' @param chromosome_sizes a data.table detailing the length of each chromosome
-#'  with columns "chromosome name" and "chromosome size"
-#' @param bin_size The desired size of each region (integer)
+#' @param chromosome_sizes_file
+#'  A file path (string) to a text file detailing the length of each chromosome.
+#'  The file should contain two columns: chromosome name and chromosome length.
+#' @param bin_size The desired size of each region (integer). Defaults to 200.
+#' @param chromosomes A character vector of all chromosomes to create bins for.
+#'  Defaults to 1,2,3,...,22,X
 #'
-#' @return A data.table with columns "chromosome",
-#' "starting base pair position" and "end base pair position"
+#' @return A list of data.tables with columns "chromosome",
+#'  "starting base pair position" and "end base pair position". Each list item
+#'  is given the corresponding chromosome index as its name.
 #'
 #' @examples
-#'  create_bins("22", chromosome_sizes, 200)
+#'  create_blank_bed_files("path/to/chromosome_sizes.txt", 100, seq(1,22))
 #'
-#'  Generates a data.table of the form:
-#'  chr22	0	200
-#'  chr22	200	400
-#'  chr22	400	600
-#'  ...
+#'  $`1`
+#'             chr     start       end
+#'          <char>     <num>     <num>
+#'       1:   chr1         0       200
+#'       3:   chr1       400       600
+#'       4:   chr1       600       800
+#'       5:   chr1       800      1000
+#'      ---
+#' 1246250:   chr1 249249800 249250000
+#' 1246251:   chr1 249250000 249250200
+#' 1246252:   chr1 249250200 249250400
+#' 1246253:   chr1 249250400 249250600
+#' 1246254:   chr1 249250600 249250800
+#' ...
+#'  $`22`
+#'            chr    start      end
+#'         <char>    <num>    <num>
+#'      1:  chr22        0      200
+#'      2:  chr22      200      400
+#'      3:  chr22      400      600
+#'      4:  chr22      600      800
+#'      5:  chr22      800     1000
+#'     ---
+#' 256519:  chr22 51303600 51303800
+#' 256520:  chr22 51303800 51304000
+#' 256521:  chr22 51304000 51304200
+#' 256522:  chr22 51304200 51304400
+#' 256523:  chr22 51304400 51304600
 #'
 #' @export
-create_blank_bed_files <- function(chromosome_sizes, bin_size) {
-  chromosomes <- c(seq(1, 22), "X")
+create_blank_bed_files <- function(chromosome_sizes_file,
+                                   bin_size = 200,
+                                   chromosomes = c(seq(1, 22), "X")) {
+  chromosome_sizes <- process_chromosome_sizes(chromosome_sizes_file)
+
   blank_bed_files <- lapply(chromosomes, function(chromosome) {
+    chromosome_name <- paste0("chr", chromosome)
+    chromosome_length <- chromosome_sizes[[paste0("chr", chromosome)]]
     do.call(create_bins, c(list(
-      chromosome = chromosome,
-      chromosome_sizes = chromosome_sizes,
+      chromosome_name = chromosome_name,
+      chromosome_length = chromosome_length,
       bin_size = bin_size
     )))
   })

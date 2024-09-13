@@ -4,15 +4,15 @@
 \alias{create_bins}
 \title{Create genomic windows for a chromosome}
 \usage{
-create_bins(chromosome, chromosome_sizes, bin_size)
+create_bins(chromosome_name, chromosome_length, bin_size)
 }
 \arguments{
-\item{chromosome_sizes}{a data.table detailing the length of each chromosome
-with columns "chromosome name" and "chromosome size"}
+\item{chromosome_length}{The length of the given chromosome (integer)}
 
 \item{bin_size}{The desired size of each region (integer)}
 
-\item{chromsome}{The name of the chromsome (string)}
+\item{chromsome}{The name of the chromsome (string). This must be of the
+form "chrxyz" as ChromHMM expects this form.}
 }
 \value{
 A data.table with columns "chromosome",
@@ -23,11 +23,12 @@ Given a chromosome and its size this creates a data.table
 that details regions of a fixed length spanning the chromosome
 }
 \examples{
- create_bins("22", chromosome_sizes, 200)
+ create_bins("chr22", "1000000", 200)
 
  Generates a data.table of the form:
  chr22	0	200
  chr22	200	400
  chr22	400	600
  ...
+ chr22	999800	1000000
 }

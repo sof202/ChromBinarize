@@ -4,30 +4,61 @@
 \alias{create_blank_bed_files}
 \title{A wrapper for \code{create_bins()}}
 \usage{
-create_blank_bed_files(chromosome_sizes, bin_size)
+create_blank_bed_files(
+  chromosome_sizes_file,
+  bin_size = 200,
+  chromosomes = c(seq(1, 22), "X")
+)
 }
 \arguments{
-\item{chromosome_sizes}{a data.table detailing the length of each chromosome
-with columns "chromosome name" and "chromosome size"}
+\item{chromosome_sizes_file}{A file path (string) to a text file detailing the length of each chromosome.
+The file should contain two columns: chromosome name and chromosome length.}
 
-\item{bin_size}{The desired size of each region (integer)}
+\item{bin_size}{The desired size of each region (integer). Defaults to 200.}
+
+\item{chromosomes}{A character vector of all chromosomes to create bins for.
+Defaults to 1,2,3,...,22,X}
 }
 \value{
-A data.table with columns "chromosome",
-"starting base pair position" and "end base pair position"
+A list of data.tables with columns "chromosome",
+"starting base pair position" and "end base pair position". Each list item
+is given the corresponding chromosome index as its name.
 }
 \description{
-Using a desired bin size, creates data.tables in the form of
-a bed file for chromosomes 1 to X. Each row is the next subsequent window
-equal to the bin size.\code{create_bins()}
+Using a desired bin size, this creates data.tables for each
+chromosome requested in the form of a bed file. Each row gives the
+coordinates of a genomic window each equal to the bin size.
 }
 \examples{
- create_bins("22", chromosome_sizes, 200)
+ create_blank_bed_files("path/to/chromosome_sizes.txt", 100, seq(1,22))
 
- Generates a data.table of the form:
- chr22	0	200
- chr22	200	400
- chr22	400	600
- ...
+ $`1`
+            chr     start       end
+         <char>     <num>     <num>
+      1:   chr1         0       200
+      3:   chr1       400       600
+      4:   chr1       600       800
+      5:   chr1       800      1000
+     ---
+1246250:   chr1 249249800 249250000
+1246251:   chr1 249250000 249250200
+1246252:   chr1 249250200 249250400
+1246253:   chr1 249250400 249250600
+1246254:   chr1 249250600 249250800
+...
+ $`22`
+           chr    start      end
+        <char>    <num>    <num>
+     1:  chr22        0      200
+     2:  chr22      200      400
+     3:  chr22      400      600
+     4:  chr22      600      800
+     5:  chr22      800     1000
+    ---
+256519:  chr22 51303600 51303800
+256520:  chr22 51303800 51304000
+256521:  chr22 51304000 51304200
+256522:  chr22 51304200 51304400
+256523:  chr22 51304400 51304600
 
 }
