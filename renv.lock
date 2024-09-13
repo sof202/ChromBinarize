@@ -61,6 +61,14 @@
       ],
       "Hash": "45f0398006e83a5b10b72a90663d8d8c"
     },
+    "chrombinarize": {
+      "Package": "chrombinarize",
+      "Version": "0.0.0.9000",
+      "Source": "Local",
+      "RemoteType": "local",
+      "RemoteUrl": "./chrombinarize",
+      "Hash": "f3cbc2e1f53e7c9b66a516a5cdf76d1d"
+    },
     "cli": {
       "Package": "cli",
       "Version": "3.6.3",
