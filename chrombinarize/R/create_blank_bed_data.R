@@ -1,9 +1,9 @@
 #' @title Read and process a chromosome lengths file
 #'
 #' @description Convert a file detailing the sizes of each chromosome
-#'  into a vector to be used by `create_blank_bed_files()`
+#'  into a vector to be used by `create_blank_bed_data()`
 #'
-#' @inheritParams create_blank_bed_files
+#' @inheritParams create_blank_bed_data
 #'
 #' @details It is assumed that the input file is coming from ChromHMM's
 #'  included files. However, if this is not the case, you will need to ensure
@@ -38,7 +38,7 @@ process_chromosome_sizes <- function(chromosome_sizes_file) {
 #' @param chromosome_name The name of the chromsome (string).
 #'  This must be of the form "chrxyz" as ChromHMM expects this form.
 #' @param chromosome_length The length of the given chromosome (integer)
-#' @inheritParams create_blank_bed_files
+#' @inheritParams create_blank_bed_data
 #'
 #' @return A data.table with columns "chromosome",
 #' "starting base pair position" and "end base pair position"
@@ -81,7 +81,7 @@ create_bins <- function(chromosome_name, chromosome_length, bin_size) {
 #'  is given the corresponding chromosome index as its name.
 #'
 #' @examples
-#'  create_blank_bed_files("path/to/chromosome_sizes.txt", 100, seq(1,22))
+#'  create_blank_bed_data("path/to/chromosome_sizes.txt", 100, seq(1,22))
 #'
 #'  $`1`
 #'             chr     start       end
@@ -113,12 +113,12 @@ create_bins <- function(chromosome_name, chromosome_length, bin_size) {
 #' 256523:  chr22 51304400 51304600
 #'
 #' @export
-create_blank_bed_files <- function(chromosome_sizes_file,
+create_blank_bed_data <- function(chromosome_sizes_file,
                                    bin_size = 200,
                                    chromosomes = c(seq(1, 22), "X")) {
   chromosome_sizes <- process_chromosome_sizes(chromosome_sizes_file)
 
-  blank_bed_files <- lapply(chromosomes, function(chromosome) {
+  blank_bed_data <- lapply(chromosomes, function(chromosome) {
     chromosome_name <- paste0("chr", chromosome)
     chromosome_length <- chromosome_sizes[[paste0("chr", chromosome)]]
     do.call(create_bins, c(list(
@@ -127,6 +127,6 @@ create_blank_bed_files <- function(chromosome_sizes_file,
       bin_size = bin_size
     )))
   })
-  names(blank_bed_files) <- chromosomes
-  return(blank_bed_files)
+  names(blank_bed_data) <- chromosomes
+  return(blank_bed_data)
 }
