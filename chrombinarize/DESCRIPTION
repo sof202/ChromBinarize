@@ -1,0 +1,21 @@
+Package: chrombinarize
+Title: A series of functions used in ChromBinarize's pipelines
+Version: 0.0.1
+Authors@R: 
+    person("Sam", "Fletcher", "s.o.fletcher@exeter.ac.uk", role = c("cre"))
+Description: Functions used to binarize methylation (and hydroxymethylation) 
+    data into a binary file format that is useable by ChromHMM. It also
+    provides some supplementary functionality to give the user more information
+    around the statistical thresholds being used in the binarization process.
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    cowplot,
+    data.table,
+    dplyr,
+    fitdistrplus,
+    ggplot2,
+    grid,
+    gridExtra
