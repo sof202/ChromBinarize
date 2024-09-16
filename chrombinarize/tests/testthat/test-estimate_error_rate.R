@@ -30,8 +30,12 @@ test_that("error rate is one for all methylated reads", {
 
 test_that("function throws error for incorrect file format", {
   tempfile_path <- withr::local_tempfile(
-    pattern = "allZeros.bed",
-    lines = c("string,string")
+    pattern = "wrong_format.bed",
+    lines = c("string,string", "string,string")
   )
-  expect_error(estimate_error_rate(tempfile_path))
+  expect_error(read_reference_set(tempfile_path))
+})
+
+test_that("function throws error for non-existent file", {
+  expect_error(read_reference_set("non-existent-file"))
 })

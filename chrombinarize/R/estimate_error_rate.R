@@ -1,3 +1,46 @@
+#' @title Read in Reference Set
+#'
+#' @description Reads in your reference set into a data table with several
+#'  checks to ensure the file is of the correct form
+#'
+#' @inheritParams estimate_error_rate
+#'
+#' @return A data.table with columns "reads" (integer) and "percent_methylated"
+#'  (numerical).
+#'
+#' @examples
+#' estimate_error_rate("path/to/reference_set.tsv")
+read_reference_set <- function(reference_set_path) {
+  if (!file.exists(reference_set_path)) stop("ERROR: File does not exist.")
+
+  reference_set <- suppressWarnings(data.table::fread(
+    reference_set_path,
+    col.names = c("reads", "percent_methylated"),
+    colClasses = c("integer", "numeric")
+  ))
+
+  if (!all(vapply(
+    reference_set[["reads"]],
+    is.integer,
+    logical(1)
+  ))) {
+    stop("The first column (reads) must be integer valued")
+  }
+
+  if (!all(vapply(
+    reference_set[["percent_methylated"]],
+    is.numeric,
+    logical(1)
+  ))) {
+    stop(
+      "The second column (percent of reads methylated)",
+      "must be numerical (double)"
+    )
+  }
+
+  return(reference_set)
+}
+
 #' @title Estimate the Error Rate of Methylation Data
 #'
 #' @description This function estimates the error rate of methylation data
@@ -37,10 +80,7 @@
 #'
 #' @export
 estimate_error_rate <- function(reference_set_path) {
-  unmethylated_positions <- data.table::fread(
-    reference_set_path,
-    col.names = c("reads", "percent_methylated")
-  )
+  unmethylated_positions <- read_reference_set(reference_set_path)
 
   unmethylated_positions <-
     dplyr::mutate(
