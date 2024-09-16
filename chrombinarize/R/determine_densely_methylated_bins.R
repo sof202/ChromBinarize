@@ -93,28 +93,22 @@ read_bin_counts_file <- function(bin_counts_file) {
     colClasses = c("character", "integer", "integer", "integer")
   ))
 
-  check_column_class <- function(column, type_checker, stop_message) {
-    if (!all(vapply(column, type_checker, logical(1)))) {
-      stop(stop_message)
-    }
-  }
-
-  check_column_class(
+  verify_column_class(
     bin_counts[["chr"]],
     is.character,
     "The first column (chromosome name) must be a string"
   )
-  check_column_class(
+  verify_column_class(
     bin_counts[["start"]],
     is.integer,
     "The second column (start) must be an integer"
   )
-  check_column_class(
+  verify_column_class(
     bin_counts[["end"]],
     is.integer,
     "The third column (end) must be an integer"
   )
-  check_column_class(
+  verify_column_class(
     bin_counts[["count"]],
     is.integer,
     "The fourth column (count) must be an integer"

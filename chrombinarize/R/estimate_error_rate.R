@@ -19,24 +19,16 @@ read_reference_set <- function(reference_set_path) {
     colClasses = c("integer", "numeric")
   ))
 
-  if (!all(vapply(
+  verify_column_class(
     reference_set[["reads"]],
     is.integer,
-    logical(1)
-  ))) {
-    stop("The first column (reads) must be integer valued")
-  }
-
-  if (!all(vapply(
+    "The first column (reads) must be integer valued"
+  )
+  verify_column_class(
     reference_set[["percent_methylated"]],
     is.numeric,
-    logical(1)
-  ))) {
-    stop(
-      "The second column (percent of reads methylated)",
-      "must be numerical (double)"
-    )
-  }
+    "The second column (percent of reads methylated) must be numerical (double)"
+  )
 
   return(reference_set)
 }
