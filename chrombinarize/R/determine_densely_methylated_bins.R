@@ -85,9 +85,39 @@ is_densely_methylated <-
 #'  5:   chr1   800  1000   199
 #'  ...
 read_bin_counts_file <- function(bin_counts_file) {
-  bin_counts <- data.table::fread(
+  if (!file.exists(bin_counts_file)) stop("ERROR: File does not exist.")
+
+  bin_counts <- suppressWarnings(data.table::fread(
     bin_counts_file,
-    col.names = c("chr", "start", "end", "count")
+    col.names = c("chr", "start", "end", "count"),
+    colClasses = c("character", "integer", "integer", "integer")
+  ))
+
+  check_column_class <- function(column, type_checker, stop_message) {
+    if (!all(vapply(column, type_checker, logical(1)))) {
+      stop(stop_message)
+    }
+  }
+
+  check_column_class(
+    bin_counts[["chr"]],
+    is.character,
+    "The first column (chromosome name) must be a string"
+  )
+  check_column_class(
+    bin_counts[["start"]],
+    is.integer,
+    "The second column (start) must be an integer"
+  )
+  check_column_class(
+    bin_counts[["end"]],
+    is.integer,
+    "The third column (end) must be an integer"
+  )
+  check_column_class(
+    bin_counts[["count"]],
+    is.integer,
+    "The fourth column (count) must be an integer"
   )
   return(bin_counts)
 }
