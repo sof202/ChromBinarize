@@ -192,7 +192,7 @@ create_correlation_plot <- function(comparison_bedmethyl,
     ggplot2::theme_bw() +
     ggplot2::labs(
       x = "percent methylation in ONT",
-      y = "percent methylation in WGBS"
+      y = "percent methylation in BS"
     )
   return(methylation_correlation_plot)
 }
