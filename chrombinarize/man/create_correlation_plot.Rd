@@ -4,7 +4,11 @@
 \alias{create_correlation_plot}
 \title{Generate a Density Heatmap Correlation Plot}
 \usage{
-create_correlation_plot(comparison_bedmethyl)
+create_correlation_plot(
+  comparison_bedmethyl,
+  mark = "m",
+  read_depth_filter = 30
+)
 }
 \arguments{
 \item{comparison_bedmethyl}{A data.table with the following columns:
@@ -17,6 +21,12 @@ create_correlation_plot(comparison_bedmethyl)
 \item percent_methylation: percentage of reads observed to be methylated
 (numeric)
 }}
+
+\item{mark}{The name of the mark to inspect ("m" or "h")}
+
+\item{read_depth_filter}{A filter to use on the read depth in your bedmethyl
+file. This is in place to reduce random fluctuations (common in low count
+data)}
 }
 \value{
 A plot (ggplot) of type \code{geom_bin2d} showing how the percent

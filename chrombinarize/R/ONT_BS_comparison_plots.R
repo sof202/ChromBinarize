@@ -8,14 +8,7 @@
 #' This is primarily for the purpose of using the
 #' `create_read_depth_plot()` and `create_percent_comparison_plot()` functions.
 #'
-#' @param comparison_bedmethyl A data.table with the following columns:
-#' - chr: chromosome name (string)
-#' - start: starting base pair position (integer)
-#' - end: ending base pair position (integer)
-#' - mark_name: "m" for 5mC and "h" for 5hmC (string)
-#' - read_depth: read depth (integer)
-#' - percent_methylation: percentage of reads observed to be methylated
-#'    (numeric)
+#' @inheritParams create_read_depth_plot
 #'
 #' @return A modified version of the `comparison_bedmethyl` data.table with
 #'    additional columns:
@@ -33,8 +26,6 @@
 #'    (numeric)
 #' - BS_read_depth: read depth for BS (integer)
 #' - BS_percent_methylation: percentage of methylated reads in BS (numeric)
-#'
-#' @export
 add_absolute_change_columns <- function(comparison_bedmethyl) {
   comparison_bedmethyl <- dplyr::mutate(
     comparison_bedmethyl,
@@ -54,40 +45,41 @@ add_absolute_change_columns <- function(comparison_bedmethyl) {
 #'  histogram is produced to showcase the distribution of the absolute change
 #'  in read depth seen between each dataset.
 #'
-#' @param comparison_bedmethyl
-#'  A modified version of a comparison_bedmethyl (data.table) with columns:
+#' @param comparison_bedmethyl A data.table with the following columns:
 #' - chr: chromosome name (string)
 #' - start: starting base pair position (integer)
 #' - end: ending base pair position (integer)
 #' - mark_name: "m" for 5mC and "h" for 5hmC (string)
-#' - ONT_read_depth: read depth for ONT (integer)
-#' - ONT_percent_methylation: percentage of methylated reads in ONT
+#' - read_depth: read depth (integer)
+#' - percent_methylation: percentage of reads observed to be methylated
 #'    (numeric)
-#' - BS_read_depth: read depth for BS (integer)
-#' - BS_percent_methylation: percentage of methylated reads in BS (numeric)
-#' - absolute_change_percent_methylation: absolute change in percent
-#'    methylation (numeric)
-#' - absolute_change_read_depth: absolute change in read depth (integer)
+#' @param mark The name of the mark to inspect ("m" or "h")
+#' @param read_depth_filter A filter to use on the read depth in your bedmethyl
+#'  file. This is in place to reduce random fluctuations (common in low count
+#'  data)
 #'
 #' @return A plot (ggplot) of type `geom_histogram` showing the distribution
 #'  of the absolute change in percent methylation between the datasets
-#'
-#' @details Use `add_absolute_change_columns()` to obtain the necessary columns
-#'  in your comparison_bedmethyl data table for this function.
-#'  (see ?chrombinarize::add_absolute_change_columns)
 #'
 #' @examples
 #' # Read in comparison_bedmethyl file
 #' bedmethyl <- read_comparison_bedmethyl("path/to/bedmethyl.bed")
 #'
-#' # Add absolute change columns
-#' bedmethyl <- add_absolute_change_columns(bedmethyl)
-#'
 #' # Create histogram
 #' create_read_depth_plot(bedmethyl)
 #'
 #' @export
-create_read_depth_plot <- function(comparison_bedmethyl) {
+create_read_depth_plot <- function(comparison_bedmethyl,
+                                   mark = "m",
+                                   read_depth_filter = 30) {
+  comparison_bedmethyl <- add_absolute_change_columns(comparison_bedmethyl)
+  comparison_bedmethyl <- dplyr::filter(
+    comparison_bedmethyl,
+    ONT_N >= !!read_depth_filter,
+    BS_N >= !!read_depth_filter,
+    mark == !!mark
+  )
+
   # read depth can get very large if lots of samples are merged. If this is the
   # case, then the histogram becomes very difficult to interpret. We remove
   # highly covered sites for this reason.
@@ -124,14 +116,21 @@ create_read_depth_plot <- function(comparison_bedmethyl) {
 #' # Read in comparison_bedmethyl file
 #' bedmethyl <- read_comparison_bedmethyl("path/to/bedmethyl.bed")
 #'
-#' # Add absolute change columns
-#' bedmethyl <- add_absolute_change_columns(bedmethyl)
-#'
 #' # Create histogram
 #' create_read_depth_plot(bedmethyl)
 #'
 #' @export
-create_percent_comparison_plot <- function(comparison_bedmethyl) {
+create_percent_comparison_plot <- function(comparison_bedmethyl,
+                                           mark = "m",
+                                           read_depth_filter = 30) {
+  comparison_bedmethyl <- add_absolute_change_columns(comparison_bedmethyl)
+  comparison_bedmethyl <- dplyr::filter(
+    comparison_bedmethyl,
+    ONT_N >= !!read_depth_filter,
+    BS_N >= !!read_depth_filter,
+    mark == !!mark
+  )
+
   percent_comparison_plot <-
     ggplot2::ggplot(
       comparison_bedmethyl,
@@ -150,7 +149,7 @@ create_percent_comparison_plot <- function(comparison_bedmethyl) {
 #'  density heatmap is produced between the percent methylation seen at each
 #'  CpG site for both data types.
 #'
-#' @inheritParams add_absolute_change_columns
+#' @inheritParams create_read_depth_plot
 #'
 #' @return A plot (ggplot) of type `geom_bin2d` showing how the percent
 #' methylation in BS and ONT compare
@@ -160,7 +159,15 @@ create_percent_comparison_plot <- function(comparison_bedmethyl) {
 #'  main diagonal (datasets agree with one another). This is assuming of course
 #'  that both datasets are from the same study/sample etc.
 #' @export
-create_correlation_plot <- function(comparison_bedmethyl) {
+create_correlation_plot <- function(comparison_bedmethyl,
+                                    mark = "m",
+                                    read_depth_filter = 30) {
+  comparison_bedmethyl <- dplyr::filter(
+    comparison_bedmethyl,
+    ONT_N >= !!read_depth_filter,
+    BS_N >= !!read_depth_filter,
+    mark == !!mark
+  )
   # For better interpretability, a log scale is used for colouration
   breaks <- c(1, 10, 100, 1000, 10000)
 

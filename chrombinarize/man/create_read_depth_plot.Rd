@@ -4,24 +4,29 @@
 \alias{create_read_depth_plot}
 \title{Generate a Histogram for the Change in Read Depth}
 \usage{
-create_read_depth_plot(comparison_bedmethyl)
+create_read_depth_plot(
+  comparison_bedmethyl,
+  mark = "m",
+  read_depth_filter = 30
+)
 }
 \arguments{
-\item{comparison_bedmethyl}{A modified version of a comparison_bedmethyl (data.table) with columns:
+\item{comparison_bedmethyl}{A data.table with the following columns:
 \itemize{
 \item chr: chromosome name (string)
 \item start: starting base pair position (integer)
 \item end: ending base pair position (integer)
 \item mark_name: "m" for 5mC and "h" for 5hmC (string)
-\item ONT_read_depth: read depth for ONT (integer)
-\item ONT_percent_methylation: percentage of methylated reads in ONT
+\item read_depth: read depth (integer)
+\item percent_methylation: percentage of reads observed to be methylated
 (numeric)
-\item BS_read_depth: read depth for BS (integer)
-\item BS_percent_methylation: percentage of methylated reads in BS (numeric)
-\item absolute_change_percent_methylation: absolute change in percent
-methylation (numeric)
-\item absolute_change_read_depth: absolute change in read depth (integer)
 }}
+
+\item{mark}{The name of the mark to inspect ("m" or "h")}
+
+\item{read_depth_filter}{A filter to use on the read depth in your bedmethyl
+file. This is in place to reduce random fluctuations (common in low count
+data)}
 }
 \value{
 A plot (ggplot) of type \code{geom_histogram} showing the distribution
@@ -32,17 +37,9 @@ Using comparative methylation data from BS-Seq and ONT, a
 histogram is produced to showcase the distribution of the absolute change
 in read depth seen between each dataset.
 }
-\details{
-Use \code{add_absolute_change_columns()} to obtain the necessary columns
-in your comparison_bedmethyl data table for this function.
-(see ?chrombinarize::add_absolute_change_columns)
-}
 \examples{
 # Read in comparison_bedmethyl file
 bedmethyl <- read_comparison_bedmethyl("path/to/bedmethyl.bed")
-
-# Add absolute change columns
-bedmethyl <- add_absolute_change_columns(bedmethyl)
 
 # Create histogram
 create_read_depth_plot(bedmethyl)
