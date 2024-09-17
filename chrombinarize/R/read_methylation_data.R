@@ -8,9 +8,10 @@
 #'
 #' @return A data.table with columns: "chr" (chromosome name, string), "start",
 #'  (starting base pair position, int), "end" (ending base pair position, int),
-#'  "name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int), "strand"
-#'  (Either "+", "-" or "." for unknown strand) and "percent_methylation"
-#'  (The percentage of such reads that were observed to be methylated, numeric)
+#'  "mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int),
+#'  "strand" (Either "+", "-" or "." for unknown strand) and
+#'  "percent_methylation" (The percentage of such reads that were observed to
+#'  be methylated, numeric)
 #'
 #' @details This function also checks that your BEDmethyl file is of the
 #'  correct form. If your file has the incorrect number of columns or incorrect
@@ -38,7 +39,7 @@ read_methylation_data <- function(bed_file_location) {
       "chr",
       "start",
       "end",
-      "name",
+      "mark_name",
       "read_depth",
       "strand",
       "percent_methylation"
@@ -74,9 +75,9 @@ read_methylation_data <- function(bed_file_location) {
     "The third column (end) must be an integer"
   )
   verify_column_class(
-    methylation_data[["name"]],
+    methylation_data[["mark_name"]],
     is_mh,
-    "The fourth column (name) must only contain strings 'm' or 'h'"
+    "The fourth column (mark_name) must only contain strings 'm' or 'h'"
   )
   verify_column_class(
     methylation_data[["read_depth"]],
