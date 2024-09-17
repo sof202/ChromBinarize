@@ -108,7 +108,7 @@ concatenate_plots <- function(n_thresholds, methylation_data, plot_type) {
 ##   MAIN   ##
 ## ======== ##
 
-methylation_data <- chrombinarize::read_methylation_data(bed_file_location)
+methylation_data <- chrombinarize::read_bedmethyl(bed_file_location)
 
 methylation_data <- dplyr::filter(methylation_data, mark_name == mark)
 

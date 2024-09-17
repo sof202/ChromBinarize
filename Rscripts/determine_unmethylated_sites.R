@@ -11,7 +11,7 @@ reference_set_path <- file.path(folder, reference_set)
 binomial_p <- chrombinarize::estimate_error_rate(reference_set_path)
 
 bed_file_location <- file.path(folder, input_bed_file)
-methylation_data <- chrombinarize::read_methylation_data(bed_file_location)
+methylation_data <- chrombinarize::read_bedmethyl(bed_file_location)
 
 methylation_data <- methylation_data |>
   dplyr::mutate(

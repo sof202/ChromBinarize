@@ -18,7 +18,7 @@
 #'  column structure, a helpful error message will be returned instead.
 #'
 #' @examples
-#' read_methylation_data("path/to/bedmethyl_file.bed")
+#' read_bedmethyl("path/to/bedmethyl_file.bed")
 #'
 #'        chr start   end   name read_depth strand percent_methylation
 #'     <char> <int> <int> <char>      <int> <char>               <num>
@@ -30,7 +30,7 @@
 #'  6:   chr3   950  1050      h         72      +                 100
 #'
 #' @export
-read_methylation_data <- function(bed_file_location) {
+read_bedmethyl <- function(bed_file_location) {
   if (!file.exists(bed_file_location)) stop("ERROR: File does not exist.")
 
   methylation_data <- data.table::fread(

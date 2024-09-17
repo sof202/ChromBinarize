@@ -119,7 +119,7 @@ concatenate_plots <- function(max_read_depth,
 ##   MAIN   ##
 ## ======== ##
 
-methylation_data <- chrombinarize::read_methylation_data(bed_file_location)
+methylation_data <- chrombinarize::read_bedmethyl(bed_file_location)
 
 methylation_data <- dplyr::filter(methylation_data, mark_name == mark)
 

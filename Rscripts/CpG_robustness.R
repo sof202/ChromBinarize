@@ -76,7 +76,7 @@ create_cpg_robustness_plot <- function(methylation_data) {
 ##   MAIN   ##
 ## ======== ##
 
-methylation_data <- chrombinarize::read_methylation_data(bed_file_location)
+methylation_data <- chrombinarize::read_bedmethyl(bed_file_location)
 
 methylation_data <-
   add_lead_and_lag(methylation_data) |>
