@@ -6,7 +6,7 @@
 \usage{
 create_percent_comparison_plot(
   comparison_bedmethyl,
-  mark = "m",
+  mark = c("m", "h"),
   read_depth_filter = 30
 )
 }

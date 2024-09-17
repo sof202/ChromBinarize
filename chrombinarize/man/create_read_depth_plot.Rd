@@ -6,7 +6,7 @@
 \usage{
 create_read_depth_plot(
   comparison_bedmethyl,
-  mark = "m",
+  mark = c("m", "h"),
   read_depth_filter = 30
 )
 }

@@ -32,7 +32,7 @@ add_absolute_change_columns <- function(comparison_bedmethyl) {
     "absolute_change_percent_methylation" = abs(
       ONT_percent_methylation - BS_percent_methylation
     ),
-    "absolute_change_read_depth" = abs(ONT_N - BS_N)
+    "absolute_change_read_depth" = abs(ONT_read_depth - BS_read_depth)
   )
   return(comparison_bedmethyl)
 }
@@ -77,8 +77,8 @@ create_read_depth_plot <- function(comparison_bedmethyl,
   comparison_bedmethyl <- add_absolute_change_columns(comparison_bedmethyl)
   comparison_bedmethyl <- dplyr::filter(
     comparison_bedmethyl,
-    ONT_N >= !!read_depth_filter,
-    BS_N >= !!read_depth_filter,
+    ONT_read_depth >= !!read_depth_filter,
+    BS_read_depth >= !!read_depth_filter,
     mark == !!mark
   )
 
@@ -130,8 +130,8 @@ create_percent_comparison_plot <- function(comparison_bedmethyl,
   comparison_bedmethyl <- add_absolute_change_columns(comparison_bedmethyl)
   comparison_bedmethyl <- dplyr::filter(
     comparison_bedmethyl,
-    ONT_N >= !!read_depth_filter,
-    BS_N >= !!read_depth_filter,
+    ONT_read_depth >= !!read_depth_filter,
+    BS_read_depth >= !!read_depth_filter,
     mark == !!mark
   )
 
@@ -170,8 +170,8 @@ create_correlation_plot <- function(comparison_bedmethyl,
 
   comparison_bedmethyl <- dplyr::filter(
     comparison_bedmethyl,
-    ONT_N >= !!read_depth_filter,
-    BS_N >= !!read_depth_filter,
+    ONT_read_depth >= !!read_depth_filter,
+    BS_read_depth >= !!read_depth_filter,
     mark == !!mark
   )
   # For better interpretability, a log scale is used for colouration
