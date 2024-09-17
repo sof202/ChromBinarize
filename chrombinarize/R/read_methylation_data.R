@@ -50,6 +50,10 @@ read_methylation_data <- function(bed_file_location) {
     )
   )
 
+  is_mh <- function(ch) {
+    return(ch == "m" || ch == "h")
+  }
+
   verify_column_class(
     methylation_data[["chr"]],
     is.character,
@@ -67,8 +71,8 @@ read_methylation_data <- function(bed_file_location) {
   )
   verify_column_class(
     methylation_data[["name"]],
-    is.character,
-    "The fourth column (name) must be a string"
+    is_mh,
+    "The fourth column (name) must only contain strings 'm' or 'h'"
   )
   verify_column_class(
     methylation_data[["read_depth"]],
