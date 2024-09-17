@@ -8,6 +8,10 @@ beta_threshold <- as.numeric(args[6])
 
 renv::load(renv_environment)
 
+## ======== ##
+##   MAIN   ##
+## ======== ##
+
 bin_counts <- chrombinarize::determine_dense_bins(
   bin_counts_file,
   beta_threshold
@@ -24,9 +28,6 @@ sparsely_methylated_bins <- bin_counts |>
   dplyr::filter(!densely_methylated) |>
   dplyr::select(methylation_present)
 
-## =========== ##
-##   OUTPUTS   ##
-## =========== ##
 data.table::fwrite(
   densely_methylated_bins,
   file = dense_output_file,
