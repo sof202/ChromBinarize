@@ -105,14 +105,6 @@ bed_file_location="${ONT_bed_file_location}"
 # putting a maximum value here helps with interpretability of plots.
 max_N_value=750
 
-# p1 for rate of erroneous unmethylation calls for methylated sites
-# p2 for rate of erroneous methylation calls for unmethylated sites
-plot_type=
-
-# 'N' for looking at minimum read depth on x axis
-# 'percent' for looking at minimum/maximum percentage on x axis
-run_type=
-
 ## .................... ##
 ## b_CpG_robustness.sh  ##
 ## .................... ##
