@@ -12,13 +12,6 @@ library(ggplot2)
 ##   DATA MANIPULATION   ##
 ## ===================== ##
 
-read_methylation_data <- function(bed_file_location) {
-  methylation_data <- data.table::fread(bed_file_location)
-  names(methylation_data) <-
-    c("Chr", "start", "end", "name", "size", "strand", "percent_methylation")
-  return(methylation_data)
-}
-
 add_lead_and_lag <- function(methylation_data) {
   methylation_data <- dplyr::mutate(
     methylation_data,
@@ -83,7 +76,7 @@ create_cpg_robustness_plot <- function(methylation_data) {
 ##   MAIN   ##
 ## ======== ##
 
-methylation_data <- read_methylation_data(bed_file_location)
+methylation_data <- chrombinarize::read_methylation_data(bed_file_location)
 
 methylation_data <-
   add_lead_and_lag(methylation_data) |>

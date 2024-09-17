@@ -10,19 +10,8 @@ renv::load(renv_environment)
 reference_set_path <- file.path(folder, reference_set)
 binomial_p <- chrombinarize::estimate_error_rate(reference_set_path)
 
-methylation_data_path <- file.path(folder, input_bed_file)
-methylation_data <- data.table::fread(
-  methylation_data_path,
-  col.names = c(
-    "Chr",
-    "start",
-    "end",
-    "name",
-    "read_depth",
-    "strand",
-    "percent_methylation"
-  )
-)
+bed_file_location <- file.path(folder, input_bed_file)
+methylation_data <- chrombinarize::read_methylation_data(bed_file_location)
 
 methylation_data <- methylation_data |>
   dplyr::mutate(

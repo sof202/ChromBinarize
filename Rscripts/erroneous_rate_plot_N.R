@@ -1,6 +1,6 @@
 args <- commandArgs(trailingOnly = TRUE)
 renv_environment <- args[1]
-bed_file <- args[2]
+bed_file_location <- args[2]
 mark <- args[3] # m for 5mc and h for 5hmc
 max_read_depth <- as.numeric(args[4]) # you don't need to consider N = 2000
 plot_type <- as.name(args[5])
@@ -119,17 +119,7 @@ concatenate_plots <- function(max_read_depth,
 ##   MAIN   ##
 ## ======== ##
 
-methylation_data <- data.table::fread(bed_file)
-
-names(methylation_data) <- c(
-  "chr",
-  "start",
-  "end",
-  "mark_name",
-  "read_depth",
-  "strand",
-  "percent_methylation"
-)
+methylation_data <- chrombinarize::read_methylation_data(bed_file_location)
 
 methylation_data <- dplyr::filter(methylation_data, mark_name == mark)
 
