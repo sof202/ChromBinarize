@@ -100,7 +100,7 @@ read_bedmethyl <- function(bed_file_location) {
 
 #' @title Read in a comparison BEDMethyl File
 #'
-#' @description Converts a comparison BEDMethyl file into a data table that 
+#' @description Converts a comparison BEDMethyl file into a data table that
 #'  can be used by the comparison scripts in the pipeline.
 #'
 #' @param bed_file_location A file path (string) to the comparison BEDMethyl
@@ -108,8 +108,7 @@ read_bedmethyl <- function(bed_file_location) {
 #'
 #' @return A data.table with columns: "chr" (chromosome name, string), "start",
 #'  (starting base pair position, int), "end" (ending base pair position, int),
-#'  "mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int),
-#'  "strand" (Either "+", "-" or "." for unknown strand) and
+#'  "mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int) and
 #'  "percent_methylation" (The percentage of such reads that were observed to
 #'  be methylated, numeric)
 #'
