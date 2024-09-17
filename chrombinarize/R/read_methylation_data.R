@@ -12,6 +12,10 @@
 #'  (Either "+", "-" or "." for unknown strand) and "percent_methylation"
 #'  (The percentage of such reads that were observed to be methylated, numeric)
 #'
+#' @details This function also checks that your BEDmethyl file is of the
+#'  correct form. If your file has the incorrect number of columns or incorrect
+#'  column structure, a helpful error message will be returned instead.
+#'
 #' @examples
 #' read_methylation_data("path/to/bedmethyl_file.bed")
 #'
