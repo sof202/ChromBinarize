@@ -1,0 +1,80 @@
+#' @title Generate Data for `create_error_rate_plot()`
+#'
+#' @description Create a data table with the data required for the
+#'  `create_error_rate_plot()` function.
+#'
+#' @inheritParams create_error_rate_plot
+#'
+#' @return A data table with columns
+#'  - n -> The minimum read depth considered (integer)
+#'  - error_rate -> The error rate estimated (numeric)
+#'
+#' @examples
+#' create_error_rate_data(methylation_data, 1000, 5)
+#'         n error_rate
+#'     <int>      <num>
+#'  1:     1          0.6
+#'  2:     2          0.54
+#'  3:     3          0.52312
+#'  4:     4          0.491
+#'  5:     5          0.43221
+#'  6:     6          0.4
+#'  7:     7          0.3
+#'  8:     8          0.123
+#'  9:     9          0.1
+#' 10:    10          0.05
+create_error_rate_data <- function(methylation_data,
+                                   max_read_depth,
+                                   percent_threshold) {
+  n_values <- 1:max_read_depth
+  error_rates <- lapply(n_values, function(n) {
+    methylation_data <- dplyr::filter(methylation_data, read_depth >= n)
+    estimate_error_rate(methylation_data, n, percent_threshold)
+  })
+  error_rate_data <- data.table::data.table(
+    "n" = n_values,
+    "error_rate" = unlist(error_rates)
+  )
+  return(error_rate_data)
+}
+
+#' @title Generate a Plot of Error Rates
+#'
+#' @description Find how the predicted error rate for your methylation data
+#'  changes as the read depth and percent methylation thresholds change
+#'
+#' @inheritParams estimate_error_rate
+#' @param max_read_depth The maximum read depth threshold to view (integer).
+#'  Some data sets have a single site with really high read depth, plotting
+#'  all the way up to this point is a waste of computation and won't give you
+#'  meaningful data (estimating an error rate using a single site). Defaults to
+#'  1000.
+#'
+#' @return A plot (ggplot) of type `geom_point` showcasing how the estimated
+#'  error rate changes with the minimum read depth considered
+#'
+#' @examples
+#' create_error_rate_plot(methylation_data, 1000, 5)
+#'
+#' @export
+create_error_rate_plot <- function(methylation_data,
+                                   max_read_depth = 1000,
+                                   percent_threshold = 5) {
+  error_rate_data <- create_error_rate_data(
+    methylation_data,
+    max_read_depth,
+    percent_threshold
+  )
+  error_rate_plot <-
+    ggplot2::ggplot(
+      error_rate_data,
+      ggplot2::aes(x = n, y = error_rate)
+    ) +
+    ggplot2::geom_point(color = "black") +
+    ggplot2::labs(
+      x = "Smallest read depth considered",
+      y = "Estimated error rate"
+    ) +
+    ggplot2::theme_bw()
+  return(error_rate_plot)
+}

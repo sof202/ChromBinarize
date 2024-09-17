@@ -11,12 +11,16 @@ read_bedmethyl(bed_file_location)
 processed.}
 }
 \value{
-A data.table with columns: "chr" (chromosome name, string), "start",
-(starting base pair position, int), "end" (ending base pair position, int),
-"mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int),
-"strand" (Either "+", "-" or "." for unknown strand) and
-"percent_methylation" (The percentage of such reads that were observed to
-be methylated, numeric)
+A data.table with columns:
+\itemize{
+\item chr: chromosome name (string)
+\item start: starting base pair position (integer)
+\item end: ending base pair position (integer)
+\item mark_name: "m" for 5mC and "h" for 5hmC (string)
+\item read_depth: read depth for the site (integer)
+\item strand: "+", "-" or "." (character)
+\item percent_methylation: percentage of reads reported as methylated (numeric)
+}
 }
 \description{
 Converts a BEDMethyl file into a data table that can be used

@@ -5,7 +5,15 @@
 #'  in the input file is considered incorrect and contributes to the estimated
 #'  error rate.
 #'
-#' @inheritParams create_read_depth_plot
+#' @param methylation_data
+#' A data.table with columns:
+#' - chr: chromosome name (string)
+#' - start: starting base pair position (integer)
+#' - end: ending base pair position (integer)
+#' - mark_name: "m" for 5mC and "h" for 5hmC (string)
+#' - read_depth: read depth for the site (integer)
+#' - strand: "+", "-" or "." (character)
+#' - percent_methylation: percentage of reads reported as methylated (numeric)
 #' @param read_depth_threshold The minimum read depth to consider (integer).
 #'  Higher values are recommended. Defaults to 30.
 #' @param percent_threshold The maximum percent methylation to consider
