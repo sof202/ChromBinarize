@@ -13,8 +13,7 @@ file to be processed.}
 \value{
 A data.table with columns: "chr" (chromosome name, string), "start",
 (starting base pair position, int), "end" (ending base pair position, int),
-"mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int),
-"strand" (Either "+", "-" or "." for unknown strand) and
+"mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int) and
 "percent_methylation" (The percentage of such reads that were observed to
 be methylated, numeric)
 }
