@@ -5,67 +5,14 @@ output_directory <- args[3]
 
 renv::load(renv_environment)
 
-## ===================== ##
-##   DATA MANIPULATION   ##
-## ===================== ##
+## ======== ##
+##   MAIN   ##
+## ======== ##
 methylation_data <- chrombinarize::read_comparison_bedmethyl(input_bed_file)
 
 # Here we combine 5mC and 5hmC as BS captures both signals without separating
 # them
-methylation_5mc <- dplyr::filter(
-  methylation_data,
-  mark_name == "m"
-)
-methylation_5hmc <- dplyr::filter(
-  methylation_data,
-  mark_name == "h"
-) |>
-  dplyr::mutate(
-    mark_name = "m"
-  )
-
-combine_percentages <- function(reads1, reads2, percent1, percent2) {
-  return((reads1 * percent1 + reads2 * percent2) / (reads1 + reads2))
-}
-
-methylation_data <- dplyr::full_join(
-  methylation_5mc,
-  methylation_5hmc,
-  by = c(
-    "chr",
-    "start",
-    "end",
-    "mark_name",
-    "BS_read_depth",
-    "BS_percent_methylation"
-  )
-) |>
-  dplyr::mutate(
-    ONT_percent_methylation = combine_percentages(
-      ONT_read_depth.x,
-      ONT_read_depth.y,
-      ONT_percent_methylation.x,
-      ONT_percent_methylation.y
-    ),
-    ONT_read_depth = ONT_read_depth.x + ONT_read_depth.y
-  ) |>
-  dplyr::select(
-    c(
-      "chr",
-      "start",
-      "end",
-      "mark_name",
-      "ONT_read_depth",
-      "ONT_percent_methylation",
-      "BS_read_depth",
-      "BS_percent_methylation"
-    )
-  )
-
-
-## ============ ##
-##   PLOTTING   ##
-## ============ ##
+methylation_data <- chrombinarize::combine_5mc_5hmc(methylation_data)
 
 read_depth_plot <-
   chrombinarize::create_read_depth_plot(methylation_data)
