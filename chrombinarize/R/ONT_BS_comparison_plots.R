@@ -70,8 +70,10 @@ add_absolute_change_columns <- function(comparison_bedmethyl) {
 #'
 #' @export
 create_read_depth_plot <- function(comparison_bedmethyl,
-                                   mark = "m",
+                                   mark = c("m", "h"),
                                    read_depth_filter = 30) {
+  mark <- match.arg(mark)
+
   comparison_bedmethyl <- add_absolute_change_columns(comparison_bedmethyl)
   comparison_bedmethyl <- dplyr::filter(
     comparison_bedmethyl,
@@ -121,8 +123,10 @@ create_read_depth_plot <- function(comparison_bedmethyl,
 #'
 #' @export
 create_percent_comparison_plot <- function(comparison_bedmethyl,
-                                           mark = "m",
+                                           mark = c("m", "h"),
                                            read_depth_filter = 30) {
+  mark <- match.arg(mark)
+
   comparison_bedmethyl <- add_absolute_change_columns(comparison_bedmethyl)
   comparison_bedmethyl <- dplyr::filter(
     comparison_bedmethyl,
@@ -160,8 +164,10 @@ create_percent_comparison_plot <- function(comparison_bedmethyl,
 #'  that both datasets are from the same study/sample etc.
 #' @export
 create_correlation_plot <- function(comparison_bedmethyl,
-                                    mark = "m",
+                                    mark = c("m", "h"),
                                     read_depth_filter = 30) {
+  mark <- match.arg(mark)
+
   comparison_bedmethyl <- dplyr::filter(
     comparison_bedmethyl,
     ONT_N >= !!read_depth_filter,
