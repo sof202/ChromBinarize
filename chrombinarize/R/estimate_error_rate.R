@@ -1,38 +1,3 @@
-#' @title Read in Reference Set
-#'
-#' @description Reads in your reference set into a data table with several
-#'  checks to ensure the file is of the correct form
-#'
-#' @inheritParams estimate_error_rate
-#'
-#' @return A data.table with columns "reads" (integer) and "percent_methylated"
-#'  (numerical).
-#'
-#' @examples
-#' estimate_error_rate("path/to/reference_set.tsv")
-read_reference_set <- function(reference_set_path) {
-  if (!file.exists(reference_set_path)) stop("ERROR: File does not exist.")
-
-  reference_set <- suppressWarnings(data.table::fread(
-    reference_set_path,
-    col.names = c("reads", "percent_methylated"),
-    colClasses = c("integer", "numeric")
-  ))
-
-  verify_column_class(
-    reference_set[["reads"]],
-    is.integer,
-    "The first column (reads) must be integer valued"
-  )
-  verify_column_class(
-    reference_set[["percent_methylated"]],
-    is.numeric,
-    "The second column (percent of reads methylated) must be numerical (double)"
-  )
-
-  return(reference_set)
-}
-
 #' @title Estimate the Error Rate of Methylation Data
 #'
 #' @description This function estimates the error rate of methylation data
@@ -40,18 +5,14 @@ read_reference_set <- function(reference_set_path) {
 #'  in the input file is considered incorrect and contributes to the estimated
 #'  error rate.
 #'
-#' @param reference_set_path A file path (string) to a file detailing
-#'  CpG positions in the epigenome that do not exhibit methylation.
-#'  The file is expected to have columns: "read depth at base pair position"
-#'  and "percentage of such reads called as methylated", e.g.:
+#' @inheritParams create_read_depth_plot
+#' @param read_depth_threshold The minimum read depth to consider (integer).
+#'  Higher values are recommended. Defaults to 30.
+#' @param percent_threshold The maximum percent methylation to consider
+#'  (numeric). Lower values are recommended. Defaults to 5.
 #'
-#'      34	5.9
-#'      30	5
-#'      42	4.4
-#'      51	5.9
-#'      22	0
-#'
-#' @return An estimated error rate (numeric) expressed as a proportion (0 to 1).
+#' @return An estimated error rate (numeric) expressed as a probability
+#'  (0 to 1).
 #'
 #' @details The input file should only contain positions with a low percentage
 #'  of reads called as methylated. By default, ChromBinarize uses a reference
@@ -60,31 +21,37 @@ read_reference_set <- function(reference_set_path) {
 #'  which are typically unmethylated regions of the genome.
 #'
 #'  **Warning**: If you are too stringent on unmethylated positions, the
-#'  estimated error rate may approach **0**.
+#'  estimated error rate will approach 0.
 #'  This may not be helpful. Aim for a larger error rate that is also accurate.
 #'
 #' @examples
-#' # Estimate error rate using a TSV file
-#' estimate_error_rate("path/to/reference_set.tsv")
+#' estimate_error_rate(bedmethyl_data, 40, 5)
+#' estimate_error_rate(bedmethyl_data, 500, 2)
+#' estimate_error_rate(bedmethyl_data)
 #'
-#' # Estimate error rate using a CSV file
-#' estimate_error_rate("path/to/reference_set.csv")
+#' # Bad usage
+#' estimate_error_rate(bedmethyl_data, 1, 5)
+#' estimate_error_rate(bedmethyl_data, 30, 0.1)
 #'
 #' @export
-estimate_error_rate <- function(reference_set_path) {
-  unmethylated_positions <- read_reference_set(reference_set_path)
-
+estimate_error_rate <- function(methylation_data,
+                                read_depth_threshold = 30,
+                                percent_threshold = 5) {
   unmethylated_positions <-
+    dplyr::filter(
+      methylation_data,
+      read_depth >= !!read_depth_threshold,
+      percent_methylation <= !!percent_threshold
+    ) |>
     dplyr::mutate(
-      unmethylated_positions,
-      "incorrectly_methylated" = reads * percent_methylated / 100
+      "incorrectly_methylated" = read_depth * percent_methylation / 100
     )
 
   incorrectly_methylated_total <-
     sum(unmethylated_positions[["incorrectly_methylated"]])
-  total_reads <- sum(unmethylated_positions[["reads"]])
-  error_rate <-
+  total_reads <- sum(unmethylated_positions[["read_depth"]])
+  estimated_error_rate <-
     incorrectly_methylated_total / total_reads
 
-  return(error_rate)
+  return(estimated_error_rate)
 }

@@ -1,17 +1,18 @@
 args <- commandArgs(trailingOnly = TRUE)
 renv_environment <- args[1]
-folder <- args[2]
-reference_set <- args[3]
-input_bed_file <- args[4]
+bed_file_location <- args[2]
+read_depth_threshold <- as.numeric(args[3])
+percent_threshold <- as.numeric(args[4])
 output_file_name <- args[5]
 
 renv::load(renv_environment)
 
-reference_set_path <- file.path(folder, reference_set)
-binomial_p <- chrombinarize::estimate_error_rate(reference_set_path)
-
-bed_file_location <- file.path(folder, input_bed_file)
 methylation_data <- chrombinarize::read_bedmethyl(bed_file_location)
+binomial_p <- chrombinarize::estimate_error_rate(
+  methylation_data,
+  read_depth_threshold,
+  percent_threshold
+)
 
 methylation_data <- methylation_data |>
   dplyr::mutate(

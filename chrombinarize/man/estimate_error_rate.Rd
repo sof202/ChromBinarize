@@ -4,23 +4,22 @@
 \alias{estimate_error_rate}
 \title{Estimate the Error Rate of Methylation Data}
 \usage{
-estimate_error_rate(reference_set_path)
+estimate_error_rate(
+  methylation_data,
+  read_depth_threshold = 30,
+  percent_threshold = 5
+)
 }
 \arguments{
-\item{reference_set_path}{A file path (string) to a file detailing
-CpG positions in the epigenome that do not exhibit methylation.
-The file is expected to have columns: "read depth at base pair position"
-and "percentage of such reads called as methylated", e.g.:
+\item{read_depth_threshold}{The minimum read depth to consider (integer).
+Higher values are recommended. Defaults to 30.}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{ 34    5.9
- 30    5
- 42    4.4
- 51    5.9
- 22    0
-}\if{html}{\out{</div>}}}
+\item{percent_threshold}{The maximum percent methylation to consider
+(numeric). Lower values are recommended. Defaults to 5.}
 }
 \value{
-An estimated error rate (numeric) expressed as a proportion (0 to 1).
+An estimated error rate (numeric) expressed as a probability
+(0 to 1).
 }
 \description{
 This function estimates the error rate of methylation data
@@ -36,14 +35,16 @@ being methylated is less than \strong{5\%}. It can also use only CpGs in CGIs,
 which are typically unmethylated regions of the genome.
 
 \strong{Warning}: If you are too stringent on unmethylated positions, the
-estimated error rate may approach \strong{0}.
+estimated error rate will approach 0.
 This may not be helpful. Aim for a larger error rate that is also accurate.
 }
 \examples{
-# Estimate error rate using a TSV file
-estimate_error_rate("path/to/reference_set.tsv")
+estimate_error_rate(bedmethyl_data, 40, 5)
+estimate_error_rate(bedmethyl_data, 500, 2)
+estimate_error_rate(bedmethyl_data)
 
-# Estimate error rate using a CSV file
-estimate_error_rate("path/to/reference_set.csv")
+# Bad usage
+estimate_error_rate(bedmethyl_data, 1, 5)
+estimate_error_rate(bedmethyl_data, 30, 0.1)
 
 }

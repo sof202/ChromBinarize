@@ -70,21 +70,16 @@ if [[ -n "${use_cpg_islands}" ]]; then
     "${processing_directory}/formatted.bed"
 fi
 
-purification_extractSitesWithLowMethylation \
+purification_calculateSiteMethylationProbability \
   "m" \
   "${processing_directory}/formatted.bed" \
-  "${processing_directory}/unmethylated_reads.bed"
+  "processed_reads.bed"
 purification_filterOnReadDepth \
   "m" \
-  "${processing_directory}/formatted.bed" \
-  "${processing_directory}/filtered_reads.bed"
-purification_calculateSiteMethylationProbability \
-  "${processing_directory}" \
-  "unmethylated_reads.bed" \
-  "filtered_reads.bed" \
-  "processed_reads.bed"
-purification_removeDeterminedUnmethylatedSites \
   "${processing_directory}/processed_reads.bed" \
+  "${processing_directory}/filtered_reads.bed" 
+purification_removeDeterminedUnmethylatedSites \
+  "${processing_directory}/filtered_reads.bed" \
   "${processing_directory}/purified_reads.bed"
 
 ## ======================== ##
