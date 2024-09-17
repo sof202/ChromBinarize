@@ -62,18 +62,6 @@ methylation_data <- dplyr::full_join(
     )
   )
 
-methylation_data <- methylation_data |>
-  dplyr::mutate(
-    "absolute_change_percent_methylation" = abs(
-      ONT_percent_methylation - BS_percent_methylation
-    ),
-    "absolute_change_read_depth" = abs(ONT_N - BS_N)
-  ) |>
-  dplyr::filter(
-    ONT_N >= 30, # Filtering by read depth should give better results
-    BS_N >= 30,
-    mark == "m" # still have hydroxy rows at this point.
-  )
 
 ## ============ ##
 ##   PLOTTING   ##
