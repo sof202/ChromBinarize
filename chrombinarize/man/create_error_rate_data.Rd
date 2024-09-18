@@ -42,14 +42,14 @@ Create a data table with the data required for the
 create_error_rate_data(methylation_data, 1000, 5)
         n error_rate
     <int>      <num>
- 1:     1          0.6
- 2:     2          0.54
- 3:     3          0.52312
- 4:     4          0.491
- 5:     5          0.43221
- 6:     6          0.4
- 7:     7          0.3
- 8:     8          0.123
- 9:     9          0.1
-10:    10          0.05
+ 1:     1          0.05
+ 2:     2          0.049
+ 3:     3          0.049
+ 4:     4          0.048
+ 5:     5          0.046
+ 6:     6          0.046
+ 7:     7          0.04
+ 8:     8          0.04
+ 9:     9          0.039
+10:    10          0.039
 }

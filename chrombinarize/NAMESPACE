@@ -3,6 +3,7 @@
 export(combine_5mc_5hmc)
 export(create_blank_bed_data)
 export(create_correlation_plot)
+export(create_cpg_robustness_plot)
 export(create_error_rate_plot)
 export(create_percent_comparison_plot)
 export(create_read_depth_plot)
