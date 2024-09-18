@@ -35,7 +35,7 @@
 read_bedmethyl <- function(bed_file_location) {
   if (!file.exists(bed_file_location)) stop("ERROR: File does not exist.")
 
-  methylation_data <- data.table::fread(
+  methylation_data <- suppressWarnings(data.table::fread(
     bed_file_location,
     col.names = c(
       "chr",
@@ -55,7 +55,7 @@ read_bedmethyl <- function(bed_file_location) {
       "character",
       "numeric"
     )
-  )
+  ))
 
   is_mh <- function(ch) {
     return(ch == "m" || ch == "h")
