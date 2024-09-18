@@ -57,7 +57,7 @@ rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 
 purification_convertBSBedToMethylBedFormat \
-  "mh" \
+  "m" \
   "${WGBS_bed_file_location}" \
   "${processing_directory}/formatted.bed"
 
@@ -71,11 +71,11 @@ if [[ -n "${use_cpg_islands}" ]]; then
 fi
 
 purification_calculateSiteMethylationProbability \
-  "mh" \
+  "m" \
   "${processing_directory}/formatted.bed" \
   "processed_reads.bed"
 purification_filterOnReadDepth \
-  "mh" \
+  "m" \
   "${processing_directory}/processed_reads.bed" \
   "${processing_directory}/filtered_reads.bed" 
 purification_removeDeterminedUnmethylatedSites \
