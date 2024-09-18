@@ -4,7 +4,11 @@
 \alias{create_cpg_robustness_plot}
 \title{Create a Plot Showcasing Methylation Stability}
 \usage{
-create_cpg_robustness_plot(methylation_data, min_distance, max_distance)
+create_cpg_robustness_plot(
+  methylation_data,
+  min_distance = 0,
+  max_distance = 30
+)
 }
 \arguments{
 \item{methylation_data}{A data.table with columns:
@@ -19,10 +23,10 @@ create_cpg_robustness_plot(methylation_data, min_distance, max_distance)
 }}
 
 \item{min_distance}{The smallest distance a CpG can be away from another to
-be called nearby. Integer valued.}
+be called nearby. Integer valued, defaults to 0.}
 
 \item{max_distance}{The largest distance a CpG can be away from another to
-be called nearby. Integer valued.}
+be called nearby. Integer valued, defaults to 30.}
 }
 \value{
 A plot (ggplot) of type \code{geom_bin2d} showing how the methylation

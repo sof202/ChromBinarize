@@ -8,8 +8,8 @@ calculate_nearby_methylation(
   methylation_data,
   chromosome,
   current_start,
-  min_distance,
-  max_distance
+  min_distance = 0,
+  max_distance = 30
 )
 }
 \arguments{
@@ -29,10 +29,10 @@ calculate_nearby_methylation(
 \item{current_start}{The start position of the CpG in question (integer)}
 
 \item{min_distance}{The smallest distance a CpG can be away from another to
-be called nearby. Integer valued.}
+be called nearby. Integer valued, defaults to 0.}
 
 \item{max_distance}{The largest distance a CpG can be away from another to
-be called nearby. Integer valued.}
+be called nearby. Integer valued, defaults to 30.}
 }
 \value{
 The average percent methylation for 'nearby' CpGs to the input CpG

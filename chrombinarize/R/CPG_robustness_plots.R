@@ -28,8 +28,8 @@
 calculate_nearby_methylation <- function(methylation_data,
                                          chromosome,
                                          current_start,
-                                         min_distance,
-                                         max_distance) {
+                                         min_distance = 0,
+                                         max_distance = 30) {
   max_lower_bound <- current_start - max_distance
   max_upper_bound <- current_start + max_distance
   min_lower_bound <- current_start - min_distance
@@ -73,8 +73,8 @@ calculate_nearby_methylation <- function(methylation_data,
 #' 3:                       2
 #' 4:                       3
 create_cpg_robustness_data <- function(methylation_data,
-                                       min_distance,
-                                       max_distance) {
+                                       min_distance = 0,
+                                       max_distance = 30) {
   cpg_robustness_data <- methylation_data |>
     dplyr::rowwise() |>
     dplyr::mutate("surrounding_methylation" = calculate_nearby_methylation(
@@ -98,9 +98,9 @@ create_cpg_robustness_data <- function(methylation_data,
 #'
 #' @inheritParams estimate_error_rate
 #' @param min_distance The smallest distance a CpG can be away from another to
-#'  be called nearby. Integer valued.
+#'  be called nearby. Integer valued, defaults to 0.
 #' @param max_distance The largest distance a CpG can be away from another to
-#'  be called nearby. Integer valued.
+#'  be called nearby. Integer valued, defaults to 30.
 #'
 #' @return A plot (ggplot) of type `geom_bin2d` showing how the methylation
 #'  signal of CpGs correlate with 'nearby' CpGs.
@@ -115,8 +115,8 @@ create_cpg_robustness_data <- function(methylation_data,
 #'
 #' @export
 create_cpg_robustness_plot <- function(methylation_data,
-                                       min_distance,
-                                       max_distance) {
+                                       min_distance = 0,
+                                       max_distance = 30) {
   methylation_data <- create_cpg_robustness_data(
     methylation_data,
     min_distance,
