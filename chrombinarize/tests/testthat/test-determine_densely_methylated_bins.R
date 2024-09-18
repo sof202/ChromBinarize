@@ -39,19 +39,19 @@ test_that("Throws error if file has the incorrect number of columns", {
 test_that("Throws error if file has incorrect column classes", {
   tempfile_path <- withr::local_tempfile(
     pattern = "end_column_wrong.txt",
-    lines = c("chr1,0,string,2")
+    lines = "chr1,0,string,2"
   )
   expect_error(read_bin_counts_file(tempfile_path))
 
   tempfile_path <- withr::local_tempfile(
     pattern = "start_column_wrong.txt",
-    lines = c("chr1,string,0,2")
+    lines = "chr1,string,0,2"
   )
   expect_error(read_bin_counts_file(tempfile_path))
 
   tempfile_path <- withr::local_tempfile(
     pattern = "count_column_wrong.txt",
-    lines = c("chr1,0,0,string")
+    lines = "chr1,0,0,string"
   )
   expect_error(read_bin_counts_file(tempfile_path))
 })
