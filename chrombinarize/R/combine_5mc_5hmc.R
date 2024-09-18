@@ -6,6 +6,8 @@
 #'
 #' @inheritParams create_read_depth_plot
 #'
+#' @return A comparitive bedmethyl file with merged 5mC and 5hmC signal
+#'
 #' @examples
 #' # Read in a comparative bedmethyl file
 #' read_comparison_bedmethyl("path/to/bedmethyl.bed")
