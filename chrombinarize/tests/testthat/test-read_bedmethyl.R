@@ -20,47 +20,60 @@ test_that("bedmethyl with incorrect format returns an error", {
     "read_bedmethyl_files",
     "wrong_column_number.bed"
   )
-  expect_error(read_bedmethyl(wrong_number_of_columns))
+  expect_error(
+    read_bedmethyl(wrong_number_of_columns),
+    info = "There must be exactly 7 columns"
+  )
 
-  # Columns must be of the specified types listed in the function
   wrong_column_type <- test_path(
     "test_data",
     "read_bedmethyl_files",
     "wrong_column_types.bed"
   )
-  expect_error(read_bedmethyl(wrong_column_type))
+  expect_error(
+    read_bedmethyl(wrong_column_type),
+    info = "Columns must be of the specified types listed in the function"
+  )
 
-  # Mark names must be "h" or "m" only
   invalid_mark_names <- test_path(
     "test_data",
     "read_bedmethyl_files",
     "invalid_mark_names.bed"
   )
-  expect_error(read_bedmethyl(invalid_mark_names))
+  expect_error(
+    read_bedmethyl(invalid_mark_names),
+    info = "Mark names must be 'h' or 'm' only"
+  )
 
-  # No numeric column should have a negative value
   negative_values <- test_path(
     "test_data",
     "read_bedmethyl_files",
     "negative_values.bed"
   )
-  expect_error(read_bedmethyl(negative_values))
+  expect_error(
+    read_bedmethyl(negative_values),
+    info = "No numeric column should have a negative value"
+  )
 
-  # No region should have negative length
   bad_region_size <- test_path(
     "test_data",
     "read_bedmethyl_files",
     "bad_region_size"
   )
-  expect_error(read_bedmethyl(bad_region_size))
+  expect_error(
+    read_bedmethyl(bad_region_size),
+    info = "No region should have negative length"
+  )
 
-  # methylation shouldn't be greater than 100
   bad_percent_methylation <- test_path(
     "test_data",
     "read_bedmethyl_files",
     "bad_percent_methylation"
   )
-  expect_error(read_bedmethyl(bad_percent_methylation))
+  expect_error(
+    read_bedmethyl(bad_percent_methylation),
+    info = "methylation shouldn't be greater than 100"
+  )
 })
 
 test_that("Comparitive bedmethyl with correct format can be read", {
@@ -79,51 +92,63 @@ test_that("Comparitive bedmethyl with correct format can be read", {
 })
 
 test_that("Comparitive bedmethyl with incorrect format returns an error", {
-  # There must be exactly 8 columns
   wrong_number_of_columns <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
     "wrong_column_number.bed"
   )
-  expect_error(read_bedmethyl(wrong_number_of_columns))
+  expect_error(
+    read_bedmethyl(wrong_number_of_columns),
+    info = "There must be exactly 8 columns"
+  )
 
-  # Columns must be of the specified types listed in the function
   wrong_column_type <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
     "wrong_column_types.bed"
   )
-  expect_error(read_bedmethyl(wrong_column_type))
+  expect_error(
+    read_bedmethyl(wrong_column_type),
+    info = "Columns must be of the specified types listed in the function"
+  )
 
-  # Mark names must be "h" or "m" only
   invalid_mark_names <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
     "invalid_mark_names.bed"
   )
-  expect_error(read_bedmethyl(invalid_mark_names))
+  expect_error(
+    read_bedmethyl(invalid_mark_names),
+    info = "Mark names must be 'h' or 'm' only"
+  )
 
-  # No numeric column should have a negative value
   negative_values <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
     "negative_values.bed"
   )
-  expect_error(read_bedmethyl(negative_values))
+  expect_error(
+    read_bedmethyl(negative_values),
+    info = "No numeric column should have a negative value"
+  )
 
-  # No region should have negative length
   bad_region_size <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
     "bad_region_size"
   )
-  expect_error(read_bedmethyl(bad_region_size))
+  expect_error(
+    read_bedmethyl(bad_region_size),
+    info = "No region should have negative length"
+  )
 
-  # methylation shouldn't be greater than 100
   bad_percent_methylation <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
     "bad_percent_methylation"
   )
-  expect_error(read_bedmethyl(bad_percent_methylation))
+  expect_error(
+    read_bedmethyl(bad_percent_methylation),
+    info = "methylation shouldn't be greater than 100"
+  )
 })
