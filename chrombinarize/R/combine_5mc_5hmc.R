@@ -10,11 +10,34 @@
 #'
 #' @examples
 #' # Read in a comparative bedmethyl file
-#' read_comparison_bedmethyl("path/to/bedmethyl.bed")
+#' bedmethyl <- read_comparison_bedmethyl("path/to/bedmethyl.bed")
+#'
+#' head(bedmethyl, 4)
+#'       chr start   end mark_name ONT_read_depth ONT_percent_methylation
+#'    <char> <num> <num>    <char>          <num>                   <num>
+#' 1:   chr1     0   200         h              6                       5
+#' 2:   chr1     0   200         m              6                       5
+#' 3:   chr1   200   400         h             99                      10
+#' 4:   chr1   200   400         m             99                      20
+#'    BS_read_depth BS_percent_methylation
+#'            <num>                  <num>
+#' 1:             0                      0
+#' 2:             0                      0
+#' 3:             0                      0
+#' 4:             0                      0
 #'
 #' # Combine signal
-#' combine_5mc_5hmc(bedmethyl)
+#' bedmethyl <- combine_5mc_5hmc(bedmethyl)
 #'
+#' head(bedmethyl, 2)
+#'       chr start   end mark_name ONT_read_depth ONT_percent_methylation
+#'    <char> <num> <num>    <char>          <num>                   <num>
+#' 1:   chr1     0   200         m              6                      10
+#' 2:   chr1   200   400         m             99                      30
+#'    BS_read_depth BS_percent_methylation
+#'            <num>                  <num>
+#' 1:             0                      0
+#' 2:             0                      0
 #' @export
 combine_5mc_5hmc <- function(comparison_bedmethyl) {
   methylation_5mc <- dplyr::filter(
