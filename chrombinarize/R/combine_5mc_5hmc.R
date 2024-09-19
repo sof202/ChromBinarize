@@ -4,7 +4,7 @@
 #'  when comparing ONT data to WGBS data, as WGBS doesn't discern between 5mC
 #'  and 5hmC (unlike modifided base called ONT data).
 #'
-#' @inheritParams create_read_depth_plot
+#' @inheritParams comparative_bedmethyl_format
 #'
 #' @return A comparitive bedmethyl file with merged 5mC and 5hmC signal
 #'

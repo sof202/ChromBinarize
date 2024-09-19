@@ -33,13 +33,10 @@ get_beta_parameters <- function(bin_densities) {
 #'  tail of the beta distibution is calculated and compared against the given
 #'  threshold.
 #'
-#' @param bin_density
-#'  The density of the bin being inspected (numeric)
+#' @inheritParams get_beta_parameters
+#' @inheritParams determine_dense_bins
 #' @param shape1, shape2
 #'  Beta distriubution parameters (numeric)
-#' @param threshold
-#'  The value required for the p-value from the beta distribution to be
-#'  considered significant
 #'
 #' @return A Boolean value (represented by a 0 or 1) where 1 indicates that
 #'  the bin density provided is significantly above what is expected (and 0
@@ -54,9 +51,9 @@ get_beta_parameters <- function(bin_densities) {
 #'  is_densely_methylated(0.4, 0.3, 9.5, 0.001)
 #'  1
 is_densely_methylated <-
-  function(bin_density, shape1, shape2, threshold = 0.001) {
+  function(bin_density, shape1, shape2, beta_threshold = 0.001) {
     return(as.numeric(
-      pbeta(bin_density, shape1, shape2, lower.tail = FALSE) < threshold
+      pbeta(bin_density, shape1, shape2, lower.tail = FALSE) < beta_threshold
     ))
   }
 

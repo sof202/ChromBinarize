@@ -282,3 +282,42 @@ read_comparison_bedmethyl <- function(bed_file_location) {
 
   return(methylation_data)
 }
+
+#' @title Format of bedmethl files
+#'
+#' @description The Expected format for bedmethyl files. This is just for
+#'  documentation purposes
+#'
+#' @param methylation_data
+#' A data table with the following columns:
+#' - chr: chromosome name (string)
+#' - start: starting base pair position (integer)
+#' - end: ending base pair position (integer)
+#' - mark_name: "m" for 5mC and "h" for 5hmC (string)
+#' - read_depth: read depth for the site (integer)
+#' - strand: "+", "-" or "." (character)
+#' - percent_methylation: percentage of reads reported as methylated (numeric)
+#'
+#' @name bedmethyl_format
+NULL
+
+#' @title Format of bedmethl files
+#'
+#' @description The Expected format for bedmethyl files. This is just for
+#'  documentation purposes
+#'
+#' @param comparison_bedmethyl
+#' A data table with the following columns:
+#' - chr: chromosome name (string)
+#' - start: starting base pair position (integer)
+#' - end: ending base pair position (integer)
+#' - mark_name: "m" for 5mC and "h" for 5hmC (string)
+#' - ONT_read_depth: read depth in the ONT data(integer)
+#' - ONT_percent_methylation: percentage of reads observed to be methylated
+#'    in the ONT data(numeric)
+#' - BS_read_depth: read depth in the BS-Seq data(integer)
+#' - BS_percent_methylation: percentage of reads observed to be methylated
+#'    in the BS-Seq data (numeric)
+#'
+#' @name comparative_bedmethyl_format
+NULL

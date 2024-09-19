@@ -97,7 +97,7 @@ create_cpg_robustness_data <- function(methylation_data,
 #' @description Generates a density plot that shows how similar the methylation
 #'   signal is for surrounding CpG sites for each CpG.
 #'
-#' @inheritParams estimate_error_rate
+#' @inheritParams bedmethyl_format
 #' @param min_distance The smallest distance a CpG can be away from another to
 #'  be called nearby. Integer valued, defaults to 0.
 #' @param max_distance The largest distance a CpG can be away from another to

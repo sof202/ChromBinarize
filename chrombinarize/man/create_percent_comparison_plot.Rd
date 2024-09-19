@@ -11,15 +11,18 @@ create_percent_comparison_plot(
 )
 }
 \arguments{
-\item{comparison_bedmethyl}{A data.table with the following columns:
+\item{comparison_bedmethyl}{A data table with the following columns:
 \itemize{
 \item chr: chromosome name (string)
 \item start: starting base pair position (integer)
 \item end: ending base pair position (integer)
 \item mark_name: "m" for 5mC and "h" for 5hmC (string)
-\item read_depth: read depth (integer)
-\item percent_methylation: percentage of reads observed to be methylated
-(numeric)
+\item ONT_read_depth: read depth in the ONT data(integer)
+\item ONT_percent_methylation: percentage of reads observed to be methylated
+in the ONT data(numeric)
+\item BS_read_depth: read depth in the BS-Seq data(integer)
+\item BS_percent_methylation: percentage of reads observed to be methylated
+in the BS-Seq data (numeric)
 }}
 
 \item{mark}{The name of the mark to inspect ("m" or "h")}

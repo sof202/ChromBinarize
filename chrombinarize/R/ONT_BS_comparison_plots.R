@@ -8,7 +8,7 @@
 #' This is primarily for the purpose of using the
 #' `create_read_depth_plot()` and `create_percent_comparison_plot()` functions.
 #'
-#' @inheritParams create_read_depth_plot
+#' @inheritParams create_correlation_plot
 #'
 #' @return A modified version of the `comparison_bedmethyl` data.table with
 #'    additional columns:
@@ -45,18 +45,7 @@ add_absolute_change_columns <- function(comparison_bedmethyl) {
 #'  histogram is produced to showcase the distribution of the absolute change
 #'  in read depth seen between each dataset.
 #'
-#' @param comparison_bedmethyl A data.table with the following columns:
-#' - chr: chromosome name (string)
-#' - start: starting base pair position (integer)
-#' - end: ending base pair position (integer)
-#' - mark_name: "m" for 5mC and "h" for 5hmC (string)
-#' - read_depth: read depth (integer)
-#' - percent_methylation: percentage of reads observed to be methylated
-#'    (numeric)
-#' @param mark The name of the mark to inspect ("m" or "h")
-#' @param read_depth_filter A filter to use on the read depth in your bedmethyl
-#'  file. This is in place to reduce random fluctuations (common in low count
-#'  data)
+#' @inheritParams create_correlation_plot
 #'
 #' @return A plot (ggplot) of type `geom_histogram` showing the distribution
 #'  of the absolute change in percent methylation between the datasets
@@ -107,7 +96,7 @@ create_read_depth_plot <- function(comparison_bedmethyl,
 #'  histogram is produced to showcase the distribution of the absolute change
 #'  in percentage methylation seen between each dataset.
 #'
-#' @inheritParams create_read_depth_plot
+#' @inheritParams create_correlation_plot
 #'
 #' @return A plot (ggplot) of type `geom_histogram` showing the distribution
 #'  of the absolute change in percent methylation between the datasets
@@ -153,7 +142,11 @@ create_percent_comparison_plot <- function(comparison_bedmethyl,
 #'  density heatmap is produced between the percent methylation seen at each
 #'  CpG site for both data types.
 #'
-#' @inheritParams create_read_depth_plot
+#' @inheritParams comparative_bedmethyl_format
+#' @param mark The name of the mark to inspect ("m" or "h")
+#' @param read_depth_filter A filter to use on the read depth in your bedmethyl
+#'  file. This is in place to reduce random fluctuations (common in low count
+#'  data)
 #'
 #' @return A plot (ggplot) of type `geom_bin2d` showing how the percent
 #' methylation in BS and ONT compare

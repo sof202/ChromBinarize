@@ -11,7 +11,7 @@ create_error_rate_plot(
 )
 }
 \arguments{
-\item{methylation_data}{A data.table with columns:
+\item{methylation_data}{A data table with the following columns:
 \itemize{
 \item chr: chromosome name (string)
 \item start: starting base pair position (integer)
@@ -27,9 +27,6 @@ Some data sets have a single site with really high read depth, plotting
 all the way up to this point is a waste of computation and won't give you
 meaningful data (estimating an error rate using a single site). Defaults to
 1000.}
-
-\item{percent_threshold}{The maximum percent methylation to consider
-(numeric). Lower values are recommended. Defaults to 5.}
 }
 \value{
 A plot (ggplot) of type \code{geom_point} showcasing how the estimated

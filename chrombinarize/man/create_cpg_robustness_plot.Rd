@@ -11,7 +11,7 @@ create_cpg_robustness_plot(
 )
 }
 \arguments{
-\item{methylation_data}{A data.table with columns:
+\item{methylation_data}{A data table with the following columns:
 \itemize{
 \item chr: chromosome name (string)
 \item start: starting base pair position (integer)

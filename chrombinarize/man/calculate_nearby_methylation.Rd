@@ -13,7 +13,7 @@ calculate_nearby_methylation(
 )
 }
 \arguments{
-\item{methylation_data}{A data.table with columns:
+\item{methylation_data}{A data table with the following columns:
 \itemize{
 \item chr: chromosome name (string)
 \item start: starting base pair position (integer)

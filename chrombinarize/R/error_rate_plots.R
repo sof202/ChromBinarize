@@ -43,7 +43,7 @@ create_error_rate_data <- function(methylation_data,
 #' @description Find how the predicted error rate for your methylation data
 #'  changes as the read depth and percent methylation thresholds change
 #'
-#' @inheritParams estimate_error_rate
+#' @inheritParams bedmethyl_format
 #' @param max_read_depth The maximum read depth threshold to view (integer).
 #'  Some data sets have a single site with really high read depth, plotting
 #'  all the way up to this point is a waste of computation and won't give you

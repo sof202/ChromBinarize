@@ -4,16 +4,14 @@
 \alias{is_densely_methylated}
 \title{Determine if a Bin is Densely Methylated}
 \usage{
-is_densely_methylated(bin_density, shape1, shape2, threshold = 0.001)
+is_densely_methylated(bin_density, shape1, shape2, beta_threshold = 0.001)
 }
 \arguments{
-\item{bin_density}{The density of the bin being inspected (numeric)}
-
 \item{shape1, }{shape2
 Beta distriubution parameters (numeric)}
 
-\item{threshold}{The value required for the p-value from the beta distribution to be
-considered significant}
+\item{beta_threshold}{A numeric value that determines the significance threshold required for
+a bin to be densely populated with reads. Defaults to 0.001}
 }
 \value{
 A Boolean value (represented by a 0 or 1) where 1 indicates that
