@@ -2,36 +2,33 @@ name: test-chrombinarize
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: read
-
 jobs:
-  build:
+  R-CMD-check:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
 
-      - name: Install devtools
-        run: install.packages('devtools', repos = 'https://cran.r-project.org')
-        shell: Rscript {0}
-        working-directory: chrombinarize
-
-      - name: Install chrombinarize
-        run: devtools::install(quick = TRUE, dependencies = TRUE)
-        shell: Rscript {0}
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         working-directory: chrombinarize
 
       - name: Run tests
-        run: devtools::test()
-        shell: Rscript {0}
+        run: |
+          library(testthat)
+          library(chrombinarize)
+          test_dir("tests/testthat")
         working-directory: chrombinarize
