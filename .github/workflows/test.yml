@@ -10,12 +10,11 @@ on:
 permissions:
   contents: read
 jobs:
-  R-CMD-check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
