@@ -1,21 +1,26 @@
 #' @title Ensure bedmethyl Regions are Positive
 #'
-#' @description bed files should have start and end columns such that each
+#' @description BED files should have start and end columns such that each
 #'  region is strictly positive. A region spanning bp:200 (start) to bp:100
 #'  (end) is nonsensicle.
 #'
-#' @inheritParams estimate_error_rate
+#' @inheritParams bedmethyl_format
 #'
 #' @return A logical value. TRUE implies that all regions make sense. FALSE
-#'  indicates a region is nonsensicle
+#'  indicates at least one region is nonsensicle
 #'
 #' @examples
 #'  # Good bedmethyl data (end > start)
 #'  regions_make_sense(bedmethyl_data)
 #'    TRUE
 #'
-#'  # bed bedmethyl data, row 3 contains a start value of 200, and end value
+#'  # bedmethyl data, row 3 contains a start value of 200, and end value
 #'  # of 100
+#'  bedmethyl
+#'        chr start   end   name read_depth strand percent_methylation
+#'     <char> <int> <int> <char>      <int> <char>               <num>
+#'  1:   chr1   200   100      m         55      +                  20
+#'
 #'  regions_make_sense(bedmethyl_data)
 #'    FALSE
 regions_have_positive_length <- function(bedmethyl_data) {
@@ -24,12 +29,12 @@ regions_have_positive_length <- function(bedmethyl_data) {
 }
 
 
-#' @title Read in a BEDMethyl File
+#' @title Read in a Bedmethyl File
 #'
-#' @description Converts a BEDMethyl file into a data table that can be used
+#' @description Converts a bedmethyl file into a data table that can be used
 #'  by many other functions in the pipeline.
 #'
-#' @param bed_file_location A file path (string) to the BEDMethyl file to be
+#' @param bed_file_location A file path (string) to the bedmethyl file to be
 #'  processed.
 #'
 #' @return A data.table with columns:
@@ -147,19 +152,25 @@ read_bedmethyl <- function(bed_file_location) {
   return(methylation_data)
 }
 
-#' @title Read in a comparison BEDMethyl File
+#' @title Read in a Comparison Bedmethyl File
 #'
-#' @description Converts a comparison BEDMethyl file into a data table that
+#' @description Converts a comparison bedmethyl file into a data table that
 #'  can be used by the comparison scripts in the pipeline.
 #'
 #' @param bed_file_location A file path (string) to the comparison BEDMethyl
 #' file to be processed.
 #'
-#' @return A data.table with columns: "chr" (chromosome name, string), "start",
-#'  (starting base pair position, int), "end" (ending base pair position, int),
-#'  "mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int) and
-#'  "percent_methylation" (The percentage of such reads that were observed to
-#'  be methylated, numeric)
+#' @return A data.table with columns:
+#' - chr: chromosome name (string)
+#' - start: starting base pair position (integer)
+#' - end: ending base pair position (integer)
+#' - mark_name: "m" for 5mC and "h" for 5hmC (string)
+#' - ONT_read_depth: read depth in the ONT data(integer)
+#' - ONT_percent_methylation: percentage of reads observed to be methylated
+#'    in the ONT data(numeric)
+#' - BS_read_depth: read depth in the BS-Seq data(integer)
+#' - BS_percent_methylation: percentage of reads observed to be methylated
+#'    in the BS-Seq data (numeric)
 #'
 #' @details This function also checks that your BEDmethyl file is of the
 #'  correct form. If your file has the incorrect number of columns or incorrect
@@ -283,7 +294,7 @@ read_comparison_bedmethyl <- function(bed_file_location) {
   return(methylation_data)
 }
 
-#' @title Format of bedmethl files
+#' @title Format of Bedmethyl Files
 #'
 #' @description The Expected format for bedmethyl files. This is just for
 #'  documentation purposes
@@ -301,10 +312,10 @@ read_comparison_bedmethyl <- function(bed_file_location) {
 #' @name bedmethyl_format
 NULL
 
-#' @title Format of bedmethl files
+#' @title Format of Comparison Bedmethl Files
 #'
-#' @description The Expected format for bedmethyl files. This is just for
-#'  documentation purposes
+#' @description The expected format for comparison bedmethyl files. This is
+#'  just for documentation purposes
 #'
 #' @param comparison_bedmethyl
 #' A data table with the following columns:

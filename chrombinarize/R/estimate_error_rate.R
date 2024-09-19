@@ -5,7 +5,7 @@
 #'  in the input file is considered incorrect and contributes to the estimated
 #'  error rate.
 #'
-#' @inheritParams bedmethyl_format
+#' @inheritParams comparative_bedmethyl_format
 #' @param read_depth_threshold The minimum read depth to consider (integer).
 #'  Higher values are recommended. Defaults to 30.
 #' @param percent_threshold The maximum percent methylation to consider

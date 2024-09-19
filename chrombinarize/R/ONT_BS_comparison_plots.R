@@ -8,7 +8,7 @@
 #' This is primarily for the purpose of using the
 #' `create_read_depth_plot()` and `create_percent_comparison_plot()` functions.
 #'
-#' @inheritParams create_correlation_plot
+#' @inheritParams comparative_bedmethyl_format
 #'
 #' @return A modified version of the `comparison_bedmethyl` data.table with
 #'    additional columns:
@@ -21,11 +21,12 @@
 #' - start: starting base pair position (integer)
 #' - end: ending base pair position (integer)
 #' - mark_name: "m" for 5mC and "h" for 5hmC (string)
-#' - ONT_read_depth: read depth for ONT (integer)
-#' - ONT_percent_methylation: percentage of methylated reads in ONT
-#'    (numeric)
-#' - BS_read_depth: read depth for BS (integer)
-#' - BS_percent_methylation: percentage of methylated reads in BS (numeric)
+#' - ONT_read_depth: read depth in the ONT data(integer)
+#' - ONT_percent_methylation: percentage of reads observed to be methylated
+#'    in the ONT data(numeric)
+#' - BS_read_depth: read depth in the BS-Seq data(integer)
+#' - BS_percent_methylation: percentage of reads observed to be methylated
+#'    in the BS-Seq data (numeric)
 add_absolute_change_columns <- function(comparison_bedmethyl) {
   comparison_bedmethyl <- dplyr::mutate(
     comparison_bedmethyl,
@@ -100,8 +101,6 @@ create_read_depth_plot <- function(comparison_bedmethyl,
 #'
 #' @return A plot (ggplot) of type `geom_histogram` showing the distribution
 #'  of the absolute change in percent methylation between the datasets
-#'
-#' @inherit create_read_depth_plot details
 #'
 #' @examples
 #' # Read in comparison_bedmethyl file

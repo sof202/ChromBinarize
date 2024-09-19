@@ -1,10 +1,10 @@
-#' @title Check if a Column has the Correct Class
+#' @title Check Column has Correct Class
 #'
 #' @description To ensure that files are read in correctly, columns can be
 #'  checked for if they are of the desired class.
 #'
-#' @param column A vector of any class
-#' @param type_checker A base R type checker (i.e. `is.integer()`)
+#' @param column The vector (extracted column) to inspect
+#' @param type_checker A type checker (i.e. `is.integer()`)
 #' @param stop_message A string to be outputted in case of failure
 #'
 #' @return A custom stop error message if the column doesn't adhere to the
@@ -20,7 +20,7 @@
 #'   is.integer,
 #'   "column is not an integer"
 #' )
-#' "column is not an integer" (and terminates call stack)
+#' Error: column is not an integer (and terminates call stack)
 verify_column_class <- function(column, type_checker, stop_message) {
   if (!all(vapply(column, type_checker, logical(1)))) {
     stop(stop_message)
