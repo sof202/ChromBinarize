@@ -39,8 +39,8 @@ calculate_nearby_methylation <- function(methylation_data,
     dplyr::filter(chr == chromosome) |>
     dplyr::filter(start != current_start) |>
     dplyr::filter(
-      (start <= max_upper_bound & start >= min_upper_bound) | 
-      (start <= min_lower_bound & start >= max_lower_bound)
+      (start <= max_upper_bound & start >= min_upper_bound) |
+        (start <= min_lower_bound & start >= max_lower_bound)
     ) |>
     dplyr::pull(percent_methylation)
 
