@@ -14,6 +14,7 @@ test_that("bedmethyl with correct format can be read", {
 })
 
 test_that("bedmethyl with incorrect format returns an error", {
+  # There must be exactly 7 columns
   wrong_number_of_columns <- test_path(
     "test_data",
     "read_bedmethyl_files",
@@ -21,6 +22,7 @@ test_that("bedmethyl with incorrect format returns an error", {
   )
   expect_error(read_bedmethyl(wrong_number_of_columns))
 
+  # Columns must be of the specified types listed in the function
   wrong_column_type <- test_path(
     "test_data",
     "read_bedmethyl_files",
@@ -28,6 +30,7 @@ test_that("bedmethyl with incorrect format returns an error", {
   )
   expect_error(read_bedmethyl(wrong_column_type))
 
+  # Mark names must be "h" or "m" only
   invalid_mark_names <- test_path(
     "test_data",
     "read_bedmethyl_files",
@@ -76,6 +79,7 @@ test_that("Comparitive bedmethyl with correct format can be read", {
 })
 
 test_that("Comparitive bedmethyl with incorrect format returns an error", {
+  # There must be exactly 8 columns
   wrong_number_of_columns <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
@@ -83,6 +87,7 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
   )
   expect_error(read_bedmethyl(wrong_number_of_columns))
 
+  # Columns must be of the specified types listed in the function
   wrong_column_type <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
@@ -90,6 +95,7 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
   )
   expect_error(read_bedmethyl(wrong_column_type))
 
+  # Mark names must be "h" or "m" only
   invalid_mark_names <- test_path(
     "test_data",
     "read_comparative_bedmethyl_files",
