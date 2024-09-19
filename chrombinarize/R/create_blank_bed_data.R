@@ -1,4 +1,4 @@
-#' @title Read and process a chromosome lengths file
+#' @title Read and Process a Chromosome Lengths File
 #'
 #' @description Convert a file detailing the sizes of each chromosome
 #'  into a vector to be used by `create_blank_bed_data()`
@@ -30,7 +30,7 @@ process_chromosome_sizes <- function(chromosome_sizes_file) {
   return(chromosome_sizes)
 }
 
-#' @title Create genomic windows for a chromosome
+#' @title Create Genomic Windows for a Chromosome
 #'
 #' @description Given a chromosome and its size this creates a data.table
 #'  that details regions of a fixed length spanning the chromosome
