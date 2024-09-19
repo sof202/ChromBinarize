@@ -8,70 +8,19 @@ beta_threshold <- as.numeric(args[6])
 
 renv::load(renv_environment)
 
-## ======================== ##
-##   DISTRIBUTION FITTING   ##
-## ======================== ##
-
-get_beta_parameters <- function(bin_counts) {
-  fit <- fitdistrplus::fitdist(
-    bin_counts[["density"]],
-    "beta",
-    method = "mle"
-  )
-
-  shape1 <- coef(fit)[["shape1"]]
-  shape2 <- coef(fit)[["shape2"]]
-
-  return(c(shape1, shape2))
-}
-
-## ==================== ##
-##  BIN IDENTIFICATION  ##
-## ==================== ##
-
-remove_zero_bins <- function(bin_counts) {
-  return(dplyr::filter(bin_counts, count > 0))
-}
-
-is_densely_methylated <-
-  function(bin_density, shape1, shape2, threshold) {
-    return(
-      as.numeric( # Numeric is used as T/F is not as transferable as 0/1
-        pbeta(bin_density, shape1, shape2, lower.tail = FALSE) < threshold
-      )
-    )
-  }
-
 ## ======== ##
 ##   MAIN   ##
 ## ======== ##
 
-bin_counts <- data.table::fread(bin_counts_file)
-names(bin_counts) <- c("chr", "start", "end", "count")
-
-bin_counts <- dplyr::mutate(bin_counts,
-  "density" = count / bin_size
+bin_counts <- chrombinarize::determine_dense_bins(
+  bin_counts_file,
+  beta_threshold
 )
 
-# We want to discern between sparsely and densely methylated bins. As such
-# we remove any bins with zero signal as these bins will massively skew our
-# beta distribution to the left.
-beta_parameters <- get_beta_parameters(
-  remove_zero_bins(bin_counts)
+bin_counts <- dplyr::mutate(
+  bin_counts,
+  "methylation_present" = as.numeric(count > 0)
 )
-shape1 <- beta_parameters[[1]]
-shape2 <- beta_parameters[[2]]
-
-bin_counts <- bin_counts |>
-  dplyr::mutate(
-    "densely_methylated" = is_densely_methylated(
-      density,
-      shape1,
-      shape2,
-      beta_threshold
-    ),
-    "methylation_present" = as.numeric(count > 0)
-  )
 
 densely_methylated_bins <- dplyr::select(bin_counts, densely_methylated)
 
@@ -79,9 +28,6 @@ sparsely_methylated_bins <- bin_counts |>
   dplyr::filter(!densely_methylated) |>
   dplyr::select(methylation_present)
 
-## =========== ##
-##   OUTPUTS   ##
-## =========== ##
 data.table::fwrite(
   densely_methylated_bins,
   file = dense_output_file,

@@ -42,8 +42,9 @@ move_log_files pvalues
 
 number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
 
+# If the file has 5 columns, it is not in BEDmethyl format.
 if [[ "${number_of_columns}" -eq 5 ]]; then
-    purification_convertBSBedToMethylBedFormat \
+    purification_convertBSBedToBedMethylFormat \
       "${mark}" \
       "${bed_file_location}" \
       "${BASE_DIR}/converted.bed"
@@ -58,22 +59,12 @@ fi
 mkdir -p "${BASE_DIR}/plots/"
 
 conda activate ChromBinarize-R
-if [[ "${run_type}" == "N" ]]; then
-  Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_N.R" \
-    "${REPO_DIR}" \
-    "${bed_file_location}" \
-    "${mark}" \
-    "${max_N_value}" \
-    "${plot_type}" \
-    "${BASE_DIR}/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
-elif [[ "${run_type}" == "percent" ]]; then
-  Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_percent.R" \
-    "${REPO_DIR}" \
-    "${bed_file_location}" \
-    "${mark}" \
-    "${plot_type}" \
-    "${BASE_DIR}/plots/erroneous_rate_plot_${plot_type}_${run_type}_x_axis.png"
-fi
+Rscript "${RSCRIPT_DIR}/erroneous_rate_plot_N.R" \
+  "${REPO_DIR}" \
+  "${bed_file_location}" \
+  "${mark}" \
+  "${max_N_value}" \
+  "${BASE_DIR}/plots/erroneous_rate_plot.png"
 conda deactivate
 
 if [[ "${number_of_columns}" -eq 5 ]]; then

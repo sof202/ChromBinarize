@@ -1,7 +1,8 @@
 ## ONT
 
-This pipeline expects input bed files of the following format (standard output
-of ONT's [modkit](https://github.com/nanoporetech/modkit)):
+This pipeline expects input bed files of the following format, which we define
+as 'bedmethyl' format (standard output of ONT's 
+[modkit](https://github.com/nanoporetech/modkit)):
 
 |Chromosome|Start|End|Methylation type|Coverage|Strand|Percent methylation|
 |----------|-----|---|----------------|--------|------|-------------------|

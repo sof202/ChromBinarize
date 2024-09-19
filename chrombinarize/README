@@ -1,0 +1,4 @@
+# chrombinarize
+
+This is an R package that includes the functions required for the various
+R scripts utilised in the ChromBinarize pipelines.

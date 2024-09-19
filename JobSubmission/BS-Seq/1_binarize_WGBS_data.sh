@@ -56,8 +56,8 @@ processing_directory="${BASE_DIR}/WGBS_5mc_5hmc"
 rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 
-purification_convertBSBedToMethylBedFormat \
-  "mh" \
+purification_convertBSBedToBedmethylFormat \
+  "m" \
   "${WGBS_bed_file_location}" \
   "${processing_directory}/formatted.bed"
 
@@ -70,21 +70,16 @@ if [[ -n "${use_cpg_islands}" ]]; then
     "${processing_directory}/formatted.bed"
 fi
 
-purification_extractSitesWithLowMethylation \
-  "mh" \
-  "${processing_directory}/formatted.bed" \
-  "${processing_directory}/unmethylated_reads.bed"
-purification_filterOnReadDepth \
-  "mh" \
-  "${processing_directory}/formatted.bed" \
-  "${processing_directory}/filtered_reads.bed"
 purification_calculateSiteMethylationProbability \
-  "${processing_directory}" \
-  "unmethylated_reads.bed" \
-  "filtered_reads.bed" \
+  "m" \
+  "${processing_directory}/formatted.bed" \
   "processed_reads.bed"
-purification_removeDeterminedUnmethylatedSites \
+purification_filterOnReadDepth \
+  "m" \
   "${processing_directory}/processed_reads.bed" \
+  "${processing_directory}/filtered_reads.bed" 
+purification_removeDeterminedUnmethylatedSites \
+  "${processing_directory}/filtered_reads.bed" \
   "${processing_directory}/purified_reads.bed"
 
 ## ======================== ##

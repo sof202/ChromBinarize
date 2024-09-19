@@ -1,64 +1,32 @@
 args <- commandArgs(trailingOnly = TRUE)
 renv_environment <- args[1]
-folder <- args[2]
-reference_set <- args[3]
-input_bed_file <- args[4]
+bed_file_location <- args[2]
+read_depth_threshold <- as.numeric(args[3])
+percent_threshold <- as.numeric(args[4])
 output_file_name <- args[5]
 
 renv::load(renv_environment)
 
-## =============== ##
-##   OBTAINING P   ##
-## =============== ##
+methylation_data <- chrombinarize::read_bedmethyl(bed_file_location)
+binomial_p <- chrombinarize::estimate_error_rate(
+  methylation_data,
+  read_depth_threshold,
+  percent_threshold
+)
 
-# Sites we are reasonably sure are in fact unmethylated
-unmethylated_positions <-
-  data.table::fread(file.path(folder, reference_set))
-
-colnames(unmethylated_positions) <- c("reads", "percent_methylated")
-
-unmethylated_positions <-
+methylation_data <- methylation_data |>
   dplyr::mutate(
-    unmethylated_positions,
-    "incorrectly_methylated" = reads * percent_methylated / 100
-  )
-
-incorrectly_methylated_total <-
-  sum(unmethylated_positions$incorrectly_methylated)
-total_reads <- sum(unmethylated_positions$reads)
-erroneous_methylated_p <-
-  incorrectly_methylated_total / total_reads
-
-## ======= ##
-##   MAIN  ##
-## ======= ##
-
-reverse_binomial <- function(n, p, percent_methylation) {
-  x <- ceiling(n * percent_methylation / 100)
-  return(1 - pbinom(x - 1, n, p))
-}
-
-methylation_data <- data.table::fread(file.path(folder, input_bed_file))
-colnames(methylation_data) <- c(
-  "Chr",
-  "start",
-  "end",
-  "name",
-  "sample_size",
-  "strand",
-  "percent_methylation"
-)
-
-methylation_data <- dplyr::mutate(methylation_data,
-  sample_size = as.numeric(sample_size),
-  percent_methylation = as.numeric(percent_methylation),
-  "likelihood of methylated reads being erroneous" =
-    reverse_binomial(
-      sample_size,
-      erroneous_methylated_p,
-      percent_methylation
+    number_of_methylated_reads = read_depth * percent_methylation / 100,
+    "likelihood of methylated reads being erroneous" = pbinom(
+      number_of_methylated_reads,
+      read_depth,
+      binomial_p,
+      lower.tail = FALSE
     )
-)
+  ) |>
+  dplyr::select(
+    -number_of_methylated_reads
+  )
 
 data.table::fwrite(methylation_data,
   file = file.path(folder, output_file_name),

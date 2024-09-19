@@ -1,6 +1,6 @@
 #!/bin/bash
 
-purification_convertBSBedToMethylBedFormat() {
+purification_convertBSBedToBedmethylFormat() {
   # The default format required for BS-Seq files is not the same as ONT. This
   # is because ONT bed files are usually created with modkit and our lab uses
   # wgbs_tools for BS-Seq bed file creation. These do not output the same 
@@ -10,7 +10,7 @@ purification_convertBSBedToMethylBedFormat() {
   output_file_name=$3
 
 logs "${DEBUG_MODE:0}" \
-"Converting ${input_bed_file} into methylbed format."
+"Converting ${input_bed_file} into bedmethyl format."
 
   awk -v mark_name="$mark_name" \
     'function convert_to_percent(reads, total_reads) {
@@ -45,36 +45,31 @@ ${CPG_ISLANDS_REFERENCE}."
   fi
 }
 
-purification_extractSitesWithLowMethylation() {
+purification_calculateSiteMethylationProbability() {
   mark_name=$1
   input_bed_file=$2
-  output_file_name=$3
+  output_file=$3
 
   if [[ "${mark_name}" =~ "m" ]]; then
-    reference_percent_threshold="${reference_percentage_threshold_m:=5}"
-    reference_read_depth_threshold="${reference_read_depth_threshold_m:=50}"
+    percent_threshold="${reference_percentage_threshold_m:=5}"
+    read_depth_threshold="${reference_read_depth_threshold_m:=50}"
   elif [[ "${mark_name}" == "h" ]]; then
-    reference_percent_threshold="${reference_percentage_threshold_h:=5}"
-    reference_read_depth_threshold="${reference_read_depth_threshold_h:=50}"
+    percent_threshold="${reference_percentage_threshold_h:=5}"
+    read_depth_threshold="${reference_read_depth_threshold_h:=50}"
   fi
 
 logs "${DEBUG_MODE:0}" \
-"Creating 'good reference set' from ${input_bed_file} where:
-Percent methylation for sites are at most ${reference_percent_threshold},
-Number of reads for sites are at least ${reference_read_depth_threshold}."
+"Calculating the probability that methylated reads are due to sequencing or \
+basecalling errors."
 
-  awk -v percent_threshold="${reference_percent_threshold}" \
-    -v read_threshold="${reference_read_depth_threshold}" \
-    -v mark_name="$mark_name" \
-    '{OFS="\t"}
-    $4 == mark_name && $5 >= read_threshold && $7 <= percent_threshold {print $5,$7}' \
-    "${input_bed_file}" > \
-      "${output_file_name}"
-
-  if [[ ! -s "${output_file_name}" ]]; then
-errors "${output_file_name} is empty.
-Your thresholds in the config file are likely too high for your dataset."
-  fi
+  conda activate ChromBinarize-R
+  Rscript "${RSCRIPT_DIR}/determine_unmethylated_sites.R" \
+    "${REPO_DIR}" \
+    "${input_bed_file}" \
+    "${read_depth_threshold}" \
+    "${percent_threshold}" \
+    "${output_file}"
+  conda deactivate
 }
 
 purification_filterOnReadDepth() {
@@ -98,26 +93,6 @@ the number of reads is at least ${minimum_read_depth}."
 errors "${output_file_name} is empty.
 Your read threshold in the config file is likely too high for your dataset."
   fi
-}
-
-purification_calculateSiteMethylationProbability() {
-  processing_directory=$1
-  reference_set=$2
-  input_file=$3
-  output_file=$4
-
-logs "${DEBUG_MODE:0}" \
-"Calculating the probability that methylated reads are due to sequencing or \
-basecalling errors."
-
-  conda activate ChromBinarize-R
-  Rscript "${RSCRIPT_DIR}/determine_unmethylated_sites.R" \
-    "${REPO_DIR}" \
-    "${processing_directory}" \
-    "${reference_set}" \
-    "${input_file}" \
-    "${output_file}"
-  conda deactivate
 }
 
 purification_removeDeterminedUnmethylatedSites() {
