@@ -8,12 +8,13 @@
 #'  A numeric vector, detailing the collection of read densities across all
 #'  genomic regions considered.
 #'
-#' @return A numeric vector containing estimated parameters shape1 and shape2
+#' @return A numeric vector containing the estimated parameters for the beta
+#'  distribution shape1 and shape2
 #'
 #' @examples
 #'  bin_densities <- c(0.001, 0.09, 0.1, 0.001, 0.002)
 #'  get_beta_parameters(bin_densities)
-#'  [1] 0.3834632 9.7126634
+#'    0.3834632 9.7126634
 get_beta_parameters <- function(bin_densities) {
   fit <- fitdistrplus::fitdist(
     bin_densities,
@@ -29,12 +30,13 @@ get_beta_parameters <- function(bin_densities) {
 
 #' @title Determine if a Bin is Densely Methylated
 #'
-#' @description Using the beta distribution and the given bin density the upper
+#' @description Using the beta distribution and the given bin density, the upper
 #'  tail of the beta distibution is calculated and compared against the given
 #'  threshold.
 #'
-#' @inheritParams get_beta_parameters
 #' @inheritParams determine_dense_bins
+#' @param bin_density
+#'  The density of reads in the selected bin (numeric)
 #' @param shape1, shape2
 #'  Beta distriubution parameters (numeric)
 #'
@@ -66,9 +68,11 @@ is_densely_methylated <-
 #'
 #' @inheritParams determine_dense_bins
 #'
-#' @return A data.table with the columns: "chr" (chromosome, string)
-#'  "start" (start position, integer), "end" (end position, integer) and
-#'  "count" (number of reads in bin, integer)
+#' @return A data.table with the columns:
+#' - chr: Chromosome number (string, ex: "chr22")
+#' - start: Starting base pair position (integer)
+#' - end: Ending base pair position (integer)
+#' - count: Number of reads in the bin (integer)
 #'
 #' @examples
 #'  read_bin_counts_file("path/to/bin_counts.bed")
@@ -130,8 +134,12 @@ read_bin_counts_file <- function(bin_counts_file) {
 #'
 #' @return A data.table detailing which bins in the input file are densely
 #'  populated with methylated sites. The data.table has columns:
-#'  "chromosome", "start position", "end position", "number of reads in region"
-#'  and "is densely methylated" (Boolean value)
+#' - chr: Chromosome number (string, ex: "chr22")
+#' - start: Starting base pair position (integer)
+#' - end: Ending base pair position (integer)
+#' - count: Number of reads in the bin (integer)
+#' - is_densely_methylated: Boolean value for whether or not the bin is 
+#'   densely methylated or not (logical)
 #'
 #' @examples
 #' determine_dense_bins("path/to/bin_counts.bed", 200, 0.0001)
