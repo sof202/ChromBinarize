@@ -4,7 +4,8 @@ test_that("New columns added are as expected", {
     "read_comparison_files",
     "expected_comparitive_bedmethyl.Rds"
   ))
-  actual_updated_columns <- add_absolute_change_columns(methylation_data)
+  actual_updated_columns <-
+    chrombinarize:::add_absolute_change_columns(methylation_data)
   expected_updated_columns <- readRDS(test_path(
     "test_data",
     "ONT_BS_comparison",

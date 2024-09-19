@@ -1,17 +1,18 @@
 # Test data is a subset of hg19.txt that contains chromosomes 1-22, X and Y
 chromosome_sizes_test_file <-
-  testthat::test_path("test_data", "example_chromsizes.txt")
+  test_path("test_data", "example_chromsizes.txt")
 
 # This test bed data only includes chromosome 1 as it allows for a smaller
 # rds file
 expected_small_bed_data <-
-  readRDS(testthat::test_path("test_data", "expected_bed_data.Rds"))
+  readRDS(test_path("test_data", "expected_bed_data.Rds"))
 
 expected_chromosome_lengths <-
-  readRDS(testthat::test_path("test_data", "expected_chromosome_lengths.Rds"))
+  readRDS(test_path("test_data", "expected_chromosome_lengths.Rds"))
 
 testthat::test_that("Processing function returns correct vector", {
-  chromosome_lengths <- process_chromosome_sizes(chromosome_sizes_test_file)
+  chromosome_lengths <-
+    chrombinarize:::process_chromosome_sizes(chromosome_sizes_test_file)
 
   expect_true(is.integer(chromosome_lengths))
   expect_equal(
