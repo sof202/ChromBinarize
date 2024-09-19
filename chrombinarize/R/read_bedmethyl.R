@@ -1,3 +1,29 @@
+#' @title Ensure bedmethyl Regions are Positive
+#'
+#' @description bed files should have start and end columns such that each
+#'  region is strictly positive. A region spanning bp:200 (start) to bp:100
+#'  (end) is nonsensicle.
+#'
+#' @inheritParams estimate_error_rate
+#'
+#' @return A logical value. TRUE implies that all regions make sense. FALSE
+#'  indicates a region is nonsensicle
+#'
+#' @examples
+#'  # Good bedmethyl data (end > start)
+#'  regions_make_sense(bedmethyl_data)
+#'    TRUE
+#'
+#'  # bed bedmethyl data, row 3 contains a start value of 200, and end value
+#'  # of 100
+#'  regions_make_sense(bedmethyl_data)
+#'    FALSE
+regions_have_positive_length <- function(bedmethyl_data) {
+  region_sizes <- bedmethyl_data[["end"]] - bedmethyl_data[["start"]]
+  return(all(region_sizes > 0))
+}
+
+
 #' @title Read in a BEDMethyl File
 #'
 #' @description Converts a BEDMethyl file into a data table that can be used
@@ -96,6 +122,27 @@ read_bedmethyl <- function(bed_file_location) {
     is.numeric,
     "The seventh column (percent_methylation) must be a numeric (float)"
   )
+
+  if (!regions_have_positive_length(methylation_data)) {
+    stop(
+      "A nonsensicle region exists.",
+      "A row has 'end' base pair smaller than the 'start' base pair."
+    )
+  }
+
+  if (any(dplyr::select(methylation_data, -"strand") < 0)) {
+    stop(
+      "A nonsensicle row exists.",
+      "A row has a negative value (all values must be natural numbers)."
+    )
+  }
+
+  if (any(methylation_data[["percent_methylation"]] > 100)) {
+    stop(
+      "A nonsensicle row exists.",
+      "A row has a percent_methylation greater than 100."
+    )
+  }
 
   return(methylation_data)
 }
@@ -210,6 +257,28 @@ read_comparison_bedmethyl <- function(bed_file_location) {
     is.numeric,
     "The eighth column (BS_percent_methylation) must be a numeric (float)"
   )
+
+  if (!regions_have_positive_length(methylation_data)) {
+    stop(
+      "A nonsensicle region exists.",
+      "A row has 'end' base pair smaller than the 'start' base pair."
+    )
+  }
+
+  if (any(methylation_data < 0)) {
+    stop(
+      "A nonsensicle row exists.",
+      "A row has a negative value (all values must be natural numbers)."
+    )
+  }
+
+  if (any(methylation_data[["ONT_percent_methylation"]] > 100) ||
+        any(methylation_data[["BS_percent_methylation"]] > 100)) {
+    stop(
+      "A nonsensicle row exists.",
+      "A row has a percent_methylation greater than 100."
+    )
+  }
 
   return(methylation_data)
 }
