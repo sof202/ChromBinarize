@@ -67,6 +67,9 @@ process_chromosome_sizes <- function(chromosome_sizes_file) {
 #'  ...
 #'  chr22	999800	1000000
 create_bins <- function(chromosome_name, chromosome_length, bin_size) {
+  if (!startsWith(chromosome_name, "chr")) {
+    stop("chromosome name must start with the string 'chr'")
+  }
   bin_starts <- seq(0, chromosome_length, bin_size)
   bins <- data.table::data.table("start" = bin_starts)
   bins <- bins |>
