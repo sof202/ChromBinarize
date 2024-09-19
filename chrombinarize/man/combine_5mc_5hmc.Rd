@@ -18,6 +18,9 @@ combine_5mc_5hmc(comparison_bedmethyl)
 (numeric)
 }}
 }
+\value{
+A comparitive bedmethyl file with merged 5mC and 5hmC signal
+}
 \description{
 Merges methylation signal for both "h" and "m". This is useful
 when comparing ONT data to WGBS data, as WGBS doesn't discern between 5mC
