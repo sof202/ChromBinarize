@@ -6,8 +6,8 @@
 #' @inheritParams create_error_rate_plot
 #'
 #' @return A data table with columns
-#'  - n -> The minimum read depth considered (integer)
-#'  - error_rate -> The error rate estimated (numeric)
+#'  - n: The minimum read depth considered (integer)
+#'  - error_rate: The error rate estimated (numeric)
 #'
 #' @examples
 #' create_error_rate_data(methylation_data, 1000, 5)
@@ -60,6 +60,8 @@ create_error_rate_data <- function(methylation_data,
 create_error_rate_plot <- function(methylation_data,
                                    max_read_depth = 1000,
                                    percent_threshold = 5) {
+  max_read_depth <- min(max(methylation_data[["read_depth"]]), max_read_depth)
+
   error_rate_data <- create_error_rate_data(
     methylation_data,
     max_read_depth,
