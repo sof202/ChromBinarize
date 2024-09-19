@@ -23,8 +23,8 @@
 #'
 #'  regions_make_sense(bedmethyl_data)
 #'    FALSE
-regions_have_positive_length <- function(bedmethyl_data) {
-  region_sizes <- bedmethyl_data[["end"]] - bedmethyl_data[["start"]]
+regions_have_positive_length <- function(methylation_data) {
+  region_sizes <- methylation_data[["end"]] - methylation_data[["start"]]
   return(all(region_sizes > 0))
 }
 
