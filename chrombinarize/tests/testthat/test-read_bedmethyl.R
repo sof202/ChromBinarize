@@ -34,6 +34,30 @@ test_that("bedmethyl with incorrect format returns an error", {
     "invalid_mark_names.bed"
   )
   expect_error(read_bedmethyl(invalid_mark_names))
+
+  # No numeric column should have a negative value
+  negative_values <- test_path(
+    "test_data",
+    "read_bedmethyl_files",
+    "negative_values.bed"
+  )
+  expect_error(read_bedmethyl(negative_values))
+
+  # No region should have negative length
+  bad_region_size <- test_path(
+    "test_data",
+    "read_bedmethyl_files",
+    "bad_region_size"
+  )
+  expect_error(read_bedmethyl(bad_region_size))
+
+  # methylation shouldn't be greater than 100
+  bad_percent_methylation <- test_path(
+    "test_data",
+    "read_bedmethyl_files",
+    "bad_percent_methylation"
+  )
+  expect_error(read_bedmethyl(bad_percent_methylation))
 })
 
 test_that("Comparitive bedmethyl with correct format can be read", {
@@ -72,4 +96,28 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
     "invalid_mark_names.bed"
   )
   expect_error(read_bedmethyl(invalid_mark_names))
+
+  # No numeric column should have a negative value
+  negative_values <- test_path(
+    "test_data",
+    "read_comparative_bedmethyl_files",
+    "negative_values.bed"
+  )
+  expect_error(read_bedmethyl(negative_values))
+
+  # No region should have negative length
+  bad_region_size <- test_path(
+    "test_data",
+    "read_comparative_bedmethyl_files",
+    "bad_region_size"
+  )
+  expect_error(read_bedmethyl(bad_region_size))
+
+  # methylation shouldn't be greater than 100
+  bad_percent_methylation <- test_path(
+    "test_data",
+    "read_comparative_bedmethyl_files",
+    "bad_percent_methylation"
+  )
+  expect_error(read_bedmethyl(bad_percent_methylation))
 })
