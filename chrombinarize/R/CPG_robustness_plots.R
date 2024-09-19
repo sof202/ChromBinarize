@@ -35,15 +35,16 @@ calculate_nearby_methylation <- function(methylation_data,
   min_lower_bound <- current_start - min_distance
   min_upper_bound <- current_start + min_distance
 
-  average_count <- methylation_data |>
+  nearby_counts <- methylation_data |>
     dplyr::filter(chr == chromosome) |>
     dplyr::filter(start != current_start) |>
-    dplyr::filter(start <= max_upper_bound & start >= min_upper_bound) |>
-    dplyr::filter(start <= min_lower_bound & start >= max_lower_bound) |>
-    dplyr::summarise("average" = mean(percent_methylation, na.rm = TRUE)) |>
-    dplyr::pull()
+    dplyr::filter(
+      (start <= max_upper_bound & start >= min_upper_bound) | 
+      (start <= min_lower_bound & start >= max_lower_bound)
+    ) |>
+    dplyr::pull(percent_methylation)
 
-  return(average_count)
+  return(mean(nearby_counts, na.rm = TRUE))
 }
 
 #' @title Create Data for `create_cpg_robustness_plot()`
