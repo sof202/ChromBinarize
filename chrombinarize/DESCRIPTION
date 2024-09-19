@@ -1,6 +1,6 @@
 Package: chrombinarize
 Title: A series of functions used in ChromBinarize's pipelines
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person("Sam", "Fletcher", "s.o.fletcher@exeter.ac.uk", role = c("cre"))
 Description: Functions used to binarize methylation (and hydroxymethylation) 
