@@ -28,6 +28,5 @@ jobs:
         run: |
           library(testthat)
           library(chrombinarize)
-          test_dir("tests/testthat")
+          test_dir("chrombinarize/tests/testthat")
         shell: Rscript {0}
-        working-directory: chrombinarize
