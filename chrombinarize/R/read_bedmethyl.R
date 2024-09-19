@@ -130,7 +130,7 @@ read_bedmethyl <- function(bed_file_location) {
     )
   }
 
-  if (any(dplyr::select(methylation_data, -"strand") < 0)) {
+  if (any(dplyr::select(methylation_data, where(is.numeric)) < 0)) {
     stop(
       "A nonsensicle row exists.",
       "A row has a negative value (all values must be natural numbers)."
@@ -265,7 +265,7 @@ read_comparison_bedmethyl <- function(bed_file_location) {
     )
   }
 
-  if (any(methylation_data < 0)) {
+  if (any(dplyr::select(methylation_data, where(is.numeric)) < 0)) {
     stop(
       "A nonsensicle row exists.",
       "A row has a negative value (all values must be natural numbers)."
