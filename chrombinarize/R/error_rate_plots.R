@@ -24,8 +24,8 @@
 #'  9:     9          0.039
 #' 10:    10          0.039
 create_error_rate_data <- function(methylation_data,
-                                   max_read_depth,
-                                   percent_threshold) {
+                                   max_read_depth = 1000,
+                                   percent_threshold = 5) {
   n_values <- 1:max_read_depth
   error_rates <- lapply(n_values, function(n) {
     methylation_data <- dplyr::filter(methylation_data, read_depth >= n)
