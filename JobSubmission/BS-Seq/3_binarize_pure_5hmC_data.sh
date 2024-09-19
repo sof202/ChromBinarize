@@ -128,7 +128,7 @@ awk \
   "${processing_directory}/WGBS_oxBS_combined.bed" > \
   "${processing_directory}/WGBS_5mC_removed.bed"
 
-purification_convertBSBedToMethylBedFormat \
+purification_convertBSBedToBedMethylFormat \
   "h" \
   "${processing_directory}/WGBS_5mC_removed.bed" \
   "${processing_directory}/purified_reads.bed"

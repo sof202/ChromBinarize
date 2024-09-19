@@ -56,7 +56,7 @@ processing_directory="${BASE_DIR}/oxBS_5mc"
 rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 
-purification_convertBSBedToMethylBedFormat \
+purification_convertBSBedToBedMethylFormat \
   "m" \
   "${oxBS_bed_file_location}" \
   "${processing_directory}/formatted.bed"

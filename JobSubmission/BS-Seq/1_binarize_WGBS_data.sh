@@ -56,7 +56,7 @@ processing_directory="${BASE_DIR}/WGBS_5mc_5hmc"
 rm -rf "${processing_directory}"
 mkdir -p "${processing_directory}"
 
-purification_convertBSBedToMethylBedFormat \
+purification_convertBSBedToBedmethylFormat \
   "m" \
   "${WGBS_bed_file_location}" \
   "${processing_directory}/formatted.bed"

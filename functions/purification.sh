@@ -1,6 +1,6 @@
 #!/bin/bash
 
-purification_convertBSBedToMethylBedFormat() {
+purification_convertBSBedToBedmethylFormat() {
   # The default format required for BS-Seq files is not the same as ONT. This
   # is because ONT bed files are usually created with modkit and our lab uses
   # wgbs_tools for BS-Seq bed file creation. These do not output the same 
@@ -10,7 +10,7 @@ purification_convertBSBedToMethylBedFormat() {
   output_file_name=$3
 
 logs "${DEBUG_MODE:0}" \
-"Converting ${input_bed_file} into methylbed format."
+"Converting ${input_bed_file} into bedmethyl format."
 
   awk -v mark_name="$mark_name" \
     'function convert_to_percent(reads, total_reads) {

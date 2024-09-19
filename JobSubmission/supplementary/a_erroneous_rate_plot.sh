@@ -44,7 +44,7 @@ number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
 
 # If the file has 5 columns, it is not in BEDmethyl format.
 if [[ "${number_of_columns}" -eq 5 ]]; then
-    purification_convertBSBedToMethylBedFormat \
+    purification_convertBSBedToBedMethylFormat \
       "${mark}" \
       "${bed_file_location}" \
       "${BASE_DIR}/converted.bed"

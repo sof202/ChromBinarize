@@ -47,7 +47,7 @@ mkdir -p "${filtered_reads_directory}"
 
 number_of_columns=$(awk '{print NF; exit}' "${bed_file_location}")
 if [[ "${number_of_columns}" -eq 5 ]]; then
-    purification_convertBSBedToMethylBedFormat \
+    purification_convertBSBedToBedMethylFormat \
       "${mark}" \
       "${bed_file_location}" \
       "${filtered_reads_directory}/converted.bed"
