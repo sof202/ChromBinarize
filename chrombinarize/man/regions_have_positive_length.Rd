@@ -8,10 +8,10 @@ regions_have_positive_length(bedmethyl_data)
 }
 \value{
 A logical value. TRUE implies that all regions make sense. FALSE
-indicates a region is nonsensicle
+indicates at least one region is nonsensicle
 }
 \description{
-bed files should have start and end columns such that each
+BED files should have start and end columns such that each
 region is strictly positive. A region spanning bp:200 (start) to bp:100
 (end) is nonsensicle.
 }
@@ -20,8 +20,13 @@ region is strictly positive. A region spanning bp:200 (start) to bp:100
  regions_make_sense(bedmethyl_data)
    TRUE
 
- # bed bedmethyl data, row 3 contains a start value of 200, and end value
+ # bedmethyl data, row 3 contains a start value of 200, and end value
  # of 100
+ bedmethyl
+       chr start   end   name read_depth strand percent_methylation
+    <char> <int> <int> <char>      <int> <char>               <num>
+ 1:   chr1   200   100      m         55      +                  20
+
  regions_make_sense(bedmethyl_data)
    FALSE
 }

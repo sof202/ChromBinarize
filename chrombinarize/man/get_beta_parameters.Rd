@@ -11,7 +11,8 @@ get_beta_parameters(bin_densities)
 genomic regions considered.}
 }
 \value{
-A numeric vector containing estimated parameters shape1 and shape2
+A numeric vector containing the estimated parameters for the beta
+distribution shape1 and shape2
 }
 \description{
 Using the fitdistrplus package, the parameters for the beta
@@ -21,5 +22,5 @@ the reported density of reads in each window.
 \examples{
  bin_densities <- c(0.001, 0.09, 0.1, 0.001, 0.002)
  get_beta_parameters(bin_densities)
- [1] 0.3834632 9.7126634
+   0.3834632 9.7126634
 }

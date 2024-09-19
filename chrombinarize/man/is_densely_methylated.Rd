@@ -7,6 +7,8 @@
 is_densely_methylated(bin_density, shape1, shape2, beta_threshold = 0.001)
 }
 \arguments{
+\item{bin_density}{The density of reads in the selected bin (numeric)}
+
 \item{shape1, }{shape2
 Beta distriubution parameters (numeric)}
 
@@ -19,7 +21,7 @@ the bin density provided is significantly above what is expected (and 0
 is the opposite of course)
 }
 \description{
-Using the beta distribution and the given bin density the upper
+Using the beta distribution and the given bin density, the upper
 tail of the beta distibution is calculated and compared against the given
 threshold.
 }

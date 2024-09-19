@@ -18,8 +18,14 @@ a bin to be densely populated with reads. Defaults to 0.001}
 \value{
 A data.table detailing which bins in the input file are densely
 populated with methylated sites. The data.table has columns:
-"chromosome", "start position", "end position", "number of reads in region"
-and "is densely methylated" (Boolean value)
+\itemize{
+\item chr: Chromosome number (string, ex: "chr22")
+\item start: Starting base pair position (integer)
+\item end: Ending base pair position (integer)
+\item count: Number of reads in the bin (integer)
+\item is_densely_methylated: Boolean value for whether or not the bin is
+densely methylated or not (logical)
+}
 }
 \description{
 Using the beta distribution, this finds bins with a higher

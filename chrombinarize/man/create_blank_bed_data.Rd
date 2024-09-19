@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_blank_bed_data.R
 \name{create_blank_bed_data}
 \alias{create_blank_bed_data}
-\title{A wrapper for \code{create_bins()}}
+\title{A Wrapper for \code{create_bins()}}
 \usage{
 create_blank_bed_data(
   chromosome_sizes_file,
@@ -12,7 +12,11 @@ create_blank_bed_data(
 }
 \arguments{
 \item{chromosome_sizes_file}{A file path (string) to a text file detailing the length of each chromosome.
-The file should contain two columns: chromosome name and chromosome length.}
+The file should contain two columns:
+\itemize{
+\item chromosome_name: A string detailing the chromosome name (ex: "chr22")
+\item chromosome_size: An integer detailing the length of the chromosome
+}}
 
 \item{bin_size}{The desired size of each region (integer). Defaults to 200.}
 
@@ -25,7 +29,7 @@ A list of data.tables with columns "chromosome",
 is given the corresponding chromosome index as its name.
 }
 \description{
-Using a desired bin size, this creates data.tables for each
+Using the given bin size, this creates data.tables for each
 chromosome requested in the form of a bed file. Each row gives the
 coordinates of a genomic window each equal to the bin size.
 }

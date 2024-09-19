@@ -2,12 +2,12 @@
 % Please edit documentation in R/read_bedmethyl.R
 \name{read_bedmethyl}
 \alias{read_bedmethyl}
-\title{Read in a BEDMethyl File}
+\title{Read in a Bedmethyl File}
 \usage{
 read_bedmethyl(bed_file_location)
 }
 \arguments{
-\item{bed_file_location}{A file path (string) to the BEDMethyl file to be
+\item{bed_file_location}{A file path (string) to the bedmethyl file to be
 processed.}
 }
 \value{
@@ -23,7 +23,7 @@ A data.table with columns:
 }
 }
 \description{
-Converts a BEDMethyl file into a data table that can be used
+Converts a bedmethyl file into a data table that can be used
 by many other functions in the pipeline.
 }
 \details{

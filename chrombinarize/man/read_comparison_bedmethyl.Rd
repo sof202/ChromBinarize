@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_bedmethyl.R
 \name{read_comparison_bedmethyl}
 \alias{read_comparison_bedmethyl}
-\title{Read in a comparison BEDMethyl File}
+\title{Read in a Comparison Bedmethyl File}
 \usage{
 read_comparison_bedmethyl(bed_file_location)
 }
@@ -11,14 +11,22 @@ read_comparison_bedmethyl(bed_file_location)
 file to be processed.}
 }
 \value{
-A data.table with columns: "chr" (chromosome name, string), "start",
-(starting base pair position, int), "end" (ending base pair position, int),
-"mark_name" (m for 5mC and h for 5hmC), "read_depth" (read depth, int) and
-"percent_methylation" (The percentage of such reads that were observed to
-be methylated, numeric)
+A data.table with columns:
+\itemize{
+\item chr: chromosome name (string)
+\item start: starting base pair position (integer)
+\item end: ending base pair position (integer)
+\item mark_name: "m" for 5mC and "h" for 5hmC (string)
+\item ONT_read_depth: read depth in the ONT data(integer)
+\item ONT_percent_methylation: percentage of reads observed to be methylated
+in the ONT data(numeric)
+\item BS_read_depth: read depth in the BS-Seq data(integer)
+\item BS_percent_methylation: percentage of reads observed to be methylated
+in the BS-Seq data (numeric)
+}
 }
 \description{
-Converts a comparison BEDMethyl file into a data table that
+Converts a comparison bedmethyl file into a data table that
 can be used by the comparison scripts in the pipeline.
 }
 \details{

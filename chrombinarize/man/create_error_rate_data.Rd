@@ -31,8 +31,8 @@ meaningful data (estimating an error rate using a single site). Defaults to
 \value{
 A data table with columns
 \itemize{
-\item n -> The minimum read depth considered (integer)
-\item error_rate -> The error rate estimated (numeric)
+\item n: The minimum read depth considered (integer)
+\item error_rate: The error rate estimated (numeric)
 }
 }
 \description{

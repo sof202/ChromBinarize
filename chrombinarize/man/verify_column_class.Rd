@@ -2,14 +2,14 @@
 % Please edit documentation in R/verify_column_class.R
 \name{verify_column_class}
 \alias{verify_column_class}
-\title{Check if a Column has the Correct Class}
+\title{Check Column has Correct Class}
 \usage{
 verify_column_class(column, type_checker, stop_message)
 }
 \arguments{
-\item{column}{A vector of any class}
+\item{column}{The vector (extracted column) to inspect}
 
-\item{type_checker}{A base R type checker (i.e. \code{is.integer()})}
+\item{type_checker}{A type checker (i.e. \code{is.integer()})}
 
 \item{stop_message}{A string to be outputted in case of failure}
 }
@@ -31,5 +31,5 @@ verify_column_class(
   is.integer,
   "column is not an integer"
 )
-"column is not an integer" (and terminates call stack)
+Error: column is not an integer (and terminates call stack)
 }

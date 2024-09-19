@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_bedmethyl.R
 \name{bedmethyl_format}
 \alias{bedmethyl_format}
-\title{Format of bedmethl files}
+\title{Format of Bedmethyl Files}
 \arguments{
 \item{methylation_data}{A data table with the following columns:
 \itemize{

@@ -36,11 +36,12 @@ The returned data.table retains the following columns:
 \item start: starting base pair position (integer)
 \item end: ending base pair position (integer)
 \item mark_name: "m" for 5mC and "h" for 5hmC (string)
-\item ONT_read_depth: read depth for ONT (integer)
-\item ONT_percent_methylation: percentage of methylated reads in ONT
-(numeric)
-\item BS_read_depth: read depth for BS (integer)
-\item BS_percent_methylation: percentage of methylated reads in BS (numeric)
+\item ONT_read_depth: read depth in the ONT data(integer)
+\item ONT_percent_methylation: percentage of reads observed to be methylated
+in the ONT data(numeric)
+\item BS_read_depth: read depth in the BS-Seq data(integer)
+\item BS_percent_methylation: percentage of reads observed to be methylated
+in the BS-Seq data (numeric)
 }
 }
 \description{

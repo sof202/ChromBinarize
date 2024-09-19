@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_bedmethyl.R
 \name{comparative_bedmethyl_format}
 \alias{comparative_bedmethyl_format}
-\title{Format of bedmethl files}
+\title{Format of Comparison Bedmethl Files}
 \arguments{
 \item{comparison_bedmethyl}{A data table with the following columns:
 \itemize{
@@ -19,6 +19,6 @@ in the BS-Seq data (numeric)
 }}
 }
 \description{
-The Expected format for bedmethyl files. This is just for
-documentation purposes
+The expected format for comparison bedmethyl files. This is
+just for documentation purposes
 }

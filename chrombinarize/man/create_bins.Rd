@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_blank_bed_data.R
 \name{create_bins}
 \alias{create_bins}
-\title{Create genomic windows for a chromosome}
+\title{Create Genomic Windows for a Chromosome}
 \usage{
 create_bins(chromosome_name, chromosome_length, bin_size)
 }

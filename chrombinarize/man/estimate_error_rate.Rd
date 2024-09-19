@@ -11,17 +11,6 @@ estimate_error_rate(
 )
 }
 \arguments{
-\item{methylation_data}{A data table with the following columns:
-\itemize{
-\item chr: chromosome name (string)
-\item start: starting base pair position (integer)
-\item end: ending base pair position (integer)
-\item mark_name: "m" for 5mC and "h" for 5hmC (string)
-\item read_depth: read depth for the site (integer)
-\item strand: "+", "-" or "." (character)
-\item percent_methylation: percentage of reads reported as methylated (numeric)
-}}
-
 \item{read_depth_threshold}{The minimum read depth to consider (integer).
 Higher values are recommended. Defaults to 30.}
 

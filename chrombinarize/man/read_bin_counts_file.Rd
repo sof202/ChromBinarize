@@ -13,9 +13,13 @@ and "number of reads in region". i.e. a BED3+1 file where the final column
 is the number of reads in the region}
 }
 \value{
-A data.table with the columns: "chr" (chromosome, string)
-"start" (start position, integer), "end" (end position, integer) and
-"count" (number of reads in bin, integer)
+A data.table with the columns:
+\itemize{
+\item chr: Chromosome number (string, ex: "chr22")
+\item start: Starting base pair position (integer)
+\item end: Ending base pair position (integer)
+\item count: Number of reads in the bin (integer)
+}
 }
 \description{
 Reads in a BED file detailing the number of reads in each

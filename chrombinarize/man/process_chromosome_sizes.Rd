@@ -2,13 +2,17 @@
 % Please edit documentation in R/create_blank_bed_data.R
 \name{process_chromosome_sizes}
 \alias{process_chromosome_sizes}
-\title{Read and process a chromosome lengths file}
+\title{Read and Process a Chromosome Lengths File}
 \usage{
 process_chromosome_sizes(chromosome_sizes_file)
 }
 \arguments{
 \item{chromosome_sizes_file}{A file path (string) to a text file detailing the length of each chromosome.
-The file should contain two columns: chromosome name and chromosome length.}
+The file should contain two columns:
+\itemize{
+\item chromosome_name: A string detailing the chromosome name (ex: "chr22")
+\item chromosome_size: An integer detailing the length of the chromosome
+}}
 }
 \value{
 An integer vector with values equal to the given chromosome lengths.
