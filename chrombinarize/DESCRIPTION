@@ -2,7 +2,12 @@ Package: chrombinarize
 Title: A series of functions used in ChromBinarize's pipelines
 Version: 0.1.0
 Authors@R: 
-    person("Sam", "Fletcher", "s.o.fletcher@exeter.ac.uk", role = c("cre"))
+    person(
+        given = "Sam", 
+        family = "Fletcher", 
+        email = "s.o.fletcher@exeter.ac.uk", 
+        role = c("aut","cre")
+        )
 Description: Functions used to binarize methylation (and hydroxymethylation) 
     data into a binary file format that is useable by ChromHMM. It also
     provides some supplementary functionality to give the user more information
