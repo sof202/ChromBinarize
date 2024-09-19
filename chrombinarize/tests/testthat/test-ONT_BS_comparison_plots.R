@@ -1,7 +1,7 @@
 test_that("New columns added are as expected", {
   methylation_data <- readRDS(test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "expected_comparitive_bedmethyl.Rds"
   ))
   actual_updated_columns <- add_absolute_change_columns(methylation_data)

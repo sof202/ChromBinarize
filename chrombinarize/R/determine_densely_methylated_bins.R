@@ -22,8 +22,8 @@ get_beta_parameters <- function(bin_densities) {
     method = "mle"
   )
 
-  shape1 <- coef(fit)[["shape1"]]
-  shape2 <- coef(fit)[["shape2"]]
+  shape1 <- stats::coef(fit)[["shape1"]]
+  shape2 <- stats::coef(fit)[["shape2"]]
 
   return(c(shape1, shape2))
 }
@@ -52,12 +52,15 @@ get_beta_parameters <- function(bin_densities) {
 #'  # A high density likely returns 1
 #'  is_densely_methylated(0.4, 0.3, 9.5, 0.001)
 #'  1
-is_densely_methylated <-
-  function(bin_density, shape1, shape2, beta_threshold = 0.001) {
-    return(as.numeric(
-      pbeta(bin_density, shape1, shape2, lower.tail = FALSE) < beta_threshold
-    ))
-  }
+is_densely_methylated <- function(bin_density,
+                                  shape1,
+                                  shape2,
+                                  beta_threshold = 0.001) {
+  beta_p <- stats::pbeta(bin_density, shape1, shape2, lower.tail = FALSE)
+  return(as.numeric(
+    beta_p < beta_threshold
+  ))
+}
 
 
 #' @title Converts Bin Counts to Data Table

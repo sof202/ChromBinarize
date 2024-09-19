@@ -79,12 +79,12 @@ test_that("bedmethyl with incorrect format returns an error", {
 test_that("Comparitive bedmethyl with correct format can be read", {
   example_bedmethyl_path <- test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "example_comparitive_bedmethyl.bed"
   )
   expected_result <- readRDS(test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "expected_comparitive_bedmethyl.Rds"
   ))
   actual_result <- read_comparison_bedmethyl(example_bedmethyl_path)
@@ -94,7 +94,7 @@ test_that("Comparitive bedmethyl with correct format can be read", {
 test_that("Comparitive bedmethyl with incorrect format returns an error", {
   wrong_number_of_columns <- test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "wrong_column_number.bed"
   )
   expect_error(
@@ -104,7 +104,7 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
 
   wrong_column_type <- test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "wrong_column_types.bed"
   )
   expect_error(
@@ -114,7 +114,7 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
 
   invalid_mark_names <- test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "invalid_mark_names.bed"
   )
   expect_error(
@@ -124,7 +124,7 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
 
   negative_values <- test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "negative_values.bed"
   )
   expect_error(
@@ -134,7 +134,7 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
 
   bad_region_size <- test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "bad_region_size"
   )
   expect_error(
@@ -144,7 +144,7 @@ test_that("Comparitive bedmethyl with incorrect format returns an error", {
 
   bad_percent_methylation <- test_path(
     "test_data",
-    "read_comparative_bedmethyl_files",
+    "read_comparison_files",
     "bad_percent_methylation"
   )
   expect_error(

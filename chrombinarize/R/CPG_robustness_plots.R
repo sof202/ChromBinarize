@@ -123,7 +123,7 @@ create_cpg_robustness_plot <- function(methylation_data,
     min_distance,
     max_distance
   )
-  methylation_correlation <- cor(
+  methylation_correlation <- stats::cor(
     methylation_data[["percent_methylation"]],
     methylation_data[["surrounding_methylation"]]
   )

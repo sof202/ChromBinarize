@@ -91,15 +91,13 @@
       "RemoteType": "local",
       "RemoteUrl": "./chrombinarize",
       "Requirements": [
-        "cowplot",
         "data.table",
         "dplyr",
         "fitdistrplus",
         "ggplot2",
-        "grid",
-        "gridExtra"
+        "tidyselect"
       ],
-      "Hash": "c046467589f27e87f2956bee2a99b22c"
+      "Hash": "ce0fafe8efc199b5ef997c89a321d81c"
     },
     "cli": {
       "Package": "cli",
