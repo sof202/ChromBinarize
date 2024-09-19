@@ -23,9 +23,24 @@
 #' 159138663             155270560             146364022
 #' ...
 process_chromosome_sizes <- function(chromosome_sizes_file) {
-  chromosome_sizes_table <- data.table::fread(chromosome_sizes_file)
-  names(chromosome_sizes_table) <- c("chromosome", "size")
-  chromosome_sizes <- chromosome_sizes_table[["size"]]
+  chromosome_sizes_table <- data.table::fread(
+    chromosome_sizes_file,
+    col.names = c("chromosome", "chromosome_size"),
+    colClasses = c("character", "integer")
+  )
+
+  verify_column_class(
+    chromosome_sizes_table[["chromosome"]],
+    is.character,
+    "The first column (chromosome name) must be a string"
+  )
+  verify_column_class(
+    chromosome_sizes_table[["size"]],
+    is.integer,
+    "The second column (chromosome size) must be a string"
+  )
+
+  chromosome_sizes <- chromosome_sizes_table[["chromosome_size"]]
   names(chromosome_sizes) <- chromosome_sizes_table[["chromosome"]]
   return(chromosome_sizes)
 }
