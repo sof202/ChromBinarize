@@ -81,15 +81,17 @@ create_bins <- function(chromosome_name, chromosome_length, bin_size) {
   return(bins)
 }
 
-#' @title A wrapper for `create_bins()`
+#' @title A Wrapper for `create_bins()`
 #'
-#' @description Using a desired bin size, this creates data.tables for each
+#' @description Using the given bin size, this creates data.tables for each
 #'  chromosome requested in the form of a bed file. Each row gives the
 #'  coordinates of a genomic window each equal to the bin size.
 #'
 #' @param chromosome_sizes_file
 #'  A file path (string) to a text file detailing the length of each chromosome.
-#'  The file should contain two columns: chromosome name and chromosome length.
+#'  The file should contain two columns:
+#' - chromosome_name: A string detailing the chromosome name (ex: "chr22")
+#' - chromosome_size: An integer detailing the length of the chromosome
 #' @param bin_size The desired size of each region (integer). Defaults to 200.
 #' @param chromosomes A character vector of all chromosomes to create bins for.
 #'  Defaults to 1,2,3,...,22,X
