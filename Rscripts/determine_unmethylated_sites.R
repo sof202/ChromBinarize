@@ -16,8 +16,6 @@ binomial_p <- chrombinarize::estimate_error_rate(
 
 methylation_data <- methylation_data |>
   dplyr::mutate(
-    read_depth = as.numeric(read_depth),
-    percent_methylation = as.numeric(percent_methylation),
     number_of_methylated_reads = read_depth * percent_methylation / 100,
     "likelihood of methylated reads being erroneous" = pbinom(
       number_of_methylated_reads,
