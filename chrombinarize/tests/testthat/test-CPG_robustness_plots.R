@@ -5,7 +5,7 @@ test_that("Normal functionality is obtained for data creation", {
     "expected_bedmethyl_data.Rds"
   ))
   actual_cpg_robustness_data <-
-    create_cpg_robustness_data(methylation_data, 0, 1000)
+    chrombinarize:::create_cpg_robustness_data(methylation_data, 0, 1000)
   expected_cpg_robustness_data <- readRDS(test_path(
     "test_data",
     "cpg_robustness",
@@ -28,16 +28,34 @@ test_that("Edge cases are handled as expected", {
 
   # Filtering steps will always leave an empty data frame
   expect_no_error(
-    calculate_nearby_methylation(methylation_data, "chr1", 1000, 0, 0)
+    chrombinarize:::calculate_nearby_methylation(
+      methylation_data,
+      "chr1",
+      1000,
+      0,
+      0
+    )
   )
 
   # Chromosome doesn't exist
   expect_no_error(
-    calculate_nearby_methylation(methylation_data, "chrZ", 1000, 0, 0)
+    chrombinarize:::calculate_nearby_methylation(
+      methylation_data,
+      "chrZ",
+      1000,
+      0,
+      30
+    )
   )
 
   # Base pair position doesn't exist
   expect_no_error(
-    calculate_nearby_methylation(methylation_data, "chr1", -1, 0, 0)
+    chrombinarize:::calculate_nearby_methylation(
+      methylation_data,
+      "chr1",
+      -1,
+      0,
+      30
+    )
   )
 })
