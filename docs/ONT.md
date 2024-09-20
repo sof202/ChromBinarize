@@ -4,8 +4,8 @@ This pipeline expects input bed files of the following format, which we define
 as 'bedmethyl' format (standard output of ONT's 
 [modkit](https://github.com/nanoporetech/modkit)):
 
-|Chromosome|Start|End|Methylation type|Coverage|Strand|Percent methylation|
-|----------|-----|---|----------------|--------|------|-------------------|
+|Chromosome|Start|End|Mark name (m or h)|Read depth|Strand|Percent methylation|
+|----------|-----|---|------------------|----------|------|-------------------|
 
 These scripts have been created in an attempt to binarize the methylation and
 hydroxymethylation calls that come out of ONT data. The process is split into
