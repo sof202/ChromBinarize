@@ -19,10 +19,13 @@ LOG_MESSAGE
 errors() {
   message=$1
   current_time=$(date +'%-d-%m ~ %T')
+  RED='[0;31m'
+  NO_COLOUR='[0m'
 
 cat 1>&2 << ERROR_MESSAGE
+${RED}
 [ERROR: ${current_time}]
 ${message}
-
+${NO_COLOUR}
 ERROR_MESSAGE
 }
