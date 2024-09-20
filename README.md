@@ -4,12 +4,16 @@
 
 </p>
 <p align="center">
-    <a href="https://www.codefactor.io/repository/github/sof202/chrombinarize" alt="CodeFactor">
-        <img src="https://img.shields.io/codefactor/grade/github/sof202/ChromBinarize?style=for-the-badge&color=red" /></a>
+    <a href="https://github.com/sof202/ChromBinarize/actions/workflows/test.yml">
+      <img src="https://img.shields.io/github/actions/workflow/status/sof202/ChromBinarize/test.yml?style=for-the-badge&color=red" />
+    </a>
     <a href="https://github.com/sof202/ChromBinarize/commits/main/" alt="Commit activity">
-        <img src="https://img.shields.io/github/commit-activity/m/sof202/ChromBinarize?style=for-the-badge&color=red" /></a>
+        <img src="https://img.shields.io/github/commit-activity/m/sof202/ChromBinarize?style=for-the-badge&color=red" />
+    </a>
     <a href="https://github.com/sof202/ChromBinarize/blob/main/LICENSE" alt="License">
-        <img src="https://img.shields.io/github/license/sof202/ChromBinarize?style=for-the-badge&color=red" /></a>
+        <img src="https://img.shields.io/github/license/sof202/ChromBinarize?style=for-the-badge&color=red" />
+    </a>
+
 </p>
 
 # ChromHMM Binarization Tools
