@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-e_change_bin_size.sh
+$(basename "$0")
 ================================================================================
 Purpose: Converts a binary file from one bin size to another.
 WARNING: For best results, the new bin size should be smaller than the original

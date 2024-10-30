@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-1_binarize_WGBS_data.sh
+$(basename "$0")
 ================================================================================
 Purpose: Create binary files for dense and sparse regions of methylation 
 from whole genome bisulphite sequencing bed files. Bed files are expected to be 

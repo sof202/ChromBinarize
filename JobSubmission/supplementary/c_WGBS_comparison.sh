@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-c_WGBS_comparison.sh
+$(basename "$0")
 ================================================================================
 Purpose: Creates several plots comparing a two bed files. One for ONT, the 
 other for WGBS data.

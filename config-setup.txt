@@ -97,7 +97,7 @@ input_MACS_file=
 bed_file_location="${ONT_bed_file_location}"
 
 ## ......................... ##
-## a_erroneous_rate_plot.sh  ##
+##   Plotting error rates    ##
 ## ......................... ##
 
 # In some datasets, the maximum value for the read depth of a single site
@@ -105,9 +105,9 @@ bed_file_location="${ONT_bed_file_location}"
 # putting a maximum value here helps with interpretability of plots.
 max_N_value=750
 
-## .................... ##
-## b_CpG_robustness.sh  ##
-## .................... ##
+## .................. ##
+##   CpG robustness   ##
+## .................. ##
 
 # Minimum distance between CpGs that you would consider 'close proximity'
 min_distance=0
