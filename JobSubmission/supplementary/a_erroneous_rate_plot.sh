@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-a_erroneous_rate_plot.sh
+$(basename "$0")
 ================================================================================
 Purpose: Outputs plots that show how approximated erroneous methylation call 
 probability changes with read depth/methylation percent thresholds.

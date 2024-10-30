@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-3_binarize_pure_5hmC_data.
+$(basename "$0")
 ================================================================================
 Purpose: Create binary files for dense and sparse regions of 5hmc using a
 combination of whole genome bisulphite sequencing and oxidative bisulphite

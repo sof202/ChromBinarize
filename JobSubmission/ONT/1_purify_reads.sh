@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-1_purify_reads.sh
+$(basename "$0")
 ================================================================================
 Purpose: Filters input ONT file on sites that are significantly methylated
 Optional argument: -c -> train erroneous reads probability on CpGs in CGIs only

@@ -14,7 +14,7 @@
 usage() {
 cat <<EOF
 ================================================================================
-2_binarize_reads.sh
+$(basename "$0")
 ================================================================================
 Purpose: Turns processed ONT data into dense and sparsed ChromHMM compliable
 binarized data.
