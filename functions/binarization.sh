@@ -133,3 +133,58 @@ or your 'binomial threshold' in the config file is too strict."
   done
   conda deactivate
 }
+
+binarization_convertToChromHMM() {
+  epigenetic_mark_name=$1
+  
+  rm -rf "${BINARY_DIR}/${epigenetic_mark_name:?}"
+  mkdir -p "${BINARY_DIR}/${epigenetic_mark_name}"
+
+  conda activate ChromBinarize-R
+  Rscript ${RSCRIPT_DIR}/create_blank_bed_files.R \
+    "${REPO_DIR}" \
+    "${chromosome_sizes}" \
+    "${BIN_SIZE}" \
+    "${BINARY_DIR}/${epigenetic_mark_name}"
+  conda deactivate
+
+  logs "${DEBUG_MODE:0}" \
+  "Generating ChromHMM binary files..."
+
+  input_MACS_file=$(\
+    find "${macs_directory}" \
+    -type f \
+    -name "${epigenetic_mark_name}*.bed"\
+  )
+
+  for chromosome in {1..22} X; do
+    output_binary_file="${BINARY_DIR}/${epigenetic_mark_name}/${cell_type}_chr${chromosome}_binary.txt"
+    echo -e "${cell_type}\tchr${chromosome}" > "${output_binary_file}"
+    echo "${epigenetic_mark_name}" >> "${output_binary_file}"
+
+    conda activate ChromBinarize-bedtools
+    bedtools intersect \
+      -wa \
+      -c \
+      -a "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chromosome}.bed" \
+      -b "${input_MACS_file}" | \
+      awk '{OFS="\t"} {print ($4 > 0 ? 1 : 0)}' >> \
+      "${output_binary_file}"
+    conda deactivate
+
+    number_of_signatures=$(awk 'NR>2 && $1>0' "${output_binary_file}" | wc -l)
+
+  logs 1 \
+  "chromosome ${chromosome} has:
+  ${number_of_signatures} signatures."
+
+      if [[ "${number_of_signatures}" -eq 0 ]]; then
+  errors "${chromosome}'s binary file has no true/1 entries. 
+  Please check to see if your input MACS file is empty."
+      fi
+
+    gzip "${output_binary_file}"
+
+    rm "${BINARY_DIR}/${epigenetic_mark_name}/chromosome${chromosome}.bed"
+  done
+}
