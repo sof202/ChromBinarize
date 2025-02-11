@@ -84,9 +84,9 @@ beta_threshold=0.001
 ## CHIP_SEQ BINARIZATION ##
 ## --------------------- ##
 
-# This will appear as the epigenetic mark name in the resultant binary file
-epigenetic_mark_name=
-input_MACS_file=
+# A directory that contains all of the previously peak called datasets.
+# This expects bed files named `mark.bed`
+macs_directory=
 
 
 ## ------------- ##
